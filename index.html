@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal Bosque — Seteos Logísticos</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #ffffff;
+    --bg2:       #f7f5f0;
+    --bg3:       #efefec;
+    --border:    #dedad2;
+    --border2:   #ccc8be;
+    --green:     #5a9e6f;
+    --green-dim: #2d5c3e;
+    --cream:     #e8e2d4;
+    --cream-dim: #8a8478;
+    --cream-faint:#9a9890;
+    --heber-bg:  #1b3828; --heber-fg: #6aab7d; --heber-bd: #285a3a;
+    --daniel-bg: #1a1e38; --daniel-fg: #7080cc; --daniel-bd: #283060;
+    --nahuel-bg: #332210; --nahuel-fg: #c08840; --nahuel-bd: #5a3818;
+    --dani-bg:   #1a1e38; --dani-fg:   #7080cc; --dani-bd:   #283060;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--border);
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .logo { height: 22px; filter: brightness(0) opacity(.85); }
+  .header-div { width: 1px; height: 22px; background: var(--border2); }
+  .header-title { font-size: 11px; color: var(--cream-dim); letter-spacing: .12em; text-transform: uppercase; }
+  .header-cycle { font-size: 10px; color: var(--green); letter-spacing: .1em; text-transform: uppercase; font-family: 'DM Mono', monospace; margin-top: 2px; }
+  .header-right { font-size: 10px; color: var(--cream-faint); letter-spacing: .1em; text-transform: uppercase; font-family: 'DM Mono', monospace; }
+
+  /* ── FILTERS ── */
+  .filters {
+    padding: 1rem 2rem;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    border-bottom: 0.5px solid var(--border);
+    background: var(--bg2);
+  }
+  .fl { font-size: 9px; color: var(--cream-faint); text-transform: uppercase; letter-spacing: .12em; font-family: 'DM Mono', monospace; }
+  .fl + .fl { margin-left: 10px; }
+  select, input[type=text] {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 0.5px solid var(--border2);
+    background: var(--bg3);
+    color: var(--cream);
+    outline: none;
+    transition: border-color .15s;
+  }
+  select:focus, input:focus { border-color: var(--green); }
+  .count {
+    margin-left: auto;
+    font-size: 10px;
+    color: var(--cream-faint);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: .06em;
+  }
+
+  /* ── STATUS BAR ── */
+  .status {
+    padding: .6rem 2rem;
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    color: var(--cream-faint);
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  /* ── TABLE ── */
+  .table-wrap {
+    padding: 1.5rem 2rem;
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  thead { background: #f0ede6; }
+  th {
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--cream-faint);
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    padding: 10px 14px;
+    border-bottom: 0.5px solid var(--border);
+    white-space: nowrap;
+  }
+  td {
+    padding: 11px 14px;
+    border-bottom: 0.5px solid var(--border);
+    vertical-align: top;
+    line-height: 1.55;
+    transition: background .1s;
+  }
+  tr:last-child td { border-bottom: none; }
+  tbody tr { background: var(--bg2); }
+  tbody tr:nth-child(odd) { background: var(--bg); }
+  tbody tr:hover td { background: #f0ede6 !important; }
+
+  /* ── CELLS ── */
+  .dia-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--cream-faint);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+  }
+
+  .person { display: flex; align-items: center; gap: 8px; }
+  .avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 600; flex-shrink: 0;
+    font-family: 'DM Mono', monospace;
+  }
+  .resp-name { font-size: 12px; font-weight: 500; }
+
+  .horario-pill {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    padding: 3px 8px; border-radius: 5px;
+    border: 0.5px solid;
+    letter-spacing: .04em;
+    white-space: nowrap;
+  }
+
+  .esp-name { font-weight: 500; color: var(--cream); font-size: 12px; }
+
+  .info-act { color: #2a7a48; font-weight: 500; font-size: 11px; }
+  .info-hora { font-family: 'DM Mono', monospace; font-size: 10px; color: #5a8a60; margin-top: 2px; }
+
+  .nec { color: #6a6460; font-size: 11px; line-height: 1.6; }
+
+  .nota { font-size: 10px; color: #8a8880; font-style: italic; line-height: 1.4; }
+
+  .op-tag {
+    display: inline-block; font-family: 'DM Mono', monospace;
+    font-size: 8px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--green); border: 0.5px solid var(--green-dim);
+    border-radius: 3px; padding: 2px 6px;
+  }
+
+  /* ── RESP COLORS ── */
+  .resp-heber  .avatar { background: var(--heber-bg);  color: var(--heber-fg);  border: 0.5px solid var(--heber-bd); }
+  .resp-heber  .resp-name { color: var(--heber-fg); }
+  .resp-heber  .horario-pill { background: var(--heber-bg); color: var(--heber-fg); border-color: var(--heber-bd); }
+  .resp-daniel .avatar { background: var(--daniel-bg); color: var(--daniel-fg); border: 0.5px solid var(--daniel-bd); }
+  .resp-daniel .resp-name { color: var(--daniel-fg); }
+  .resp-daniel .horario-pill { background: var(--daniel-bg); color: var(--daniel-fg); border-color: var(--daniel-bd); }
+  .resp-nahuel .avatar { background: var(--nahuel-bg); color: var(--nahuel-fg); border: 0.5px solid var(--nahuel-bd); }
+  .resp-nahuel .resp-name { color: var(--nahuel-fg); }
+  .resp-nahuel .horario-pill { background: var(--nahuel-bg); color: var(--nahuel-fg); border-color: var(--nahuel-bd); }
+  .resp-dani   .avatar { background: var(--dani-bg);   color: var(--dani-fg);   border: 0.5px solid var(--dani-bd); }
+  .resp-dani   .resp-name { color: var(--dani-fg); }
+  .resp-dani   .horario-pill { background: var(--dani-bg); color: var(--dani-fg); border-color: var(--dani-bd); }
+
+  /* ── LOADING / EMPTY ── */
+  .loading {
+    padding: 4rem 2rem;
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--cream-faint);
+    letter-spacing: .1em;
+  }
+  .loading::after { content: ''; animation: dots 1.2s steps(3,end) infinite; }
+  @keyframes dots { 0%{content:'.'} 33%{content:'..'} 66%{content:'...'} }
+
+  .empty {
+    padding: 3rem;
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--cream-faint);
+    letter-spacing: .08em;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 1rem 2rem;
+    border-top: 0.5px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--cream-faint);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer a { color: var(--green); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-left">
+    <img class="logo"
+         src="https://www.portalbosque.com/logo-white.svg"
+         alt="Portal Bosque"
+         onerror="this.style.display='none';document.getElementById('logo-text').style.display='block'">
+    <span id="logo-text" style="display:none;font-size:14px;font-weight:600;letter-spacing:.08em;color:var(--cream)">PORTAL BOSQUE</span>
+    <div class="header-div"></div>
+    <div>
+      <div class="header-title">Seteos Logísticos</div>
+      <div class="header-cycle">Ciclo Otoño 2026</div>
+    </div>
+  </div>
+  <div class="header-right">Uso Interno</div>
+</header>
+
+<!-- FILTERS -->
+<div class="filters">
+  <span class="fl">Día</span>
+  <select id="sel-dia" onchange="render()">
+    <option value="">Todos los días</option>
+  </select>
+  <span class="fl">Responsable</span>
+  <input id="inp-resp" type="text" placeholder="Ej: Heber" oninput="render()" style="width:120px">
+  <span class="fl">Espacio</span>
+  <input id="inp-esp" type="text" placeholder="Ej: Yurta" oninput="render()" style="width:140px">
+  <span class="count" id="count">—</span>
+</div>
+
+<!-- STATUS -->
+<div class="status" id="status">
+  <div class="status-dot"></div>
+  <span id="status-text">Conectando con Google Sheets...</span>
+</div>
+
+<!-- TABLE -->
+<div class="table-wrap">
+  <div id="loading" class="loading">Cargando datos</div>
+  <table id="table" style="display:none">
+    <thead>
+      <tr>
+        <th style="width:7%">Día</th>
+        <th style="width:11%">Responsable</th>
+        <th style="width:8%">Horario</th>
+        <th style="width:15%">Espacio</th>
+        <th style="width:36%">Necesidad</th>
+        <th style="width:14%">Info</th>
+        <th style="width:9%">Notas</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+  <div id="empty" class="empty" style="display:none">Sin resultados para este filtro.</div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <span>Portal Bosque · <a href="https://www.portalbosque.com" target="_blank">portalbosque.com</a></span>
+  <span id="last-update">—</span>
+</footer>
+
+<script>
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQAjbZFpNcEopTvKwlp2Nn6EpFWNPAf3hMK0vc_NRM5K3NhSTe73DsHUjEV3YjKGWT4auUjQ3kXpucf/pub?output=csv';
+
+let ALL_DATA = [];
+
+// ── CSV PARSER ──
+function parseCSV(text) {
+  const rows = [];
+  const lines = text.split('\n');
+  let lastDia = '';
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+    const cols = splitCSVLine(line);
+    if (cols.length < 4) continue;
+    let [dia, resp, horario, espacio, necesidad, info, notas] = cols.map(c => c.trim());
+    if (dia) lastDia = dia;
+    else dia = lastDia;
+    if (!espacio) continue;
+    rows.push({ dia: dia.toUpperCase(), resp: resp||'', horario: horario||'', espacio, necesidad: necesidad||'', info: info||'', notas: notas||'' });
+  }
+  return rows;
+}
+
+function splitCSVLine(line) {
+  const result = [];
+  let cur = '', inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') { inQ = !inQ; }
+    else if (ch === ',' && !inQ) { result.push(cur); cur = ''; }
+    else { cur += ch; }
+  }
+  result.push(cur);
+  return result;
+}
+
+// ── FETCH ──
+async function fetchData() {
+  try {
+    const res = await fetch(CSV_URL);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const text = await res.text();
+    ALL_DATA = parseCSV(text);
+
+    // populate day filter
+    const dias = [...new Set(ALL_DATA.map(r => r.dia).filter(Boolean))];
+    const sel = document.getElementById('sel-dia');
+    dias.forEach(d => {
+      const opt = document.createElement('option');
+      opt.value = d; opt.textContent = d.charAt(0) + d.slice(1).toLowerCase();
+      sel.appendChild(opt);
+    });
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('table').style.display = 'table';
+    const now = new Date();
+    document.getElementById('status-text').textContent =
+      `Datos sincronizados · ${now.toLocaleDateString('es-UY')} ${now.toLocaleTimeString('es-UY', {hour:'2-digit',minute:'2-digit'})}`;
+    document.getElementById('last-update').textContent =
+      `Última actualización: ${now.toLocaleDateString('es-UY')}`;
+    render();
+  } catch(e) {
+    document.getElementById('loading').textContent = 'Error al cargar datos. Revisá la conexión o los permisos de la planilla.';
+    document.getElementById('status-text').textContent = 'Sin conexión con Google Sheets';
+    document.querySelector('.status-dot').style.background = '#c05050';
+    document.querySelector('.status-dot').style.animation = 'none';
+  }
+}
+
+// ── RENDER ──
+function respClass(r) {
+  const k = (r||'').toLowerCase().trim();
+  if (k === 'heber')  return 'resp-heber';
+  if (k === 'daniel') return 'resp-daniel';
+  if (k === 'nahuel') return 'resp-nahuel';
+  if (k === 'dani')   return 'resp-dani';
+  return '';
+}
+function initials(n) { return n ? n.slice(0,2).toUpperCase() : '?' }
+
+function render() {
+  const dia  = document.getElementById('sel-dia').value.toUpperCase();
+  const resp = document.getElementById('inp-resp').value.toLowerCase().trim();
+  const esp  = document.getElementById('inp-esp').value.toLowerCase().trim();
+
+  const filtered = ALL_DATA.filter(r => {
+    if (dia  && r.dia.toUpperCase() !== dia) return false;
+    if (resp && !r.resp.toLowerCase().includes(resp)) return false;
+    if (esp  && !r.espacio.toLowerCase().includes(esp)) return false;
+    return true;
+  });
+
+  document.getElementById('count').textContent =
+    filtered.length + ' fila' + (filtered.length !== 1 ? 's' : '');
+
+  const tbody = document.getElementById('tbody');
+  const empty = document.getElementById('empty');
+
+  if (!filtered.length) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  const isOp = r => r.info === 'Tarea operativa / gral';
+
+  tbody.innerHTML = filtered.map(r => {
+    const rc = respClass(r.resp);
+    const op = isOp(r);
+    const infoLines = r.info.split('\n');
+    const infoAct   = infoLines[0] || '';
+    const infoHora  = infoLines.slice(1).join(' ');
+
+    const respHtml = r.resp
+      ? `<div class="person ${rc}">
+           <div class="avatar">${initials(r.resp)}</div>
+           <span class="resp-name">${r.resp}</span>
+         </div>`
+      : `<span style="color:var(--cream-faint);font-size:11px">—</span>`;
+
+    const horarioHtml = r.horario
+      ? `<span class="horario-pill ${rc}">${r.horario}</span>`
+      : `<span style="color:var(--cream-faint)">—</span>`;
+
+    const infoHtml = op
+      ? `<span class="op-tag">Operativa</span>`
+      : infoAct
+        ? `<div class="info-act">${infoAct}</div>${infoHora ? `<div class="info-hora">${infoHora}</div>` : ''}`
+        : `<span style="color:var(--cream-faint)">—</span>`;
+
+    return `<tr>
+      <td><span class="dia-badge">${r.dia}</span></td>
+      <td>${respHtml}</td>
+      <td>${horarioHtml}</td>
+      <td><span class="esp-name">${r.espacio}</span></td>
+      <td><div class="nec">${r.necesidad}</div></td>
+      <td>${infoHtml}</td>
+      <td><div class="nota">${r.notas}</div></td>
+    </tr>`;
+  }).join('');
+}
+
+// ── INIT ──
+fetchData();
+// Auto-refresh every 5 minutes
+setInterval(fetchData, 5 * 60 * 1000);
+</script>
+</body>
+</html>
