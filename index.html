@@ -12,7 +12,6 @@
         }
         body { font-family: sans-serif; margin: 0; background: #fff; color: var(--text-dark); }
         
-        /* Header Principal */
         .main-header { 
             background: var(--header-bg); 
             color: white; 
@@ -32,7 +31,6 @@
         .title-section h2 { margin: 0; font-size: 16px; font-weight: bold; }
         .title-section p { margin: 0; font-size: 11px; opacity: 0.8; }
 
-        /* Barra de Filtros Amarilla */
         .filters-bar { 
             background: var(--filter-bg); 
             padding: 5px 40px; 
@@ -43,37 +41,43 @@
         .filter-group { display: flex; align-items: center; gap: 5px; font-weight: bold; font-size: 12px; }
         select { padding: 2px 5px; border-radius: 8px; border: 1px solid #bbb; font-size: 11px; height: 24px; outline: none; }
 
-        /* TABLA Y ENCABEZADOS (Ajuste solicitado) */
         .table-container { padding: 15px 40px; overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; min-width: 900px; }
         
-        thead tr { display: flex; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 5px; }
+        thead tr { display: flex; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 10px; }
         
-        /* Aquí achicamos los botones de la tabla */
+        /* ESTILO DE LOS ENCABEZADOS (BOTONES) */
         th { 
             background: var(--badge-bg); 
             color: white; 
-            padding: 4px 10px; /* Reducido de 10px a 4px */
-            border-radius: 12px; 
+            padding: 8px 10px; 
+            border-radius: 15px; 
             flex: 1; 
             margin: 0 4px; 
-            font-size: 11px; /* Letra un poco más chica */
+            font-size: 12px;
             font-weight: normal;
             text-align: center;
+        }
+
+        /* AJUSTE ESPECÍFICO: Achicamos solo Día y Horario */
+        th:nth-child(1), td:nth-child(1), /* Día */
+        th:nth-child(3), td:nth-child(3)  /* Horario */ {
+            flex: 0.6; /* Menos ancho relativo */
+            min-width: 80px;
         }
         
         tbody tr { display: flex; align-items: center; border-bottom: 1px solid #eee; }
         tbody tr.completed { opacity: 0.3; background: #f0f0f0; }
         tbody tr.completed td { text-decoration: line-through; }
         
-        td { padding: 8px 10px; flex: 1; font-size: 12px; margin: 0 4px; }
-        .col-necesidad { flex: 2; font-weight: bold; }
-        .col-notas { flex: 1.5; font-size: 11px; }
+        td { padding: 15px 10px; flex: 1; font-size: 13px; margin: 0 4px; }
+        .col-necesidad { flex: 2.5; font-weight: bold; } /* Más aire para necesidad */
+        .col-notas { flex: 1.5; font-size: 12px; }
         .col-check { flex: 0.4; text-align: center; }
 
-        .check-btn { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--badge-bg); cursor: pointer; display: inline-block; background: white; }
+        .check-btn { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--badge-bg); cursor: pointer; display: inline-block; background: white; }
         tr.completed .check-btn { background: var(--success-color); border-color: var(--success-color); position: relative; }
-        tr.completed .check-btn::after { content: '✓'; color: white; position: absolute; left: 3px; top: -2px; font-size: 14px; font-weight: bold; }
+        tr.completed .check-btn::after { content: '✓'; color: white; position: absolute; left: 4px; top: -1px; font-size: 14px; font-weight: bold; }
 
         @media (max-width: 600px) {
             .main-header, .filters-bar { padding: 8px 15px; }
@@ -101,7 +105,7 @@
             <thead>
                 <tr>
                     <th>Día</th><th>Responsable</th><th>Horario</th><th>Espacio</th>
-                    <th style="flex:2">Necesidad</th><th>Info</th><th style="flex:1.5">Notas</th><th style="flex:0.4">Ok</th>
+                    <th class="col-necesidad">Necesidad</th><th>Info</th><th class="col-notas">Notas</th><th class="col-check">Ok</th>
                 </tr>
             </thead>
             <tbody id="content"></tbody>
@@ -149,7 +153,7 @@
                     <td class="col-notas">${r[6] || ''}</td>
                     <td class="col-check"><div class="check-btn" onclick="done(${i})"></div></td>
                 `;
-                container.appendChild(tr);
+                tbody_id = document.getElementById('content').appendChild(tr);
             });
         }
 
