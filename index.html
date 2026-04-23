@@ -17,19 +17,13 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #fff;
-            color: var(--text-dark);
+            margin: 0; padding: 0; background-color: #fff; color: var(--text-dark);
         }
 
         .main-header {
             background-color: var(--header-bg);
-            color: white;
-            padding: 15px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            color: white; padding: 15px 40px;
+            display: flex; justify-content: space-between; align-items: center;
         }
 
         .logo-section { display: flex; align-items: center; gap: 15px; }
@@ -42,51 +36,35 @@
         .filters-bar {
             background-color: var(--filter-bg);
             padding: 15px 40px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            align-items: center;
+            display: flex; flex-wrap: wrap; gap: 20px; align-items: center;
         }
 
         .filter-group { display: flex; align-items: center; gap: 10px; }
         .filter-group label { font-weight: bold; font-size: 16px; }
 
         .filter-group select {
-            padding: 6px 12px;
-            border-radius: 20px;
-            border: 1px solid #ccc;
-            background: white;
-            min-width: 130px;
+            padding: 6px 12px; border-radius: 20px; border: 1px solid #ccc;
+            background: white; min-width: 130px;
         }
 
         .table-container { padding: 20px 40px; overflow-x: auto; }
-        
         table { width: 100%; border-collapse: collapse; min-width: 900px; }
 
         thead tr {
-            display: flex;
-            justify-content: space-between;
+            display: flex; justify-content: space-between;
             border-bottom: 2px solid var(--border-color);
-            padding-bottom: 15px;
-            margin-bottom: 10px;
+            padding-bottom: 15px; margin-bottom: 10px;
         }
 
         th {
-            background-color: var(--badge-bg);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            text-align: center;
-            flex: 1;
-            margin: 0 5px;
+            background-color: var(--badge-bg); color: white;
+            padding: 10px 15px; border-radius: 20px;
+            font-size: 14px; text-align: center; flex: 1; margin: 0 5px;
         }
 
         tbody tr {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #eee;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #eee; transition: 0.3s;
         }
 
         tbody tr.completed { background-color: #f9f9f9; opacity: 0.4; }
@@ -99,152 +77,15 @@
         .text-small { font-size: 13px; line-height: 1.4; }
         
         .badge {
-            background-color: var(--badge-bg);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 11px;
+            background-color: var(--badge-bg); color: white;
+            padding: 4px 10px; border-radius: 4px; font-size: 11px;
         }
 
         .check-btn {
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            border: 2px solid var(--badge-bg);
-            background: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 25px; height: 25px; border-radius: 50%;
+            border: 2px solid var(--badge-bg); background: white;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
         }
 
-        tr.completed .check-btn {
-            background: var(--success-color);
-            border-color: var(--success-color);
-        }
-
-        tr.completed .check-btn::after { content: '✓'; color: white; font-weight: bold; }
-
-        .col-necesidad { flex: 2; }
-        .col-notas { flex: 1.5; }
-        .col-check { flex: 0.4; text-align: center; display: flex; justify-content: center; }
-    </style>
-</head>
-<body>
-
-    <header class="main-header">
-        <div class="logo-section">
-            <h1 class="brand-name">Portal<br><span>Bosque</span></h1>
-        </div>
-        <div class="title-section">
-            <h2>Seteos Logísticos</h2>
-            <p>Ciclo Otoño 2026</p>
-        </div>
-    </header>
-
-    <nav class="filters-bar">
-        <div class="filter-group"><label>Día</label><select id="filter-dia"><option value="">Ej: Lunes</option></select></div>
-        <div class="filter-group"><label>Responsable</label><select id="filter-responsable"><option value="">Ej: Heber</option></select></div>
-        <div class="filter-group"><label>Horario</label><select id="filter-horario"><option value="">Ej: 7:00am</option></select></div>
-        <div class="filter-group"><label>Espacio</label><select id="filter-espacio"><option value="">Ej: Yurta</option></select></div>
-    </nav>
-
-    <main class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Día</th><th>Responsable</th><th>Horario</th><th>Espacio</th>
-                    <th class="col-necesidad">Necesidad</th><th>Info</th><th class="col-notas">Notas</th><th class="col-check">Ok</th>
-                </tr>
-            </thead>
-            <tbody id="table-body"></tbody>
-        </table>
-    </main>
-
-    <script>
-        // EL LINK: Asegúrate de que no tenga espacios al final
-        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQAjbZFpNcEopTvKwlp2Nn6EpFWNPAf3hMK0vc_NRM5K3NhSTe73DsHUjEV3YjKGWT4auUjQ3kXpucf/pub?output=csv';
-
-        let allData = [];
-
-        function fetchData() {
-            Papa.parse(csvUrl, {
-                download: true,
-                header: true,
-                skipEmptyLines: true,
-                complete: function(results) {
-                    allData = results.data;
-                    renderTable(allData);
-                    setupFilters(allData);
-                }
-            });
-        }
-
-        function renderTable(data) {
-            const tbody = document.getElementById('table-body');
-            tbody.innerHTML = '';
-
-            data.forEach((row, index) => {
-                // Si la fila está vacía o no tiene Día, la saltamos
-                if (!row.Día && !row.Dia) return;
-
-                const tr = document.createElement('tr');
-                tr.id = `row-${index}`;
-                
-                tr.innerHTML = `
-                    <td class="bold">${row.Día || row.Dia || '-'}</td>
-                    <td class="bold">${row.Responsable || '-'}</td>
-                    <td class="bold">${row.Horario || '-'}</td>
-                    <td class="bold uppercase">${row.Espacio || '-'}</td>
-                    <td class="text-small col-necesidad"><strong>${row.Necesidad || '-'}</strong></td>
-                    <td>${row.Info ? `<span class="badge">${row.Info}</span>` : '-'}</td>
-                    <td class="text-small col-notas">${row.Observaciones || row.Notas || '-'}</td>
-                    <td class="col-check">
-                        <div class="check-btn" onclick="toggleComplete(${index})"></div>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function toggleComplete(id) {
-            document.getElementById(`row-${id}`).classList.toggle('completed');
-        }
-
-        function setupFilters(data) {
-            const createOptions = (id, key) => {
-                const select = document.getElementById(id);
-                const values = [...new Set(data.map(item => item[key]).filter(v => v))];
-                values.forEach(v => {
-                    const opt = document.createElement('option');
-                    opt.value = v; opt.textContent = v;
-                    select.appendChild(opt);
-                });
-                select.addEventListener('change', filterData);
-            };
-
-            createOptions('filter-dia', 'Día');
-            createOptions('filter-responsable', 'Responsable');
-            createOptions('filter-horario', 'Horario');
-            createOptions('filter-espacio', 'Espacio');
-        }
-
-        function filterData() {
-            const fDia = document.getElementById('filter-dia').value;
-            const fResp = document.getElementById('filter-responsable').value;
-            const fHora = document.getElementById('filter-horario').value;
-            const fEsp = document.getElementById('filter-espacio').value;
-
-            const filtered = allData.filter(row => {
-                return (!fDia || row.Día === fDia) &&
-                       (!fResp || row.Responsable === fResp) &&
-                       (!fHora || row.Horario === fHora) &&
-                       (!fEsp || row.Espacio === fEsp);
-            });
-            renderTable(filtered);
-        }
-
-        window.onload = fetchData;
-    </script>
-</body>
-</html>
+        tr.completed .check-btn { background: var(--success-color); border-color: var(--success-color); }
+        tr.
