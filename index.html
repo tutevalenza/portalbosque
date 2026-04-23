@@ -12,7 +12,7 @@
         }
         body { font-family: sans-serif; margin: 0; background: #fff; color: var(--text-dark); }
         
-        /* Header */
+        /* Header Principal */
         .main-header { 
             background: var(--header-bg); 
             color: white; 
@@ -26,51 +26,47 @@
             font-size: 24px; 
             font-weight: 900; 
             line-height: 1;
-            letter-spacing: -0.5px;
         }
-        .brand-name span { font-weight: 200; }
 
         .title-section { text-align: right; }
         .title-section h2 { margin: 0; font-size: 16px; font-weight: bold; }
         .title-section p { margin: 0; font-size: 11px; opacity: 0.8; }
 
-        /* Filtros compactos */
+        /* Barra de Filtros Amarilla */
         .filters-bar { 
             background: var(--filter-bg); 
             padding: 5px 40px; 
             display: flex; 
-            flex-wrap: wrap; 
             gap: 12px; 
             align-items: center;
         }
-        .filter-group { 
-            display: flex; 
-            align-items: center; 
-            gap: 5px; 
-            font-weight: bold; 
-            font-size: 12px; 
-        }
-        select { 
-            padding: 2px 5px; 
-            border-radius: 8px; 
-            border: 1px solid #bbb; 
-            min-width: 80px; 
-            font-size: 11px; 
-            height: 24px;
-            outline: none;
-        }
+        .filter-group { display: flex; align-items: center; gap: 5px; font-weight: bold; font-size: 12px; }
+        select { padding: 2px 5px; border-radius: 8px; border: 1px solid #bbb; font-size: 11px; height: 24px; outline: none; }
 
-        /* Tabla y contenido */
+        /* TABLA Y ENCABEZADOS (Ajuste solicitado) */
         .table-container { padding: 15px 40px; overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; min-width: 900px; }
-        thead tr { display: flex; border-bottom: 2px solid #000; padding-bottom: 8px; }
-        th { background: var(--badge-bg); color: white; padding: 6px; border-radius: 15px; flex: 1; margin: 0 3px; font-size: 12px; }
+        
+        thead tr { display: flex; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 5px; }
+        
+        /* Aquí achicamos los botones de la tabla */
+        th { 
+            background: var(--badge-bg); 
+            color: white; 
+            padding: 4px 10px; /* Reducido de 10px a 4px */
+            border-radius: 12px; 
+            flex: 1; 
+            margin: 0 4px; 
+            font-size: 11px; /* Letra un poco más chica */
+            font-weight: normal;
+            text-align: center;
+        }
         
         tbody tr { display: flex; align-items: center; border-bottom: 1px solid #eee; }
         tbody tr.completed { opacity: 0.3; background: #f0f0f0; }
         tbody tr.completed td { text-decoration: line-through; }
         
-        td { padding: 10px 8px; flex: 1; font-size: 12px; margin: 0 3px; }
+        td { padding: 8px 10px; flex: 1; font-size: 12px; margin: 0 4px; }
         .col-necesidad { flex: 2; font-weight: bold; }
         .col-notas { flex: 1.5; font-size: 11px; }
         .col-check { flex: 0.4; text-align: center; }
@@ -82,14 +78,13 @@
         @media (max-width: 600px) {
             .main-header, .filters-bar { padding: 8px 15px; }
             .table-container { padding: 10px 15px; }
-            .brand-name { font-size: 20px; }
         }
     </style>
 </head>
 <body>
 
     <header class="main-header">
-        <div class="brand-name">Portal <span>Bosque</span></div>
+        <div class="brand-name">Portal Bosque</div>
         <div class="title-section">
             <h2>Seteos Logísticos</h2>
             <p>Ciclo Otoño 2026</p>
@@ -125,14 +120,10 @@
                 complete: function(res) {
                     const processed = [];
                     res.data.forEach((r, i) => {
-                        // Saltar cabecera y filas vacías críticas
                         if (i === 0 || (!r[3] && !r[4])) return;
-                        
-                        // Lógica de arrastre de datos para celdas combinadas
                         if (r[0] && r[0].trim() !== "") lastDia = r[0].trim();
                         if (r[1] && r[1].trim() !== "") lastResp = r[1].trim();
                         if (r[2] && r[2].trim() !== "") lastHora = r[2].trim();
-                        
                         processed.push([lastDia, lastResp, lastHora, r[3], r[4], r[5], r[6]]);
                     });
                     rawData = processed;
@@ -171,14 +162,12 @@
                 const opts = [...new Set(data.map(r => r[idx]))].filter(v => v && v.trim() !== "");
                 opts.sort().forEach(v => {
                     const el = document.createElement('option');
-                    el.value = v;
-                    el.textContent = v;
+                    el.value = v; el.textContent = v;
                     s.appendChild(el);
                 });
                 s.onchange = filter;
             };
-            make('f0', 0); // Filtro Día
-            make('f1', 1); // Filtro Responsable
+            make('f0', 0); make('f1', 1);
         }
 
         function filter() {
