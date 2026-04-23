@@ -78,4 +78,226 @@
         th {
             background-color: var(--badge-bg);
             color: white;
-            padding: 10px
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            text-align: center;
+            flex: 1;
+            margin: 0 5px;
+        }
+
+        tbody tr {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        /* Estado Completado */
+        tbody tr.completed {
+            background-color: #f9f9f9;
+            opacity: 0.5;
+        }
+        
+        tbody tr.completed td {
+            text-decoration: line-through;
+        }
+
+        td {
+            padding: 15px 10px;
+            flex: 1;
+            font-size: 14px;
+            margin: 0 5px;
+        }
+
+        .bold { font-weight: bold; }
+        .uppercase { text-transform: uppercase; }
+        .text-small { font-size: 13px; line-height: 1.4; }
+        
+        /* Badge Operativa */
+        .badge {
+            background-color: var(--badge-bg);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            text-decoration: none !important; /* Que no se tache */
+        }
+
+        /* Botón de Check */
+        .check-btn {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 2px solid var(--badge-bg);
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .check-btn:hover { background: #eee; }
+        
+        tr.completed .check-btn {
+            background: var(--success-color);
+            border-color: var(--success-color);
+        }
+
+        tr.completed .check-btn::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Ajustes de anchos */
+        .col-necesidad { flex: 2; }
+        .col-notas { flex: 1.5; }
+        .col-check { flex: 0.4; text-align: center; display: flex; justify-content: center; }
+
+        @media (max-width: 768px) {
+            .main-header, .filters-bar { padding: 15px 20px; }
+            .table-container { padding: 10px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo-section">
+            <h1 class="brand-name">Portal<br><span>Bosque</span></h1>
+        </div>
+        <div class="title-section">
+            <h2>Seteos Logísticos</h2>
+            <p>Ciclo Otoño 2026</p>
+        </div>
+    </header>
+
+    <nav class="filters-bar">
+        <div class="filter-group">
+            <label>Día</label>
+            <select id="filter-dia"><option value="">Ej: Lunes</option></select>
+        </div>
+        <div class="filter-group">
+            <label>Responsable</label>
+            <select id="filter-responsable"><option value="">Ej: Heber</option></select>
+        </div>
+        <div class="filter-group">
+            <label>Horario</label>
+            <select id="filter-horario"><option value="">Ej: 7:00am</option></select>
+        </div>
+        <div class="filter-group">
+            <label>Espacio</label>
+            <select id="filter-espacio"><option value="">Ej: Yurta</option></select>
+        </div>
+    </nav>
+
+    <main class="table-container">
+        <table id="table-seteos">
+            <thead>
+                <tr>
+                    <th>Día</th>
+                    <th>Responsable</th>
+                    <th>Horario</th>
+                    <th>Espacio</th>
+                    <th class="col-necesidad">Necesidad</th>
+                    <th>Info</th>
+                    <th class="col-notas">Notas</th>
+                    <th class="col-check">Ok</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                </tbody>
+        </table>
+    </main>
+
+    <script>
+        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQAjbZFpNcEopTvKwlp2Nn6EpFWNPAf3hMK0vc_NRM5K3NhSTe73DsHUjEV3YjKGWT4auUjQ3kXpucf/pub?output=csv';
+
+        async function fetchData() {
+            Papa.parse(csvUrl, {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    const data = results.data.filter(row => row.Día); // Limpiar filas vacías
+                    renderTable(data);
+                    setupFilters(data);
+                }
+            });
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+
+            data.forEach((row, index) => {
+                const tr = document.createElement('tr');
+                tr.setAttribute('id', `row-${index}`);
+                
+                tr.innerHTML = `
+                    <td class="bold">${row.Día}</td>
+                    <td class="bold">${row.Responsable || '-'}</td>
+                    <td class="bold">${row.Horario || '-'}</td>
+                    <td class="bold uppercase">${row.Espacio || '-'}</td>
+                    <td class="text-small col-necesidad"><strong>${row.Necesidad || '-'}</strong></td>
+                    <td>${row.Info ? `<span class="badge">${row.Info}</span>` : '-'}</td>
+                    <td class="text-small col-notas">${row.Observaciones || '-'}</td>
+                    <td class="col-check">
+                        <div class="check-btn" onclick="toggleComplete('${index}')"></div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function toggleComplete(id) {
+            const row = document.getElementById(`row-${id}`);
+            row.classList.toggle('completed');
+        }
+
+        function setupFilters(data) {
+            const fields = {
+                'filter-dia': 'Día',
+                'filter-responsable': 'Responsable',
+                'filter-horario': 'Horario',
+                'filter-espacio': 'Espacio'
+            };
+
+            Object.keys(fields).forEach(id => {
+                const select = document.getElementById(id);
+                const values = [...new Set(data.map(item => item[fields[id]]).filter(v => v))];
+                values.forEach(v => {
+                    const opt = document.createElement('option');
+                    opt.value = v;
+                    opt.textContent = v;
+                    select.appendChild(opt);
+                });
+
+                select.addEventListener('change', () => filterData(data));
+            });
+        }
+
+        function filterData(data) {
+            const filters = {
+                Día: document.getElementById('filter-dia').value,
+                Responsable: document.getElementById('filter-responsable').value,
+                Horario: document.getElementById('filter-horario').value,
+                Espacio: document.getElementById('filter-espacio').value
+            };
+
+            const filtered = data.filter(row => {
+                return (!filters.Día || row.Día === filters.Día) &&
+                       (!filters.Responsable || row.Responsable === filters.Responsable) &&
+                       (!filters.Horario || row.Horario === filters.Horario) &&
+                       (!filters.Espacio || row.Espacio === filters.Espacio);
+            });
+
+            renderTable(filtered);
+        }
+
+        fetchData();
+    </script>
+</body>
+</html>
