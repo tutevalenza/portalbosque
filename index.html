@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Bosque — Seteos Logísticos</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=DM+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.google.com/css2?family=DM+Mono&family=DM+Sans&display=swap" rel="stylesheet">
 
     <style>
     body {
@@ -160,7 +160,8 @@ async function init() {
     }
   });
 
-  console.log('Days found in data:', Array.from(DIAS_IN_DATA).sort((a, b) => DIAS_ORDER.indexOf(a) - DIAS_ORDER.indexOf(b)));
+  console.log('Days found in data:', Array.from(DIAS_IN_DATA));
+  console.log('Days in correct order:', DIAS_ORDER.filter(d => DIAS_IN_DATA.has(d)));
   console.log('Total rows loaded:', DATA.length);
 
   construirDropdown();
@@ -172,15 +173,15 @@ function construirDropdown() {
 
   sel.innerHTML = '<option value="">Todos los días</option>';
 
-  // Show days in correct order, only if they exist in data
-  DIAS_ORDER.forEach(d => {
-    if (DIAS_IN_DATA.has(d)) {
+  // Show days in DIAS_ORDER sequence, only if they exist in data
+  for (let dia of DIAS_ORDER) {
+    if (DIAS_IN_DATA.has(dia)) {
       const opt = document.createElement('option');
-      opt.value = d;
-      opt.textContent = DIAS_LABEL[d];
+      opt.value = dia;
+      opt.textContent = DIAS_LABEL[dia];
       sel.appendChild(opt);
     }
-  });
+  }
 }
 
 function render() {
