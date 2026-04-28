@@ -210,7 +210,8 @@
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQAjbZFpNcEopTvKwlp2Nn6EpFWNPAf3hMK0vc_NRM5K3NhSTe73DsHUjEV3YjKGWT4auUjQ3kXpucf/pub?gid=0&single=true&output=csv';
 let ALL_DATA = [];
 
-const DIAS_ORDER = ['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO'];
+const DIAS_ORDER   = ['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO'];
+const RESPS_VALIDOS = ['heber','daniel','nahuel','dani'];
 
 function normalizar(s) {
   return (s || '').toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -262,6 +263,7 @@ async function fetchData() {
     const text = await res.text();
     ALL_DATA = parseCSV(text);
 
+    // Días ordenados
     const diasNormEnDatos = new Set(ALL_DATA.map(r => r.diaNorm).filter(Boolean));
     const diasOpts = DIAS_ORDER
       .filter(dNorm => diasNormEnDatos.has(dNorm))
@@ -271,7 +273,8 @@ async function fetchData() {
       });
     populateSelect('sel-dia', diasOpts);
 
-    const resps = [...new Set(ALL_DATA.map(r => r.resp).filter(Boolean))].sort();
+    // Responsables — solo nombres válidos
+    const resps = [...new Set(ALL_DATA.map(r => r.resp).filter(r => RESPS_VALIDOS.includes(r.toLowerCase().trim())))].sort();
     populateSelect('sel-resp', resps);
 
     document.getElementById('loading').style.display = 'none';
