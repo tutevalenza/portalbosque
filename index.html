@@ -92,6 +92,7 @@ const DIAS_LABEL = {
 };
 
 let DATA = [];
+let DIAS_IN_DATA = new Set();
 
 function normalizar(s) {
   return (s || '')
@@ -140,6 +141,16 @@ async function init() {
     };
   }).filter(r => r.espacio);
 
+  // Collect unique days that exist in data
+  DATA.forEach(row => {
+    if (row.diaNorm) {
+      DIAS_IN_DATA.add(row.diaNorm);
+    }
+  });
+
+  console.log('Days found in data:', Array.from(DIAS_IN_DATA));
+  console.log('Days in DIAS_ORDER:', DIAS_ORDER);
+
   construirDropdown();
   render();
 }
@@ -149,16 +160,20 @@ function construirDropdown() {
 
   sel.innerHTML = '<option value="">Todos los días</option>';
 
+  // Only show days that actually exist in the data
   DIAS_ORDER.forEach(d => {
-    const opt = document.createElement('option');
-    opt.value = d;
-    opt.textContent = DIAS_LABEL[d];
-    sel.appendChild(opt);
+    if (DIAS_IN_DATA.has(d)) {
+      const opt = document.createElement('option');
+      opt.value = d;
+      opt.textContent = DIAS_LABEL[d];
+      sel.appendChild(opt);
+    }
   });
 }
 
 function render() {
-  const dia = normalizar(document.getElementById('sel-dia').value);
+  const diaValue = document.getElementById('sel-dia').value;
+  const dia = diaValue ? normalizar(diaValue) : '';
   const resp = document.getElementById('inp-resp').value.toLowerCase();
   const esp = document.getElementById('inp-esp').value.toLowerCase();
 
