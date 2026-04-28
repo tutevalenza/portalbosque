@@ -1,57 +1,57 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portal Bosque — Seteos Logísticos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Bosque — Seteos Logísticos</title>
 
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=DM+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=DM+Sans&display=swap" rel="stylesheet">
 
-<style>
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: #f7f5f0;
-  padding: 20px;
-}
+    <style>
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f7f5f0;
+      padding: 20px;
+    }
 
-h2 {
-  margin-bottom: 10px;
-}
+    h2 {
+      margin-bottom: 10px;
+    }
 
-.controls {
-  margin-bottom: 15px;
-}
+    .controls {
+      margin-bottom: 15px;
+    }
 
-select, input {
-  padding: 6px 10px;
-  margin-right: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
+    select, input {
+      padding: 6px 10px;
+      margin-right: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-}
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
 
-th, td {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-  font-size: 13px;
-}
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      font-size: 13px;
+    }
 
-th {
-  background: #f0ede6;
-  text-align: left;
-  font-size: 11px;
-  text-transform: uppercase;
-}
+    th {
+      background: #f0ede6;
+      text-align: left;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
 
-tr:hover {
-  background: #f9f7f2;
-}
-</style>
+    tr:hover {
+      background: #f9f7f2;
+    }
+    </style>
 </head>
 
 <body>
@@ -150,12 +150,10 @@ function construirDropdown() {
   sel.innerHTML = '<option value="">Todos los días</option>';
 
   DIAS_ORDER.forEach(d => {
-    if (DATA.some(r => r.diaNorm === d)) {
-      const opt = document.createElement('option');
-      opt.value = d;
-      opt.textContent = DIAS_LABEL[d];
-      sel.appendChild(opt);
-    }
+    const opt = document.createElement('option');
+    opt.value = d;
+    opt.textContent = DIAS_LABEL[d];
+    sel.appendChild(opt);
   });
 }
 
