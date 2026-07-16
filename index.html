@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portal Bosque — Seteos Logísticos</title>
+<title>Portal Bosque — Seteos</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -28,6 +28,17 @@
     --karim-bg:   #1a3040; --karim-fg: #80c8e8; --karim-dot:  #2898c8;
     --joaco-bg:   #2a2010; --joaco-fg: #d0b870; --joaco-dot:  #a88830;
     --lucas-bg:   #1e1a40; --lucas-fg: #a898e0; --lucas-dot:  #7058c0;
+    --prod-dark:      #111111;
+    --prod-btn:       #111111;
+    --prod-acc:       #555555;
+    --prod-light:     #f0f0f0;
+    --prod-border:    #333333;
+    --prod-border2:   #e0e0e0;
+    --prod-filter-bg: #f5f5f5;
+    --prod-op-bg:     #222222;
+    --prod-text:      #111111;
+    --prod-text2:     #333333;
+    --prod-text3:     #888888;
     --pending-bg:     #fff8e6;
     --pending-border: #e6a817;
     --pending-header: #c8860a;
@@ -36,83 +47,75 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
-
-  .header {
-    background: var(--dark); padding: 1rem 1.5rem;
-    display: flex; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; z-index: 100;
-  }
+  .header { background: var(--dark); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
   .header-logo { height: 44px; filter: brightness(0) invert(1) opacity(.95); }
   .header-logo-text { display: none; font-family: 'Playfair Display', serif; font-size: 20px; color: #fff; }
   .header-right { text-align: right; }
   .header-title { font-size: 18px; font-weight: 600; color: #fff; }
   .header-cycle { font-size: 12px; color: #a8d4b8; font-family: 'DM Mono', monospace; margin-top: 2px; letter-spacing: .06em; }
-
-  .today-bar {
-    background: var(--dark); padding: .5rem 1.5rem .6rem;
-    display: flex; align-items: center; gap: 10px;
-    border-bottom: 2px solid var(--green-acc);
-  }
+  .today-bar { background: var(--dark); padding: .5rem 1.5rem .6rem; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid var(--green-acc); }
   .today-label { font-size: 10px; font-weight: 600; color: #a8d4b8; letter-spacing: .1em; text-transform: uppercase; font-family: 'DM Mono', monospace; }
   .today-badge { background: var(--green-acc); color: #fff; font-size: 13px; font-weight: 700; padding: 3px 14px; border-radius: 20px; }
-  .today-date { font-size: 11px; color: #a8d4b8; font-family: 'DM Mono', monospace; margin-left: auto; }
-
-  .filters {
-    background: var(--filter-bg); padding: .75rem 1.5rem;
-    display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
-    border-bottom: 1px solid var(--border);
-  }
+  .today-date  { font-size: 11px; color: #a8d4b8; font-family: 'DM Mono', monospace; margin-left: auto; }
+  .section { margin-bottom: 0; }
+  .section-header { padding: .75rem 1.5rem; display: flex; align-items: center; gap: 12px; }
+  .section-header.logistica { background: var(--dark); border-bottom: 2px solid var(--green-acc); }
+  .section-header.produccion { background: #111111; border-bottom: 2px solid #444444; }
+  .section-title { font-size: 15px; font-weight: 700; color: #fff; letter-spacing: .04em; text-transform: uppercase; font-family: 'DM Mono', monospace; }
+  .section-pill { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; font-family: 'DM Mono', monospace; letter-spacing: .06em; }
+  .section-pill.logistica { background: var(--green-acc); color: #fff; }
+  .section-pill.produccion { background: #444; color: #fff; }
+  .filters { padding: .75rem 1.5rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; border-bottom: 1px solid var(--border); }
+  .filters.logistica { background: var(--filter-bg); border-color: var(--border); }
+  .filters.produccion { background: var(--prod-filter-bg); border-color: var(--prod-border2); }
   .filter-group { display: flex; align-items: center; gap: 6px; }
-  .filter-label { font-size: 11px; font-weight: 600; color: var(--text); letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
-  select, input[type=text] {
-    font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 6px 10px; border-radius: 6px;
-    border: 1.5px solid var(--border); background: #fff; color: var(--text);
-    outline: none; transition: border-color .15s; min-width: 100px;
-  }
+  .filter-label { font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
+  .filters.logistica .filter-label { color: var(--text); }
+  .filters.produccion .filter-label { color: var(--prod-text); }
+  select, input[type=text] { font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 6px 10px; border-radius: 6px; background: #fff; color: var(--text); outline: none; transition: border-color .15s; min-width: 100px; border: 1.5px solid var(--border); }
+  .filters.produccion select, .filters.produccion input[type=text] { border-color: var(--prod-border2); color: var(--prod-text); }
   select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%233a5040' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; padding-right: 26px; }
   select:focus, input:focus { border-color: var(--green-acc); }
-  .count { margin-left: auto; font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; background: #fff; border: 1px solid var(--border); padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
-
-  .status {
-    padding: .45rem 1.5rem; font-size: 10px; font-family: 'DM Mono', monospace;
-    color: var(--text3); background: var(--bg2); border-bottom: 1px solid var(--border2);
-    display: flex; align-items: center; gap: 6px;
-  }
-  .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green-acc); animation: pulse 2s ease-in-out infinite; flex-shrink: 0; }
+  .filters.produccion select:focus, .filters.produccion input:focus { border-color: #444; }
+  .count { margin-left: auto; font-size: 11px; font-family: 'DM Mono', monospace; background: #fff; border: 1px solid var(--border); padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+  .count.logistica { color: var(--text3); border-color: var(--border); }
+  .count.produccion { color: var(--prod-text3); border-color: var(--prod-border2); }
+  .status { padding: .45rem 1.5rem; font-size: 10px; font-family: 'DM Mono', monospace; border-bottom: 1px solid; display: flex; align-items: center; gap: 6px; }
+  .status.logistica { color: var(--text3); background: var(--bg2); border-color: var(--border2); }
+  .status.produccion { color: var(--prod-text3); background: #fafafa; border-color: var(--prod-border2); }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; animation: pulse 2s ease-in-out infinite; flex-shrink: 0; }
+  .status-dot.logistica { background: var(--green-acc); }
+  .status-dot.produccion { background: #555; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
-
-  .pending-section { margin: 1rem 1.5rem .5rem; border: 2px solid var(--pending-border); border-radius: 10px; overflow: hidden; display: none; }
-  .pending-section.visible { display: block; }
-  .pending-header { background: var(--pending-header); padding: .55rem 1rem; display: flex; align-items: center; gap: 8px; }
-  .pending-title { font-size: 12px; font-weight: 700; color: #fff; letter-spacing: .04em; text-transform: uppercase; font-family: 'DM Mono', monospace; }
-  .pending-count { margin-left: auto; background: rgba(255,255,255,.25); color: #fff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; font-family: 'DM Mono', monospace; }
-  .pending-table { width: 100%; border-collapse: collapse; background: var(--pending-bg); }
-  .pending-table td { padding: 9px 14px; border-bottom: 1px solid #f0d88a; vertical-align: middle; font-size: 12px; }
-  .pending-table tr:last-child td { border-bottom: none; }
-  .pending-table .pend-esp { font-weight: 700; color: var(--pending-text); }
-  .pending-table .pend-dia { font-size: 11px; color: #9a7200; font-family: 'DM Mono', monospace; }
-  .pending-table .pend-resp { font-size: 11px; color: var(--pending-text); }
-  .pending-table td.ok-cell { text-align: center; width: 150px; }
-
   .table-wrap { padding: 1.2rem 1.5rem; overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; background: var(--bg2); border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
-  thead tr { background: var(--green-btn); }
+  table { width: 100%; border-collapse: collapse; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  table.logistica { background: var(--bg2); }
+  table.produccion { background: #fff; }
+  thead tr.logistica { background: var(--green-btn); }
+  thead tr.produccion { background: #111111; }
   th { text-align: left; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; color: #fff; letter-spacing: .04em; text-transform: uppercase; padding: 10px 14px; white-space: nowrap; }
   thead tr th:first-child { border-radius: 10px 0 0 0; }
   thead tr th:last-child  { border-radius: 0 10px 0 0; }
-  td { padding: 11px 14px; border-bottom: 1px solid var(--border2); vertical-align: middle; line-height: 1.5; font-size: 13px; }
-  tr:last-child td { border-bottom: none; }
-  tbody tr:hover td { background: var(--green-light) !important; transition: background .12s; }
-
-  .dia-badge { display: inline-flex; flex-direction: column; align-items: center; background: var(--dark); color: #a8d4b8; border-radius: 7px; padding: 4px 10px; min-width: 68px; }
+  td { padding: 11px 14px; vertical-align: middle; line-height: 1.5; font-size: 13px; }
+  tbody.logistica tr td { border-bottom: 1px solid var(--border2); }
+  tbody.logistica tr:last-child td { border-bottom: none; }
+  tbody.logistica tr:hover td { background: var(--green-light) !important; transition: background .12s; }
+  tbody.produccion tr td { border-bottom: 1px solid #ebebeb; }
+  tbody.produccion tr:last-child td { border-bottom: none; }
+  tbody.produccion tr:hover td { background: #f0f0f0 !important; transition: background .12s; }
+  .dia-badge { display: inline-flex; flex-direction: column; align-items: center; border-radius: 7px; padding: 4px 10px; min-width: 68px; }
+  .dia-badge.logistica { background: var(--dark); color: #a8d4b8; }
+  .dia-badge.produccion { background: #111; color: #ccc; }
   .dia-badge-name { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; font-family: 'DM Mono', monospace; color: #fff; }
-  .horario-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--green-light); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; }
-  .horario-badge-text { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--dark); font-weight: 600; white-space: nowrap; }
-
+  .horario-badge { display: inline-flex; align-items: center; gap: 5px; border-radius: 6px; padding: 4px 10px; }
+  .horario-badge.logistica { background: var(--green-light); border: 1px solid var(--border); }
+  .horario-badge.produccion { background: #f0f0f0; border: 1px solid #ddd; }
+  .horario-badge-text { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .horario-badge.logistica .horario-badge-text { color: var(--dark); }
+  .horario-badge.produccion .horario-badge-text { color: #111; }
   .person { display: flex; align-items: center; gap: 8px; }
   .avatar { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; font-family: 'DM Mono', monospace; border: 2px solid; }
   .resp-name { font-size: 12px; font-weight: 600; }
-
   .resp-heber   .avatar { background: var(--heber-bg);   color: var(--heber-fg);   border-color: var(--heber-dot); }
   .resp-heber   .resp-name { color: var(--heber-dot); }
   .resp-daniel  .avatar { background: var(--daniel-bg);  color: var(--daniel-fg);  border-color: var(--daniel-dot); }
@@ -127,74 +130,95 @@
   .resp-joaco   .resp-name { color: var(--joaco-dot); }
   .resp-lucas   .avatar { background: var(--lucas-bg);   color: var(--lucas-fg);   border-color: var(--lucas-dot); }
   .resp-lucas   .resp-name { color: var(--lucas-dot); }
-
-  .esp-name { font-weight: 600; font-size: 13px; color: var(--text); }
-  .nec  { font-size: 12px; color: var(--text2); line-height: 1.55; }
-  .nota { font-size: 11px; color: var(--text3); line-height: 1.4; }
-  .op-tag { display: inline-block; font-size: 11px; font-weight: 600; background: var(--op-bg); color: var(--op-fg); border-radius: 5px; padding: 2px 8px; }
-  .info-act  { font-size: 12px; color: var(--green-acc); font-weight: 500; }
+  .esp-name { font-weight: 600; font-size: 13px; }
+  .esp-name.logistica { color: var(--text); }
+  .esp-name.produccion { color: var(--prod-text); }
+  .nec  { font-size: 12px; line-height: 1.55; }
+  .nec.logistica  { color: var(--text2); }
+  .nec.produccion { color: var(--prod-text2); }
+  .nota { font-size: 11px; line-height: 1.4; }
+  .nota.logistica  { color: var(--text3); }
+  .nota.produccion { color: var(--prod-text3); }
+  .op-tag { display: inline-block; font-size: 11px; font-weight: 600; border-radius: 5px; padding: 2px 8px; }
+  .op-tag.logistica  { background: var(--op-bg); color: var(--op-fg); }
+  .op-tag.produccion { background: #222; color: #fff; }
+  .info-act  { font-size: 12px; font-weight: 500; }
+  .info-act.logistica  { color: var(--green-acc); }
+  .info-act.produccion { color: #444; }
   .info-hora { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); margin-top: 2px; }
-
-  .ok-btn {
-    display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px;
-    border: 1.5px solid var(--border); background: #fff; cursor: pointer;
-    font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600;
-    color: var(--text3); transition: all .18s; outline: none; white-space: nowrap; margin: 0 auto;
-  }
-  .ok-btn:hover { border-color: var(--green-acc); background: var(--green-light); color: var(--green-acc); }
-  .ok-btn.done { background: var(--green-acc); border-color: var(--green-acc); color: #fff; }
-  .ok-btn svg { width: 13px; height: 13px; stroke: currentColor; stroke-width: 2.5; fill: none; flex-shrink: 0; }
+  .ok-btn { display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; border: 1.5px solid; background: #fff; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; transition: all .18s; outline: none; white-space: nowrap; margin: 0 auto; }
+  .ok-btn.logistica { border-color: var(--border); color: var(--text3); }
+  .ok-btn.logistica:hover { border-color: var(--green-acc); background: var(--green-light); color: var(--green-acc); }
+  .ok-btn.logistica.done { background: var(--green-acc); border-color: var(--green-acc); color: #fff; }
+  .ok-btn.produccion { border-color: #ccc; color: #888; }
+  .ok-btn.produccion:hover { border-color: #444; background: #f0f0f0; color: #111; }
+  .ok-btn.produccion.done { background: #111; border-color: #111; color: #fff; }
   .ok-btn.loading { opacity: .6; pointer-events: none; }
+  .ok-btn svg { width: 13px; height: 13px; stroke: currentColor; stroke-width: 2.5; fill: none; flex-shrink: 0; }
   td.ok-cell { text-align: center; width: 150px; }
-
-  .ok-btn-pending {
-    display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px;
-    border: 1.5px solid var(--pending-border); background: #fff; cursor: pointer;
-    font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600;
-    color: var(--pending-text); transition: all .18s; outline: none; white-space: nowrap; margin: 0 auto;
-  }
-  .ok-btn-pending:hover { background: #fff3cc; border-color: var(--pending-btn-done); }
-  .ok-btn-pending.done { background: var(--pending-btn-done); border-color: var(--pending-btn-done); color: #fff; }
-  .ok-btn-pending svg { width: 13px; height: 13px; stroke: currentColor; stroke-width: 2.5; fill: none; flex-shrink: 0; }
-  .ok-btn-pending.loading { opacity: .6; pointer-events: none; }
-
   .loading { padding: 4rem; text-align: center; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text3); }
   .empty   { padding: 3rem; text-align: center; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text3); }
-
-  .footer {
-    padding: .8rem 1.5rem; border-top: 1px solid var(--border);
-    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3);
-    display: flex; justify-content: space-between; align-items: center; background: var(--bg2);
-  }
-  .footer a { color: var(--green-acc); text-decoration: none; }
-
+  .pending-section { margin: 1rem 1.5rem .5rem; border: 2px solid var(--pending-border); border-radius: 10px; overflow: hidden; display: none; }
+  .pending-section.visible { display: block; }
+  .pending-header-bar { background: var(--pending-header); padding: .55rem 1rem; display: flex; align-items: center; gap: 8px; }
+  .pending-title { font-size: 12px; font-weight: 700; color: #fff; letter-spacing: .04em; text-transform: uppercase; font-family: 'DM Mono', monospace; }
+  .pending-count { margin-left: auto; background: rgba(255,255,255,.25); color: #fff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; font-family: 'DM Mono', monospace; }
+  .pending-table { width: 100%; border-collapse: collapse; background: var(--pending-bg); }
+  .pending-table td { padding: 9px 14px; border-bottom: 1px solid #f0d88a; vertical-align: middle; font-size: 12px; }
+  .pending-table tr:last-child td { border-bottom: none; }
+  .pending-table .pend-esp  { font-weight: 700; color: var(--pending-text); }
+  .pending-table .pend-dia  { font-size: 11px; color: #9a7200; font-family: 'DM Mono', monospace; }
+  .pending-table .pend-resp { font-size: 11px; color: var(--pending-text); }
+  .pending-table td.ok-cell { text-align: center; width: 150px; }
+  .ok-btn-pending { display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; border: 1.5px solid var(--pending-border); background: #fff; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; color: var(--pending-text); transition: all .18s; outline: none; white-space: nowrap; margin: 0 auto; }
+  .ok-btn-pending:hover { background: #fff3cc; border-color: var(--pending-btn-done); }
+  .ok-btn-pending.done { background: var(--pending-btn-done); border-color: var(--pending-btn-done); color: #fff; }
+  .ok-btn-pending.loading { opacity: .6; pointer-events: none; }
+  .ok-btn-pending svg { width: 13px; height: 13px; stroke: currentColor; stroke-width: 2.5; fill: none; flex-shrink: 0; }
   .cards { display: none; padding: .8rem 1rem; }
+  .card { background: var(--bg2); border-radius: 10px; border: 1px solid var(--border2); margin-bottom: .7rem; box-shadow: 0 1px 3px rgba(0,0,0,.05); overflow: hidden; }
+  .card.produccion { border-color: #ddd; }
+  .card-header { display: flex; align-items: center; justify-content: space-between; padding: .65rem 1rem; gap: 8px; }
+  .card-header.logistica  { background: var(--green-btn); }
+  .card-header.produccion { background: #111; }
+  .card-header-left { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+  .card-dia-row { display: flex; align-items: center; gap: 6px; }
+  .card-dia { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-family: 'DM Mono', monospace; }
+  .card-dia.logistica  { color: #a8d4b8; }
+  .card-dia.produccion { color: #aaa; }
+  .card-esp { font-size: 14px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card-horario-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); border-radius: 12px; padding: 3px 9px; white-space: nowrap; }
+  .card-horario-text { font-family: 'DM Mono', monospace; font-size: 11px; color: #fff; font-weight: 600; }
+  .card-body { padding: .7rem 1rem; display: flex; flex-direction: column; gap: .45rem; }
+  .card-nec { font-size: 13px; line-height: 1.55; }
+  .card-nec.logistica  { color: var(--text2); }
+  .card-nec.produccion { color: #333; }
+  .card-nota { font-size: 11px; font-style: italic; }
+  .card-nota.logistica  { color: var(--text3); }
+  .card-nota.produccion { color: #888; }
+  .card-footer { display: flex; align-items: center; justify-content: flex-end; padding: .5rem 1rem; border-top: 1px solid; gap: 8px; }
+  .card-footer.logistica  { border-color: var(--border2); }
+  .card-footer.produccion { border-color: #ebebeb; }
+  .footer { padding: .8rem 1.5rem; border-top: 1px solid var(--border); font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); display: flex; justify-content: space-between; align-items: center; background: var(--bg2); }
+  .footer a { color: var(--green-acc); text-decoration: none; }
   .cards-pending-section { display: none; margin-bottom: .5rem; }
   .cards-pending-section.visible { display: block; }
   .cards-pending-header { background: var(--pending-header); border-radius: 10px 10px 0 0; padding: .55rem 1rem; display: flex; align-items: center; gap: 8px; }
   .cards-pending-title { font-size: 12px; font-weight: 700; color: #fff; letter-spacing: .04em; text-transform: uppercase; font-family: 'DM Mono', monospace; }
   .cards-pending-count { margin-left: auto; background: rgba(255,255,255,.25); color: #fff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; font-family: 'DM Mono', monospace; }
   .cards-pending-list { border: 2px solid var(--pending-border); border-top: none; border-radius: 0 0 10px 10px; overflow: hidden; margin-bottom: .8rem; }
-
-  .card { background: var(--bg2); border-radius: 10px; border: 1px solid var(--border2); margin-bottom: .7rem; box-shadow: 0 1px 3px rgba(0,0,0,.05); overflow: hidden; }
   .card-pending { background: var(--pending-bg); border-bottom: 1px solid #f0d88a; overflow: hidden; }
   .card-pending:last-child { border-bottom: none; }
-  .card-header { display: flex; align-items: center; justify-content: space-between; padding: .65rem 1rem; background: var(--green-btn); gap: 8px; }
   .card-pending-header { display: flex; align-items: center; justify-content: space-between; padding: .65rem 1rem; background: var(--pending-header); gap: 8px; }
-  .card-header-left { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
-  .card-dia-row { display: flex; align-items: center; gap: 6px; }
-  .card-dia { font-size: 10px; font-weight: 700; color: #a8d4b8; text-transform: uppercase; letter-spacing: .08em; font-family: 'DM Mono', monospace; }
   .card-dia-pending { font-size: 10px; font-weight: 700; color: #ffe5a0; text-transform: uppercase; letter-spacing: .08em; font-family: 'DM Mono', monospace; }
-  .card-esp { font-size: 14px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .card-horario-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); border-radius: 12px; padding: 3px 9px; white-space: nowrap; }
-  .card-horario-text { font-family: 'DM Mono', monospace; font-size: 11px; color: #fff; font-weight: 600; }
-  .card-body { padding: .7rem 1rem; display: flex; flex-direction: column; gap: .45rem; }
-  .card-nec { font-size: 13px; color: var(--text2); line-height: 1.55; }
   .card-nec-pending { font-size: 13px; color: var(--pending-text); line-height: 1.55; }
-  .card-nota { font-size: 11px; color: var(--text3); font-style: italic; }
-  .card-footer { display: flex; align-items: center; justify-content: flex-end; padding: .5rem 1rem; border-top: 1px solid var(--border2); gap: 8px; }
   .card-footer-pending { display: flex; align-items: center; justify-content: flex-end; padding: .5rem 1rem; border-top: 1px solid #f0d88a; gap: 8px; }
-
+  .nav-bar { background: #fff; border-bottom: 2px solid #e0e0e0; display: flex; gap: 0; position: sticky; top: 74px; z-index: 99; }
+  .nav-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: all .2s; letter-spacing: .02em; background: #fff; color: #888; border-bottom: 3px solid transparent; margin-bottom: -2px; }
+  .nav-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .nav-btn:hover { background: #f5f5f5; color: #333; }
+  .nav-btn.active.log-active  { color: var(--dark); border-bottom-color: var(--green-acc); background: var(--green-light); }
+  .nav-btn.active.prod-active { color: #111; border-bottom-color: #111; background: #f0f0f0; }
   @media (max-width: 700px) {
     .table-wrap { display: none; }
     .pending-section { display: none !important; }
@@ -205,7 +229,6 @@
     .header { padding: .8rem 1rem; }
     .header-logo { height: 36px; }
     .header-title { font-size: 15px; }
-    .header-cycle { font-size: 10px; }
     .today-bar { padding: .45rem 1rem .5rem; }
     .status { padding: .4rem 1rem; }
     .footer { padding: .6rem 1rem; flex-direction: column; gap: 4px; text-align: center; }
@@ -219,8 +242,8 @@
        onerror="this.style.display='none';document.getElementById('logo-text').style.display='block'">
   <span id="logo-text" class="header-logo-text">Portal Bosque</span>
   <div class="header-right">
-    <div class="header-title">Seteos Logísticos</div>
-    <div class="header-cycle">Ciclo Otoño 2026</div>
+    <div class="header-title">Seteos Portal Bosque</div>
+    <div class="header-cycle">Ciclo Invierno 2026</div>
   </div>
 </header>
 
@@ -230,64 +253,117 @@
   <span class="today-date" id="today-date">—</span>
 </div>
 
-<div class="filters">
-  <div class="filter-group">
-    <span class="filter-label">Día</span>
-    <select id="sel-dia" onchange="render()"><option value="">Hoy</option></select>
-  </div>
-  <div class="filter-group">
-    <span class="filter-label">Responsable</span>
-    <select id="sel-resp" onchange="render()"><option value="">Todos</option></select>
-  </div>
-  <div class="filter-group">
-    <span class="filter-label">Espacio</span>
-    <input id="inp-esp" type="text" placeholder="Ej: Yurta" oninput="render()">
-  </div>
-  <span class="count" id="count">—</span>
+<div class="nav-bar">
+  <button class="nav-btn active log-active" id="nav-log" onclick="showSection('log')">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h14M3 10h14M3 15h8"/></svg>
+    Seteos Logística
+  </button>
+  <button class="nav-btn" id="nav-prod" onclick="showSection('prod')">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polygon points="10,2 18,18 2,18"/></svg>
+    Producción
+  </button>
 </div>
 
-<div class="status">
-  <div class="status-dot"></div>
-  <span id="status-text">Conectando con Google Sheets...</span>
-</div>
-
-<div class="pending-section" id="pending-section">
-  <div class="pending-header">
-    <span class="pending-title">⚠ Pendientes de ayer sin completar</span>
-    <span class="pending-count" id="pending-count">0</span>
+<div id="section-log">
+<div class="section">
+  <div class="section-header logistica">
+    <span class="section-title">🌿 Seteos Logísticos</span>
+    <span class="section-pill logistica">Logística</span>
   </div>
-  <table class="pending-table" id="pending-table"></table>
-</div>
-
-<div class="table-wrap">
-  <div id="loading" class="loading">Cargando datos...</div>
-  <table id="table" style="display:none">
-    <thead>
-      <tr>
-        <th>Día</th>
-        <th>Responsable</th>
-        <th>Horario</th>
-        <th>Espacio</th>
-        <th>Necesidad</th>
-        <th>Info</th>
-        <th>Notas</th>
-        <th style="text-align:center">Completado</th>
-      </tr>
-    </thead>
-    <tbody id="tbody"></tbody>
-  </table>
-  <div id="empty" class="empty" style="display:none">Sin resultados.</div>
-</div>
-
-<div class="cards" id="cards">
-  <div class="cards-pending-section" id="cards-pending-section">
-    <div class="cards-pending-header">
-      <span class="cards-pending-title">⚠ Pendientes de ayer</span>
-      <span class="cards-pending-count" id="cards-pending-count">0</span>
+  <div class="filters logistica">
+    <div class="filter-group">
+      <span class="filter-label">Día</span>
+      <select id="log-sel-dia" onchange="renderLog()"><option value="">Hoy</option></select>
     </div>
-    <div class="cards-pending-list" id="cards-pending-list"></div>
+    <div class="filter-group">
+      <span class="filter-label">Responsable</span>
+      <select id="log-sel-resp" onchange="renderLog()"><option value="">Todos</option></select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Espacio</span>
+      <input id="log-inp-esp" type="text" placeholder="Ej: Yurta" oninput="renderLog()">
+    </div>
+    <span class="count logistica" id="log-count">—</span>
   </div>
-  <div id="cards-list"></div>
+  <div class="status logistica">
+    <div class="status-dot logistica"></div>
+    <span id="log-status">Conectando...</span>
+  </div>
+  <div class="pending-section" id="pending-section">
+    <div class="pending-header-bar">
+      <span class="pending-title">⚠ Pendientes de ayer sin completar</span>
+      <span class="pending-count" id="pending-count">0</span>
+    </div>
+    <table class="pending-table" id="pending-table"></table>
+  </div>
+  <div class="table-wrap">
+    <div id="log-loading" class="loading">Cargando datos...</div>
+    <table id="log-table" class="logistica" style="display:none">
+      <thead>
+        <tr class="logistica">
+          <th>Día</th><th>Responsable</th><th>Horario</th><th>Espacio</th>
+          <th>Necesidad</th><th>Info</th><th>Notas</th><th style="text-align:center">Completado</th>
+        </tr>
+      </thead>
+      <tbody id="log-tbody" class="logistica"></tbody>
+    </table>
+    <div id="log-empty" class="empty" style="display:none">Sin resultados.</div>
+  </div>
+  <div class="cards" id="log-cards">
+    <div class="cards-pending-section" id="log-cards-pending-section">
+      <div class="cards-pending-header">
+        <span class="cards-pending-title">⚠ Pendientes de ayer</span>
+        <span class="cards-pending-count" id="log-cards-pending-count">0</span>
+      </div>
+      <div class="cards-pending-list" id="log-cards-pending-list"></div>
+    </div>
+    <div id="log-cards-list"></div>
+  </div>
+</div>
+</div>
+
+<div id="section-prod" style="display:none">
+<div class="section">
+  <div class="section-header produccion">
+    <span class="section-title">Producción Portal Bosque</span>
+    <span class="section-pill produccion">Producción</span>
+  </div>
+  <div class="filters produccion">
+    <div class="filter-group">
+      <span class="filter-label">Día</span>
+      <select id="prod-sel-dia" onchange="renderProd()"><option value="">Hoy</option></select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Responsable</span>
+      <select id="prod-sel-resp" onchange="renderProd()"><option value="">Todos</option></select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Espacio</span>
+      <input id="prod-inp-esp" type="text" placeholder="Ej: Escenario" oninput="renderProd()">
+    </div>
+    <span class="count produccion" id="prod-count">—</span>
+  </div>
+  <div class="status produccion">
+    <div class="status-dot produccion"></div>
+    <span id="prod-status">Conectando...</span>
+  </div>
+  <div class="table-wrap">
+    <div id="prod-loading" class="loading">Cargando datos...</div>
+    <table id="prod-table" class="produccion" style="display:none">
+      <thead>
+        <tr class="produccion">
+          <th>Día</th><th>Responsable</th><th>Horario</th><th>Espacio</th>
+          <th>Necesidad</th><th>Info</th><th>Notas</th><th style="text-align:center">Completado</th>
+        </tr>
+      </thead>
+      <tbody id="prod-tbody" class="produccion"></tbody>
+    </table>
+    <div id="prod-empty" class="empty" style="display:none">Sin resultados.</div>
+  </div>
+  <div class="cards" id="prod-cards">
+    <div id="prod-cards-list"></div>
+  </div>
+</div>
 </div>
 
 <footer class="footer">
@@ -296,303 +372,177 @@
 </footer>
 
 <script>
-const CSV_URL         = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQAjbZFpNcEopTvKwlp2Nn6EpFWNPAf3hMK0vc_NRM5K3NhSTe73DsHUjEV3YjKGWT4auUjQ3kXpucf/pub?gid=0&single=true&output=csv';
+const CSV_LOG  = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQAjbZFpNcEopTvKwlp2Nn6EpFWNPAf3hMK0vc_NRM5K3NhSTe73DsHUjEV3YjKGWT4auUjQ3kXpucf/pub?gid=0&single=true&output=csv';
+const CSV_PROD = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgW4spjoXNjkMCLzOgOUKjXZ76Jmw8sOi_in-lFjM4F74PoiCj-HeLDuNJlayrovYJaYbIhKtk37n2/pub?gid=574133870&single=true&output=csv';
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbykJx6LauaXrGkUnmocIeNinK5fHDxL_zFlk2Os32s3yUiC42CnIzlp-pTSOUeqBuo/exec';
 
-let ALL_DATA = [];
-let ROW_INDEX_MAP = [];
+let LOG_DATA=[], LOG_ROW_MAP=[], PROD_DATA=[], PROD_ROW_MAP=[];
+const DIAS_ORDER=['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO'];
+const DIAS_LABELS={'LUNES':'Lunes','MARTES':'Martes','MIERCOLES':'Miércoles','JUEVES':'Jueves','VIERNES':'Viernes','SABADO':'Sábado','DOMINGO':'Domingo'};
+const RESPS_VALIDOS=['heber','daniel','nahuel','facundo','karim','joaco','lucas'];
 
-const DIAS_ORDER    = ['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO'];
-const DIAS_LABELS   = {'LUNES':'Lunes','MARTES':'Martes','MIERCOLES':'Miércoles','JUEVES':'Jueves','VIERNES':'Viernes','SABADO':'Sábado','DOMINGO':'Domingo'};
-const RESPS_VALIDOS = ['heber','daniel','nahuel','facundo','karim','joaco','lucas'];
+function getTodayNorm(){const dias=['DOMINGO','LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO'];return norm(dias[new Date().getDay()]);}
+function getYesterdayNorm(){const d=new Date();d.setDate(d.getDate()-1);const dias=['DOMINGO','LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO'];return norm(dias[d.getDay()]);}
+function formatTodayDate(){return new Date().toLocaleDateString('es-UY',{weekday:'long',day:'numeric',month:'long'});}
+function norm(s){return(s||'').toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
 
-function getTodayNorm(){
-  const dias=['DOMINGO','LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO'];
-  return normalizar(dias[new Date().getDay()]);
-}
-function getYesterdayNorm(){
-  const d=new Date(); d.setDate(d.getDate()-1);
-  const dias=['DOMINGO','LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO'];
-  return normalizar(dias[d.getDay()]);
-}
-function formatTodayDate(){
-  return new Date().toLocaleDateString('es-UY',{weekday:'long',day:'numeric',month:'long'});
-}
-function normalizar(s){
-  return (s||'').toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-}
-function parseCSV(text){
-  const rows=[]; const lines=text.split('\n'); let lastDia=''; let sheetRow=1;
-  ROW_INDEX_MAP=[];
+function parseCSV(text,rowMapRef){
+  const rows=[];const lines=text.split('\n');let lastDia='';let sheetRow=1;
+  rowMapRef.length=0;
   for(let i=1;i<lines.length;i++){
     sheetRow++;
-    const line=lines[i].trim(); if(!line) continue;
-    const cols=splitCSVLine(line); if(cols.length<4) continue;
-    let [dia,resp,horario,espacio,necesidad,info,notas,completado]=cols.map(c=>c.trim());
-    if(dia) lastDia=dia; else dia=lastDia;
-    if(!espacio) continue;
-    rows.push({dia,diaNorm:normalizar(dia),resp:resp||'',horario:horario||'',espacio,necesidad:necesidad||'',info:info||'',notas:notas||'',completado:(completado||'').toUpperCase()==='SI'});
-    ROW_INDEX_MAP.push(sheetRow);
+    const line=lines[i].trim();if(!line)continue;
+    const cols=splitCSVLine(line);if(cols.length<4)continue;
+    let[dia,resp,horario,espacio,necesidad,info,notas,completado]=cols.map(c=>c.trim());
+    if(dia)lastDia=dia;else dia=lastDia;
+    if(!espacio)continue;
+    rows.push({dia,diaNorm:norm(dia),resp:resp||'',horario:horario||'',espacio,necesidad:necesidad||'',info:info||'',notas:notas||'',completado:(completado||'').toUpperCase()==='SI'});
+    rowMapRef.push(sheetRow);
   }
   return rows;
 }
 function splitCSVLine(line){
-  const result=[]; let cur='',inQ=false;
-  for(let i=0;i<line.length;i++){
-    const ch=line[i];
-    if(ch==='"'){inQ=!inQ;}
-    else if(ch===','&&!inQ){result.push(cur);cur='';}
-    else{cur+=ch;}
-  }
-  result.push(cur); return result;
+  const r=[];let cur='',inQ=false;
+  for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){inQ=!inQ;}else if(ch===','&&!inQ){r.push(cur);cur='';}else{cur+=ch;}}
+  r.push(cur);return r;
 }
-function populateSelect(id,values){
+function populateSelect(id,items){
   const sel=document.getElementById(id);
-  while(sel.options.length>1) sel.remove(1);
-  values.forEach(v=>{
-    const opt=document.createElement('option');
-    opt.value=v.val!==undefined?v.val:v;
-    opt.textContent=v.label!==undefined?v.label:v;
-    sel.appendChild(opt);
-  });
+  while(sel.options.length>1)sel.remove(1);
+  items.forEach(v=>{const o=document.createElement('option');o.value=v.val!==undefined?v.val:v;o.textContent=v.label!==undefined?v.label:v;sel.appendChild(o);});
 }
 
-async function fetchData(){
+async function fetchLog(){
   try{
-    const res=await fetch(CSV_URL+'&t='+Date.now());
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const text=await res.text();
-    ALL_DATA=parseCSV(text);
-    const diasNorm=new Set(ALL_DATA.map(r=>r.diaNorm).filter(Boolean));
-    const diasOpts=DIAS_ORDER.filter(d=>diasNorm.has(d)).map(d=>({val:d,label:DIAS_LABELS[d]||d}));
-    populateSelect('sel-dia',diasOpts);
-
-    // Dropdown responsables — siempre muestra todos los válidos
-    populateSelect('sel-resp', RESPS_VALIDOS.map(r=>r.charAt(0).toUpperCase()+r.slice(1)));
-
-    document.getElementById('loading').style.display='none';
-    document.getElementById('table').style.display='table';
-    const now=new Date();
-    document.getElementById('status-text').textContent=`Datos sincronizados · ${now.toLocaleDateString('es-UY')} ${now.toLocaleTimeString('es-UY',{hour:'2-digit',minute:'2-digit'})}`;
-    document.getElementById('last-update').textContent=`Última actualización: ${now.toLocaleDateString('es-UY')}`;
-    const todayNorm=getTodayNorm();
-    document.getElementById('today-badge').textContent=(DIAS_LABELS[todayNorm]||todayNorm).toUpperCase();
+    const res=await fetch(CSV_LOG+'&t='+Date.now());if(!res.ok)throw new Error();
+    LOG_DATA=parseCSV(await res.text(),LOG_ROW_MAP);
+    const diasNorm=new Set(LOG_DATA.map(r=>r.diaNorm).filter(Boolean));
+    populateSelect('log-sel-dia',DIAS_ORDER.filter(d=>diasNorm.has(d)).map(d=>({val:d,label:DIAS_LABELS[d]||d})));
+    populateSelect('log-sel-resp',RESPS_VALIDOS.map(r=>r.charAt(0).toUpperCase()+r.slice(1)));
+    document.getElementById('log-loading').style.display='none';
+    document.getElementById('log-table').style.display='table';
+    const n=new Date();
+    document.getElementById('log-status').textContent=`Sincronizado · ${n.toLocaleDateString('es-UY')} ${n.toLocaleTimeString('es-UY',{hour:'2-digit',minute:'2-digit'})}`;
+    document.getElementById('today-badge').textContent=(DIAS_LABELS[getTodayNorm()]||getTodayNorm()).toUpperCase();
     document.getElementById('today-date').textContent=formatTodayDate();
+    document.getElementById('last-update').textContent=`Actualizado: ${n.toLocaleDateString('es-UY')}`;
     await syncEstados();
-  } catch(e){
-    document.getElementById('loading').textContent='Error al cargar datos.';
-    document.getElementById('status-text').textContent='Sin conexión con Google Sheets';
-    document.querySelector('.status-dot').style.background='#c05050';
-    document.querySelector('.status-dot').style.animation='none';
-  }
+  }catch(e){document.getElementById('log-loading').textContent='Error al cargar datos logística.';document.getElementById('log-status').textContent='Sin conexión';}
+}
+
+async function fetchProd(){
+  try{
+    const res=await fetch(CSV_PROD+'&t='+Date.now());if(!res.ok)throw new Error();
+    PROD_DATA=parseCSV(await res.text(),PROD_ROW_MAP);
+    const diasNorm=new Set(PROD_DATA.map(r=>r.diaNorm).filter(Boolean));
+    populateSelect('prod-sel-dia',DIAS_ORDER.filter(d=>diasNorm.has(d)).map(d=>({val:d,label:DIAS_LABELS[d]||d})));
+    populateSelect('prod-sel-resp',[...new Set(PROD_DATA.map(r=>r.resp).filter(Boolean))].sort());
+    document.getElementById('prod-loading').style.display='none';
+    document.getElementById('prod-table').style.display='table';
+    const n=new Date();
+    document.getElementById('prod-status').textContent=`Sincronizado · ${n.toLocaleDateString('es-UY')} ${n.toLocaleTimeString('es-UY',{hour:'2-digit',minute:'2-digit'})}`;
+    renderProd();
+  }catch(e){document.getElementById('prod-loading').textContent='Error al cargar datos producción.';document.getElementById('prod-status').textContent='Sin conexión';}
 }
 
 async function syncEstados(){
   try{
     const res=await fetch(APPS_SCRIPT_URL+'?t='+Date.now());
     const data=await res.json();
-    if(data.ok && data.estados){
-      data.estados.forEach(e=>{
-        const idx=ROW_INDEX_MAP.indexOf(e.row);
-        if(idx!==-1 && ALL_DATA[idx]) ALL_DATA[idx].completado=e.completado;
-      });
-    }
-  } catch(e){ console.log('sync error:',e); }
-  render();
-  renderPendientes();
+    if(data.ok&&data.estados){data.estados.forEach(e=>{const idx=LOG_ROW_MAP.indexOf(e.row);if(idx!==-1&&LOG_DATA[idx])LOG_DATA[idx].completado=e.completado;});}
+  }catch(e){console.log('sync err',e);}
+  renderLog();renderPendientes();
 }
 
-async function toggleOk(dataIdx){
-  const row=ALL_DATA[dataIdx];
-  const sheetRow=ROW_INDEX_MAP[dataIdx];
-  const newVal=row.completado?'':'SI';
-  row.completado=!row.completado;
-  document.querySelectorAll(`[data-ok-idx="${dataIdx}"]`).forEach(btn=>{
-    btn.classList.toggle('done',row.completado);
-    btn.classList.add('loading');
-    btn.querySelector('.ok-label').textContent=row.completado?'Completado':'Pendiente';
-  });
-  const url=`${APPS_SCRIPT_URL}?row=${sheetRow}&value=${encodeURIComponent(newVal)}`;
-  try{ await fetch(url,{method:'GET',mode:'no-cors'}); } catch(e){ console.log('fetch error:',e); }
-  setTimeout(()=>{
-    document.querySelectorAll(`[data-ok-idx="${dataIdx}"]`).forEach(btn=>btn.classList.remove('loading'));
-  },1000);
-  if(row.completado){
-    [`pend-row-${dataIdx}`,`pend-card-${dataIdx}`].forEach(id=>{
-      const el=document.getElementById(id);
-      if(el){
-        el.style.transition='opacity .3s'; el.style.opacity='0';
-        setTimeout(()=>{ el.remove(); refreshPendingCount(); },300);
-      }
-    });
+async function toggleOk(dataIdx,section){
+  const data=section==='log'?LOG_DATA:PROD_DATA;
+  const rowMap=section==='log'?LOG_ROW_MAP:PROD_ROW_MAP;
+  const row=data[dataIdx];const sheetRow=rowMap[dataIdx];
+  row.completado=!row.completado;const newVal=row.completado?'SI':'';
+  document.querySelectorAll(`[data-ok-idx="${section}-${dataIdx}"]`).forEach(btn=>{btn.classList.toggle('done',row.completado);btn.classList.add('loading');btn.querySelector('.ok-label').textContent=row.completado?'Completado':'Pendiente';});
+  if(section==='log'){
+    try{await fetch(`${APPS_SCRIPT_URL}?row=${sheetRow}&value=${encodeURIComponent(newVal)}`,{method:'GET',mode:'no-cors'});}catch(e){}
+    if(row.completado){[`pend-row-${dataIdx}`,`pend-card-${dataIdx}`].forEach(id=>{const el=document.getElementById(id);if(el){el.style.transition='opacity .3s';el.style.opacity='0';setTimeout(()=>{el.remove();refreshPendingCount();},300);}});}
   }
+  setTimeout(()=>{document.querySelectorAll(`[data-ok-idx="${section}-${dataIdx}"]`).forEach(btn=>btn.classList.remove('loading'));},1000);
 }
 
 function refreshPendingCount(){
-  const dRows=document.getElementById('pending-table').querySelectorAll('tr');
-  const mCards=document.getElementById('cards-pending-list').querySelectorAll('.card-pending');
-  if(!dRows.length) document.getElementById('pending-section').classList.remove('visible');
-  else document.getElementById('pending-count').textContent=dRows.length;
-  if(!mCards.length) document.getElementById('cards-pending-section').classList.remove('visible');
-  else document.getElementById('cards-pending-count').textContent=mCards.length;
+  const rows=document.getElementById('pending-table').querySelectorAll('tr');
+  if(!rows.length)document.getElementById('pending-section').classList.remove('visible');
+  else document.getElementById('pending-count').textContent=rows.length;
 }
 
 function renderPendientes(){
   const ayer=getYesterdayNorm();
-  const pendientes=ALL_DATA.map((r,i)=>({r,i})).filter(({r})=>r.diaNorm===ayer&&!r.completado);
+  const pend=LOG_DATA.map((r,i)=>({r,i})).filter(({r})=>r.diaNorm===ayer&&!r.completado);
   const sec=document.getElementById('pending-section');
   const tbl=document.getElementById('pending-table');
-  if(!pendientes.length){ sec.classList.remove('visible'); }
-  else{
-    sec.classList.add('visible');
-    document.getElementById('pending-count').textContent=pendientes.length;
-    tbl.innerHTML=pendientes.map(({r,i})=>`
-      <tr id="pend-row-${i}">
-        <td><span class="pend-dia">${DIAS_LABELS[r.diaNorm]||r.dia} · ${r.horario||'—'}</span></td>
-        <td><span class="pend-esp">${r.espacio}</span></td>
-        <td><span class="pend-resp">${r.resp||'—'}</span></td>
-        <td><span style="font-size:11px;color:var(--pending-text)">${r.necesidad||''}</span></td>
-        <td class="ok-cell">${pendingBtnHtml(i,r.completado)}</td>
-      </tr>`).join('');
-  }
-  const mSec=document.getElementById('cards-pending-section');
-  const mList=document.getElementById('cards-pending-list');
-  if(!pendientes.length){ mSec.classList.remove('visible'); }
-  else{
-    mSec.classList.add('visible');
-    document.getElementById('cards-pending-count').textContent=pendientes.length;
-    mList.innerHTML=pendientes.map(({r,i})=>{
-      const rc=respClass(r.resp);
-      const respHtml=r.resp?`<div class="person ${rc}"><div class="avatar">${initials(r.resp)}</div><span class="resp-name">${r.resp}</span></div>`:'';
-      const diaLabel=DIAS_LABELS[r.diaNorm]||r.dia;
-      return `<div class="card-pending" id="pend-card-${i}">
-        <div class="card-pending-header">
-          <div class="card-header-left">
-            <div class="card-dia-row"><span class="card-dia-pending">⚠ ${diaLabel.toUpperCase()}</span></div>
-            <span class="card-esp">${r.espacio}</span>
-          </div>
-          ${r.horario?`<div class="card-horario-badge"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2"><circle cx="8" cy="8" r="6.5"/><polyline points="8,4.5 8,8.5 10.5,10"/></svg><span class="card-horario-text">${r.horario}</span></div>`:''}
-        </div>
-        <div class="card-body">
-          ${respHtml}
-          ${r.necesidad?`<div class="card-nec-pending">${r.necesidad}</div>`:''}
-          <div>${buildInfoHtml(r)}</div>
-          ${r.notas?`<div class="card-nota">${r.notas}</div>`:''}
-        </div>
-        <div class="card-footer-pending">
-          ${pendingBtnHtml(i,r.completado)}
-        </div>
-      </div>`;
-    }).join('');
-  }
+  if(!pend.length){sec.classList.remove('visible');return;}
+  sec.classList.add('visible');
+  document.getElementById('pending-count').textContent=pend.length;
+  tbl.innerHTML=pend.map(({r,i})=>`<tr id="pend-row-${i}"><td><span class="pend-dia">${DIAS_LABELS[r.diaNorm]||r.dia} · ${r.horario||'—'}</span></td><td><span class="pend-esp">${r.espacio}</span></td><td><span class="pend-resp">${r.resp||'—'}</span></td><td><span style="font-size:11px;color:var(--pending-text)">${r.necesidad||''}</span></td><td class="ok-cell">${pendBtnHtml(i)}</td></tr>`).join('');
 }
 
-function respClass(resp){
-  const k=(resp||'').toLowerCase();
-  if(k.includes('heber'))   return 'resp-heber';
-  if(k.includes('daniel'))  return 'resp-daniel';
-  if(k.includes('nahuel'))  return 'resp-nahuel';
-  if(k.includes('facundo')) return 'resp-facundo';
-  if(k.includes('karim'))   return 'resp-karim';
-  if(k.includes('joaco'))   return 'resp-joaco';
-  if(k.includes('lucas'))   return 'resp-lucas';
-  return '';
-}
-function initials(n){
-  if(!n) return '?';
-  const parts=n.trim().split(/[\s,]+/);
-  if(parts.length>=2) return (parts[0][0]+(parts[1][0]||'')).toUpperCase();
-  return n.slice(0,2).toUpperCase();
-}
-function buildInfoHtml(r){
-  if((r.info||'').toLowerCase().includes('operativa')) return `<span class="op-tag">Operativa</span>`;
-  const lines=r.info.split('\n'); const act=lines[0]||''; const hora=lines.slice(1).join(' ');
-  if(!act) return `<span style="color:var(--text3)">—</span>`;
-  return `<div class="info-act">${act}</div>${hora?`<div class="info-hora">${hora}</div>`:''}`;
-}
-function buildDiaBadge(r){
-  return `<div class="dia-badge"><span class="dia-badge-name">${(DIAS_LABELS[r.diaNorm]||r.dia).toUpperCase()}</span></div>`;
-}
-function buildHorarioBadge(horario){
-  if(!horario) return `<span style="color:var(--text3)">—</span>`;
-  return `<div class="horario-badge"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="var(--green-acc)" stroke-width="1.8"><circle cx="8" cy="8" r="6.5"/><polyline points="8,4.5 8,8.5 10.5,10"/></svg><span class="horario-badge-text">${horario}</span></div>`;
-}
-function okBtnHtml(dataIdx,isDone){
-  return `<button class="ok-btn${isDone?' done':''}" data-ok-idx="${dataIdx}" onclick="toggleOk(${dataIdx})">
-    <svg viewBox="0 0 16 16"><polyline points="2.5,8.5 6.5,12.5 13.5,4"/></svg>
-    <span class="ok-label">${isDone?'Completado':'Pendiente'}</span>
-  </button>`;
-}
-function pendingBtnHtml(dataIdx,isDone){
-  return `<button class="ok-btn-pending${isDone?' done':''}" data-ok-idx="${dataIdx}" onclick="toggleOk(${dataIdx})">
-    <svg viewBox="0 0 16 16"><polyline points="2.5,8.5 6.5,12.5 13.5,4"/></svg>
-    <span class="ok-label">${isDone?'Completado':'Marcar completado'}</span>
-  </button>`;
+function renderLog(){
+  const dia=document.getElementById('log-sel-dia').value||getTodayNorm();
+  const resp=document.getElementById('log-sel-resp').value.toLowerCase().trim();
+  const esp=document.getElementById('log-inp-esp').value.toLowerCase().trim();
+  renderSection({data:LOG_DATA,dia,resp,esp,countId:'log-count',emptyId:'log-empty',tbodyId:'log-tbody',tableId:'log-table',cardsId:'log-cards-list',section:'log',theme:'logistica'});
 }
 
-function render(){
-  const selDia=document.getElementById('sel-dia').value;
-  const dia=selDia||getTodayNorm();
-  const resp=document.getElementById('sel-resp').value.toLowerCase().trim();
-  const esp=document.getElementById('inp-esp').value.toLowerCase().trim();
-  const filtered=ALL_DATA.map((r,i)=>({r,i})).filter(({r})=>{
-    if(dia  && r.diaNorm!==dia) return false;
-    if(resp && !r.resp.toLowerCase().includes(resp)) return false;
-    if(esp  && !r.espacio.toLowerCase().includes(esp)) return false;
+function renderProd(){
+  const dia=document.getElementById('prod-sel-dia').value||getTodayNorm();
+  const resp=document.getElementById('prod-sel-resp').value.toLowerCase().trim();
+  const esp=document.getElementById('prod-inp-esp').value.toLowerCase().trim();
+  renderSection({data:PROD_DATA,dia,resp,esp,countId:'prod-count',emptyId:'prod-empty',tbodyId:'prod-tbody',tableId:'prod-table',cardsId:'prod-cards-list',section:'prod',theme:'produccion'});
+}
+
+function renderSection({data,dia,resp,esp,countId,emptyId,tbodyId,tableId,cardsId,section,theme}){
+  const f=data.map((r,i)=>({r,i})).filter(({r})=>{
+    if(dia&&r.diaNorm!==dia)return false;
+    if(resp&&!r.resp.toLowerCase().includes(resp))return false;
+    if(esp&&!r.espacio.toLowerCase().includes(esp))return false;
     return true;
   });
-  document.getElementById('count').textContent=filtered.length+' fila'+(filtered.length!==1?'s':'');
-  const empty=document.getElementById('empty');
-  if(!filtered.length){
-    document.getElementById('tbody').innerHTML='';
-    document.getElementById('cards-list').innerHTML='';
-    empty.style.display='block'; return;
-  }
-  empty.style.display='none';
-
-  document.getElementById('tbody').innerHTML=filtered.map(({r,i})=>{
+  document.getElementById(countId).textContent=f.length+' fila'+(f.length!==1?'s':'');
+  const empty=document.getElementById(emptyId);const tbl=document.getElementById(tableId);
+  if(!f.length){document.getElementById(tbodyId).innerHTML='';document.getElementById(cardsId).innerHTML='';empty.style.display='block';tbl.style.display='none';return;}
+  empty.style.display='none';tbl.style.display='table';
+  document.getElementById(tbodyId).innerHTML=f.map(({r,i})=>{
     const rc=respClass(r.resp);
-    const respHtml=r.resp?`<div class="person ${rc}"><div class="avatar">${initials(r.resp)}</div><span class="resp-name">${r.resp}</span></div>`:`<span style="color:var(--text3)">—</span>`;
-    return `<tr>
-      <td>${buildDiaBadge(r)}</td>
-      <td>${respHtml}</td>
-      <td>${buildHorarioBadge(r.horario)}</td>
-      <td><span class="esp-name">${r.espacio}</span></td>
-      <td><div class="nec">${r.necesidad||'—'}</div></td>
-      <td>${buildInfoHtml(r)}</td>
-      <td><div class="nota">${r.notas||'—'}</div></td>
-      <td class="ok-cell">${okBtnHtml(i,r.completado)}</td>
-    </tr>`;
+    const respHtml=r.resp?`<div class="person ${rc}"><div class="avatar">${initials(r.resp)}</div><span class="resp-name">${r.resp}</span></div>`:`<span style="color:#aaa">—</span>`;
+    return`<tr><td>${buildDiaBadge(r,theme)}</td><td>${respHtml}</td><td>${buildHorarioBadge(r.horario,theme)}</td><td><span class="esp-name ${theme}">${r.espacio}</span></td><td><div class="nec ${theme}">${r.necesidad||'—'}</div></td><td>${buildInfoHtml(r,theme)}</td><td><div class="nota ${theme}">${r.notas||'—'}</div></td><td class="ok-cell">${okBtnHtml(i,r.completado,section,theme)}</td></tr>`;
   }).join('');
-
-  document.getElementById('cards-list').innerHTML=filtered.map(({r,i})=>{
+  document.getElementById(cardsId).innerHTML=f.map(({r,i})=>{
     const rc=respClass(r.resp);
     const respHtml=r.resp?`<div class="person ${rc}"><div class="avatar">${initials(r.resp)}</div><span class="resp-name">${r.resp}</span></div>`:'';
-    const diaLabel=DIAS_LABELS[r.diaNorm]||r.dia;
-    return `<div class="card">
-      <div class="card-header">
-        <div class="card-header-left">
-          <div class="card-dia-row"><span class="card-dia">${diaLabel.toUpperCase()}</span></div>
-          <span class="card-esp">${r.espacio}</span>
-        </div>
-        ${r.horario?`<div class="card-horario-badge"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2"><circle cx="8" cy="8" r="6.5"/><polyline points="8,4.5 8,8.5 10.5,10"/></svg><span class="card-horario-text">${r.horario}</span></div>`:''}
-      </div>
-      <div class="card-body">
-        ${respHtml}
-        ${r.necesidad?`<div class="card-nec">${r.necesidad}</div>`:''}
-        <div>${buildInfoHtml(r)}</div>
-        ${r.notas?`<div class="card-nota">${r.notas}</div>`:''}
-      </div>
-      <div class="card-footer">
-        ${okBtnHtml(i,r.completado)}
-      </div>
-    </div>`;
+    return`<div class="card ${theme}"><div class="card-header ${theme}"><div class="card-header-left"><div class="card-dia-row"><span class="card-dia ${theme}">${(DIAS_LABELS[r.diaNorm]||r.dia).toUpperCase()}</span></div><span class="card-esp">${r.espacio}</span></div>${r.horario?`<div class="card-horario-badge"><span class="card-horario-text">${r.horario}</span></div>`:''}</div><div class="card-body">${respHtml}${r.necesidad?`<div class="card-nec ${theme}">${r.necesidad}</div>`:''}<div>${buildInfoHtml(r,theme)}</div>${r.notas?`<div class="card-nota ${theme}">${r.notas}</div>`:''}</div><div class="card-footer ${theme}">${okBtnHtml(i,r.completado,section,theme)}</div></div>`;
   }).join('');
 }
 
-fetchData();
-setInterval(syncEstados, 30*1000);
-setInterval(fetchData, 5*60*1000);
+function respClass(resp){const k=(resp||'').toLowerCase();if(k.includes('heber'))return'resp-heber';if(k.includes('daniel'))return'resp-daniel';if(k.includes('nahuel'))return'resp-nahuel';if(k.includes('facundo'))return'resp-facundo';if(k.includes('karim'))return'resp-karim';if(k.includes('joaco'))return'resp-joaco';if(k.includes('lucas'))return'resp-lucas';return'';}
+function initials(n){if(!n)return'?';const parts=n.trim().split(/[\s,]+/);return parts.length>=2?(parts[0][0]+(parts[1][0]||'')).toUpperCase():n.slice(0,2).toUpperCase();}
+function buildInfoHtml(r,theme){if((r.info||'').toLowerCase().includes('operativa'))return`<span class="op-tag ${theme}">Operativa</span>`;const lines=r.info.split('\n');const act=lines[0]||'';const hora=lines.slice(1).join(' ');if(!act)return`<span style="color:#aaa">—</span>`;return`<div class="info-act ${theme}">${act}</div>${hora?`<div class="info-hora">${hora}</div>`:''}`;}
+function buildDiaBadge(r,theme){return`<div class="dia-badge ${theme}"><span class="dia-badge-name">${(DIAS_LABELS[r.diaNorm]||r.dia).toUpperCase()}</span></div>`;}
+function buildHorarioBadge(h,theme){if(!h)return`<span style="color:#aaa">—</span>`;return`<div class="horario-badge ${theme}"><span class="horario-badge-text">${h}</span></div>`;}
+function okBtnHtml(idx,done,section,theme){return`<button class="ok-btn ${theme}${done?' done':''}" data-ok-idx="${section}-${idx}" onclick="toggleOk(${idx},'${section}')"><svg viewBox="0 0 16 16"><polyline points="2.5,8.5 6.5,12.5 13.5,4"/></svg><span class="ok-label">${done?'Completado':'Pendiente'}</span></button>`;}
+function pendBtnHtml(idx){return`<button class="ok-btn-pending" data-ok-idx="log-${idx}" onclick="toggleOk(${idx},'log')"><svg viewBox="0 0 16 16"><polyline points="2.5,8.5 6.5,12.5 13.5,4"/></svg><span class="ok-label">Marcar completado</span></button>`;}
+
+function showSection(which){
+  const logSec=document.getElementById('section-log');
+  const prodSec=document.getElementById('section-prod');
+  const btnLog=document.getElementById('nav-log');
+  const btnProd=document.getElementById('nav-prod');
+  if(which==='log'){logSec.style.display='block';prodSec.style.display='none';btnLog.className='nav-btn active log-active';btnProd.className='nav-btn';}
+  else{logSec.style.display='none';prodSec.style.display='block';btnLog.className='nav-btn';btnProd.className='nav-btn active prod-active';}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+fetchLog();
+fetchProd();
+setInterval(syncEstados,30*1000);
+setInterval(()=>{fetchLog();fetchProd();},5*60*1000);
 </script>
 </body>
 </html>
