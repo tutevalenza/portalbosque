@@ -18,6 +18,7 @@
     --joaco-bg:#2a2010;--joaco-fg:#d0b870;--joaco-dot:#a88830;
     --lucas-bg:#1e1a40;--lucas-fg:#a898e0;--lucas-dot:#7058c0;
     --prod-filter-bg:#f5f5f5;--prod-border2:#e0e0e0;--prod-text:#111111;--prod-text2:#333333;--prod-text3:#888888;
+    --mkt-dark:#7a3200;--mkt-acc:#c85a00;--mkt-light:#fff3eb;--mkt-border:#f0c0a0;--mkt-border2:#fde0cc;--mkt-filter-bg:#fff8f3;--mkt-text:#5a2500;--mkt-text2:#7a3800;--mkt-text3:#b06030;
     --pending-bg:#fff8e6;--pending-border:#e6a817;--pending-header:#c8860a;--pending-text:#7a5500;--pending-btn-done:#c8860a;
     --ag-manana:#e8f4fd;--ag-mediodia:#fef9e7;--ag-tarde:#fdf2f8;
     --ag-manana-border:#aed6f1;--ag-mediodia-border:#f9e79f;--ag-tarde-border:#d7bde2;
@@ -41,38 +42,48 @@
   .nav-btn.active.log-active{color:var(--dark);border-bottom-color:var(--green-acc);background:var(--green-light)}
   .nav-btn.active.prod-active{color:#111;border-bottom-color:#111;background:#f0f0f0}
   .nav-btn.active.ag-active{color:#5b2d8e;border-bottom-color:#8e44ad;background:#f5eef8}
+  .nav-btn.active.mkt-active{color:var(--mkt-dark);border-bottom-color:var(--mkt-acc);background:var(--mkt-light)}
   .section-header{padding:.75rem 1.5rem;display:flex;align-items:center;gap:12px}
   .section-header.logistica{background:var(--dark);border-bottom:2px solid var(--green-acc)}
   .section-header.produccion{background:#111111;border-bottom:2px solid #444}
   .section-header.agenda{background:#5b2d8e;border-bottom:2px solid #8e44ad}
+  .section-header.mkt{background:#7a3200;border-bottom:2px solid #c85a00}
   .section-title{font-size:15px;font-weight:700;color:#fff;letter-spacing:.04em;text-transform:uppercase;font-family:'DM Mono',monospace}
   .section-pill{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;font-family:'DM Mono',monospace;letter-spacing:.06em}
   .section-pill.logistica{background:var(--green-acc);color:#fff}
   .section-pill.produccion{background:#444;color:#fff}
   .section-pill.agenda{background:#8e44ad;color:#fff}
+  .section-pill.mkt{background:#c85a00;color:#fff}
   .filters{padding:.75rem 1.5rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--border)}
   .filters.logistica{background:var(--filter-bg)}
   .filters.produccion{background:var(--prod-filter-bg);border-color:var(--prod-border2)}
   .filters.agenda{background:#f9f0ff;border-color:#d7bde2}
+  .filters.mkt{background:var(--mkt-filter-bg);border-color:var(--mkt-border)}
   .filter-group{display:flex;align-items:center;gap:6px}
   .filter-label{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;color:var(--text)}
   .filters.produccion .filter-label{color:var(--prod-text)}
   .filters.agenda .filter-label{color:#5b2d8e}
+  .filters.mkt .filter-label{color:var(--mkt-dark)}
   select,input[type=text]{font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 10px;border-radius:6px;background:#fff;color:var(--text);outline:none;transition:border-color .15s;min-width:100px;border:1.5px solid var(--border)}
   .filters.produccion select,.filters.produccion input{border-color:var(--prod-border2);color:var(--prod-text)}
   .filters.agenda select,.filters.agenda input{border-color:#d7bde2;color:#5b2d8e}
+  .filters.mkt select,.filters.mkt input{border-color:var(--mkt-border);color:var(--mkt-dark)}
   select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%233a5040' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;padding-right:26px}
   select:focus,input:focus{border-color:var(--green-acc)}
   .filters.produccion select:focus,.filters.produccion input:focus{border-color:#444}
   .filters.agenda select:focus,.filters.agenda input:focus{border-color:#8e44ad}
+  .filters.mkt select:focus,.filters.mkt input:focus{border-color:var(--mkt-acc)}
   .count{margin-left:auto;font-size:11px;font-family:'DM Mono',monospace;background:#fff;border:1px solid var(--border);padding:3px 10px;border-radius:20px;white-space:nowrap;color:var(--text3)}
   .count.produccion{color:var(--prod-text3);border-color:var(--prod-border2)}
+  .count.mkt{color:var(--mkt-text3);border-color:var(--mkt-border)}
   .status{padding:.45rem 1.5rem;font-size:10px;font-family:'DM Mono',monospace;border-bottom:1px solid;display:flex;align-items:center;gap:6px}
   .status.logistica{color:var(--text3);background:var(--bg2);border-color:var(--border2)}
   .status.produccion{color:var(--prod-text3);background:#fafafa;border-color:var(--prod-border2)}
+  .status.mkt{color:var(--mkt-text3);background:#fff8f3;border-color:var(--mkt-border2)}
   .status-dot{width:6px;height:6px;border-radius:50%;animation:pulse 2s ease-in-out infinite;flex-shrink:0}
   .status-dot.logistica{background:var(--green-acc)}
   .status-dot.produccion{background:#555}
+  .status-dot.mkt{background:var(--mkt-acc)}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
   .table-wrap{padding:1.2rem 1.5rem;overflow-x:auto}
   table{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
@@ -90,16 +101,22 @@
   tbody.produccion tr td{border-bottom:1px solid #ebebeb}
   tbody.produccion tr:last-child td{border-bottom:none}
   tbody.produccion tr:hover td{background:#f0f0f0!important;transition:background .12s}
+  tbody.mkt tr td{border-bottom:1px solid var(--mkt-border2)}
+  tbody.mkt tr:last-child td{border-bottom:none}
+  tbody.mkt tr:hover td{background:var(--mkt-light)!important;transition:background .12s}
   .dia-badge{display:inline-flex;border-radius:7px;padding:4px 10px;min-width:68px;align-items:center}
   .dia-badge.logistica{background:var(--dark);color:#a8d4b8}
   .dia-badge.produccion{background:#111;color:#ccc}
+  .dia-badge.mkt{background:var(--mkt-dark);color:#ffd0a0}
   .dia-badge-name{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-family:'DM Mono',monospace;color:#fff}
   .horario-badge{display:inline-flex;align-items:center;gap:5px;border-radius:6px;padding:4px 10px}
   .horario-badge.logistica{background:var(--green-light);border:1px solid var(--border)}
   .horario-badge.produccion{background:#f0f0f0;border:1px solid #ddd}
+  .horario-badge.mkt{background:var(--mkt-light);border:1px solid var(--mkt-border)}
   .horario-badge-text{font-family:'DM Mono',monospace;font-size:12px;font-weight:600;white-space:nowrap}
   .horario-badge.logistica .horario-badge-text{color:var(--dark)}
   .horario-badge.produccion .horario-badge-text{color:#111}
+  .horario-badge.mkt .horario-badge-text{color:var(--mkt-dark)}
   .person{display:flex;align-items:center;gap:8px}
   .avatar{width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;font-family:'DM Mono',monospace;border:2px solid}
   .resp-name{font-size:12px;font-weight:600}
@@ -111,15 +128,15 @@
   .resp-joaco .avatar{background:var(--joaco-bg);color:var(--joaco-fg);border-color:var(--joaco-dot)}.resp-joaco .resp-name{color:var(--joaco-dot)}
   .resp-lucas .avatar{background:var(--lucas-bg);color:var(--lucas-fg);border-color:var(--lucas-dot)}.resp-lucas .resp-name{color:var(--lucas-dot)}
   .esp-name{font-weight:600;font-size:13px}
-  .esp-name.logistica{color:var(--text)}.esp-name.produccion{color:var(--prod-text)}
+  .esp-name.logistica{color:var(--text)}.esp-name.produccion{color:var(--prod-text)}.esp-name.mkt{color:var(--mkt-dark)}
   .nec{font-size:12px;line-height:1.55}
-  .nec.logistica{color:var(--text2)}.nec.produccion{color:var(--prod-text2)}
+  .nec.logistica{color:var(--text2)}.nec.produccion{color:var(--prod-text2)}.nec.mkt{color:var(--mkt-text2)}
   .nota{font-size:11px;line-height:1.4}
-  .nota.logistica{color:var(--text3)}.nota.produccion{color:var(--prod-text3)}
+  .nota.logistica{color:var(--text3)}.nota.produccion{color:var(--prod-text3)}.nota.mkt{color:var(--mkt-text3)}
   .op-tag{display:inline-block;font-size:11px;font-weight:600;border-radius:5px;padding:2px 8px}
-  .op-tag.logistica{background:var(--op-bg);color:var(--op-fg)}.op-tag.produccion{background:#222;color:#fff}
+  .op-tag.logistica{background:var(--op-bg);color:var(--op-fg)}.op-tag.produccion{background:#222;color:#fff}.op-tag.mkt{background:var(--mkt-dark);color:#fff}
   .info-act{font-size:12px;font-weight:500}
-  .info-act.logistica{color:var(--green-acc)}.info-act.produccion{color:#444}
+  .info-act.logistica{color:var(--green-acc)}.info-act.produccion{color:#444}.info-act.mkt{color:var(--mkt-acc)}
   .info-hora{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px}
   .ok-btn{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;border:1.5px solid;background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;transition:all .18s;outline:none;white-space:nowrap;margin:0 auto}
   .ok-btn.logistica{border-color:var(--border);color:var(--text3)}
@@ -128,6 +145,9 @@
   .ok-btn.produccion{border-color:#ccc;color:#888}
   .ok-btn.produccion:hover{border-color:#444;background:#f0f0f0;color:#111}
   .ok-btn.produccion.done{background:#111;border-color:#111;color:#fff}
+  .ok-btn.mkt{border-color:var(--mkt-border);color:var(--mkt-text3)}
+  .ok-btn.mkt:hover{border-color:var(--mkt-acc);background:var(--mkt-light);color:var(--mkt-acc)}
+  .ok-btn.mkt.done{background:var(--mkt-acc);border-color:var(--mkt-acc);color:#fff}
   .ok-btn.loading{opacity:.6;pointer-events:none}
   .ok-btn svg{width:13px;height:13px;stroke:currentColor;stroke-width:2.5;fill:none;flex-shrink:0}
   td.ok-cell{text-align:center;width:150px}
@@ -149,23 +169,23 @@
   .ok-btn-pending svg{width:13px;height:13px;stroke:currentColor;stroke-width:2.5;fill:none;flex-shrink:0}
   .cards{display:none;padding:.8rem 1rem}
   .card{background:var(--bg2);border-radius:10px;border:1px solid var(--border2);margin-bottom:.7rem;box-shadow:0 1px 3px rgba(0,0,0,.05);overflow:hidden}
-  .card.produccion{border-color:#ddd}
+  .card.produccion{border-color:#ddd}.card.mkt{border-color:var(--mkt-border)}
   .card-header{display:flex;align-items:center;justify-content:space-between;padding:.65rem 1rem;gap:8px}
-  .card-header.logistica{background:var(--green-btn)}.card-header.produccion{background:#111}
+  .card-header.logistica{background:var(--green-btn)}.card-header.produccion{background:#111}.card-header.mkt{background:var(--mkt-dark)}
   .card-header-left{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
   .card-dia-row{display:flex;align-items:center;gap:6px}
   .card-dia{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace}
-  .card-dia.logistica{color:#a8d4b8}.card-dia.produccion{color:#aaa}
+  .card-dia.logistica{color:#a8d4b8}.card-dia.produccion{color:#aaa}.card-dia.mkt{color:#ffd0a0}
   .card-esp{font-size:14px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .card-horario-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:12px;padding:3px 9px;white-space:nowrap}
   .card-horario-text{font-family:'DM Mono',monospace;font-size:11px;color:#fff;font-weight:600}
   .card-body{padding:.7rem 1rem;display:flex;flex-direction:column;gap:.45rem}
   .card-nec{font-size:13px;line-height:1.55}
-  .card-nec.logistica{color:var(--text2)}.card-nec.produccion{color:#333}
+  .card-nec.logistica{color:var(--text2)}.card-nec.produccion{color:#333}.card-nec.mkt{color:var(--mkt-text2)}
   .card-nota{font-size:11px;font-style:italic}
-  .card-nota.logistica{color:var(--text3)}.card-nota.produccion{color:#888}
+  .card-nota.logistica{color:var(--text3)}.card-nota.produccion{color:#888}.card-nota.mkt{color:var(--mkt-text3)}
   .card-footer{display:flex;align-items:center;justify-content:flex-end;padding:.5rem 1rem;border-top:1px solid;gap:8px}
-  .card-footer.logistica{border-color:var(--border2)}.card-footer.produccion{border-color:#ebebeb}
+  .card-footer.logistica{border-color:var(--border2)}.card-footer.produccion{border-color:#ebebeb}.card-footer.mkt{border-color:var(--mkt-border2)}
   .agenda-wrap{padding:1.2rem 1.5rem;overflow-x:auto}
   .agenda-table{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06);background:#fff;min-width:900px}
   .agenda-table thead tr{background:#5b2d8e}
@@ -178,7 +198,6 @@
   .ag-col-lunes:hover{background:#ddeeff!important}.ag-col-martes:hover{background:#eedeff!important}
   .ag-col-miercoles:hover{background:#ddfaee!important}.ag-col-jueves:hover{background:#ffeedd!important}
   .ag-col-viernes:hover{background:#ddfafa!important}.ag-col-sabado:hover{background:#ffddf0!important}
-  .ag-dia-hidden{display:none}
   .agenda-table thead tr th:first-child{border-radius:10px 0 0 0}
   .agenda-table thead tr th:last-child{border-radius:0 10px 0 0}
   .ag-td-hora{padding:10px 14px;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:#5b2d8e;background:#f9f0ff;border-bottom:1px solid #e8d5f5;border-right:2px solid #d7bde2;white-space:nowrap;vertical-align:top}
@@ -255,6 +274,10 @@
   <button class="nav-btn" id="nav-ag" onclick="showSection('ag')">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="14" height="13" rx="2"/><path d="M3 8h14M7 2v4M13 2v4"/></svg>
     Agenda
+  </button>
+  <button class="nav-btn" id="nav-mkt" onclick="showSection('mkt')">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10l4-6 4 4 3-3 3 5"/><circle cx="17" cy="15" r="2"/></svg>
+    MKT & Front
   </button>
 </div>
 
@@ -359,17 +382,44 @@
       <thead>
         <tr>
           <th class="ag-th-hora">Horario</th>
-          <th class="ag-th-dia ag-th-lunes" id="th-lunes">Lunes</th>
-          <th class="ag-th-dia ag-th-martes" id="th-martes">Martes</th>
-          <th class="ag-th-dia ag-th-miercoles" id="th-miercoles">Miércoles</th>
-          <th class="ag-th-dia ag-th-jueves" id="th-jueves">Jueves</th>
-          <th class="ag-th-dia ag-th-viernes" id="th-viernes">Viernes</th>
-          <th class="ag-th-dia ag-th-sabado" id="th-sabado">Sábado</th>
+          <th class="ag-th-dia ag-th-lunes" id="th-lunes">🔵 Lunes</th>
+          <th class="ag-th-dia ag-th-martes" id="th-martes">🟣 Martes</th>
+          <th class="ag-th-dia ag-th-miercoles" id="th-miercoles">🟢 Miércoles</th>
+          <th class="ag-th-dia ag-th-jueves" id="th-jueves">🟠 Jueves</th>
+          <th class="ag-th-dia ag-th-viernes" id="th-viernes">🩵 Viernes</th>
+          <th class="ag-th-dia ag-th-sabado" id="th-sabado">🩷 Sábado</th>
         </tr>
       </thead>
       <tbody id="agenda-tbody"></tbody>
     </table>
   </div>
+</div>
+</div>
+
+<!-- MKT -->
+<div id="section-mkt" style="display:none">
+<div class="section">
+  <div class="section-header mkt">
+    <span class="section-title">MKT, Comunicación y Front</span>
+    <span class="section-pill mkt">MKT</span>
+  </div>
+  <div class="filters mkt">
+    <div class="filter-group"><span class="filter-label">Día</span><select id="mkt-sel-dia" onchange="renderMkt()"><option value="">Hoy</option></select></div>
+    <div class="filter-group"><span class="filter-label">Responsable</span><select id="mkt-sel-resp" onchange="renderMkt()"><option value="">Todos</option></select></div>
+    <div class="filter-group"><span class="filter-label">Área</span><select id="mkt-sel-area" onchange="renderMkt()"><option value="">Todas</option></select></div>
+    <div class="filter-group"><span class="filter-label">Espacio</span><input id="mkt-inp-esp" type="text" placeholder="Ej: Instagram" oninput="renderMkt()"></div>
+    <span class="count mkt" id="mkt-count">—</span>
+  </div>
+  <div class="status mkt"><div class="status-dot mkt"></div><span id="mkt-status">Conectando...</span></div>
+  <div class="table-wrap">
+    <div id="mkt-loading" class="loading">Cargando datos...</div>
+    <table id="mkt-table" class="produccion" style="display:none">
+      <thead><tr class="produccion" style="background:#7a3200"><th>Día</th><th>Horario</th><th>Responsable</th><th>Área</th><th>Proyecto</th><th>Espacio</th><th>Tarea</th><th>Info</th><th>Notas</th><th style="text-align:center">Completado</th></tr></thead>
+      <tbody id="mkt-tbody" class="mkt"></tbody>
+    </table>
+    <div id="mkt-empty" class="empty" style="display:none">Sin resultados.</div>
+  </div>
+  <div class="cards" id="mkt-cards"><div id="mkt-cards-list"></div></div>
 </div>
 </div>
 
@@ -381,9 +431,10 @@
 <script>
 const CSV_LOG  = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQAjbZFpNcEopTvKwlp2Nn6EpFWNPAf3hMK0vc_NRM5K3NhSTe73DsHUjEV3YjKGWT4auUjQ3kXpucf/pub?gid=0&single=true&output=csv';
 const CSV_PROD = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgW4spjoXNjkMCLzOgOUKjXZ76Jmw8sOi_in-lFjM4F74PoiCj-HeLDuNJlayrovYJaYbIhKtk37n2/pub?gid=574133870&single=true&output=csv';
+const CSV_MKT  = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSm1lPXA-zC1xnvBQHTPvANnTARn9kxz19EUG5tjK8mhU_bNkIJBftFpKnFmGxZEjK2jG74Ts3f5rdc/pub?gid=0&single=true&output=csv';
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbykJx6LauaXrGkUnmocIeNinK5fHDxL_zFlk2Os32s3yUiC42CnIzlp-pTSOUeqBuo/exec';
 
-let LOG_DATA=[],LOG_ROW_MAP=[],PROD_DATA=[],PROD_ROW_MAP=[];
+let LOG_DATA=[],LOG_ROW_MAP=[],PROD_DATA=[],PROD_ROW_MAP=[],MKT_DATA=[],MKT_ROW_MAP=[];
 const DIAS_ORDER=['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO'];
 const DIAS_LABELS={'LUNES':'Lunes','MARTES':'Martes','MIERCOLES':'Miércoles','JUEVES':'Jueves','VIERNES':'Viernes','SABADO':'Sábado','DOMINGO':'Domingo'};
 const RESPS_VALIDOS=['pacha','flor alvez','tute','chunka','heber','facundo','joaco','daniel','lucas','karim','guillermo','nahuel'];
@@ -450,6 +501,34 @@ async function fetchProd(){
   }catch(e){document.getElementById('prod-loading').textContent='Error al cargar datos producción.';document.getElementById('prod-status').textContent='Sin conexión';}
 }
 
+async function fetchMkt(){
+  try{
+    const res=await fetch(CSV_MKT+'&t='+Date.now());if(!res.ok)throw new Error();
+    const text=await res.text();
+    const rows=[];const lines=text.split('\n');let lastDia='';let sheetRow=1;
+    MKT_ROW_MAP.length=0;
+    for(let i=1;i<lines.length;i++){
+      sheetRow++;const line=lines[i].trim();if(!line)continue;
+      const cols=splitCSVLine(line);if(cols.length<4)continue;
+      let[dia,horario,responsable,area,proyecto,espacio,tarea,info,notas,completado]=cols.map(c=>c.trim());
+      if(dia)lastDia=dia;else dia=lastDia;
+      if(!tarea&&!espacio)continue;
+      rows.push({dia,diaNorm:norm(dia),resp:responsable||'',horario:horario||'',area:area||'',proyecto:proyecto||'',espacio:espacio||'',tarea:tarea||'',info:info||'',notas:notas||'',completado:(completado||'').toUpperCase()==='SI'});
+      MKT_ROW_MAP.push(sheetRow);
+    }
+    MKT_DATA=rows;
+    const diasNorm=new Set(MKT_DATA.map(r=>r.diaNorm).filter(Boolean));
+    populateSelect('mkt-sel-dia',DIAS_ORDER.filter(d=>diasNorm.has(d)).map(d=>({val:d,label:DIAS_LABELS[d]||d})));
+    populateSelect('mkt-sel-resp',[...new Set(MKT_DATA.map(r=>r.resp).filter(Boolean))].sort());
+    populateSelect('mkt-sel-area',[...new Set(MKT_DATA.map(r=>r.area).filter(Boolean))].sort());
+    document.getElementById('mkt-loading').style.display='none';
+    document.getElementById('mkt-table').style.display='table';
+    const n=new Date();
+    document.getElementById('mkt-status').textContent=`Sincronizado · ${n.toLocaleDateString('es-UY')} ${n.toLocaleTimeString('es-UY',{hour:'2-digit',minute:'2-digit'})}`;
+    renderMkt();
+  }catch(e){document.getElementById('mkt-loading').textContent='Error al cargar datos MKT.';document.getElementById('mkt-status').textContent='Sin conexión';}
+}
+
 async function syncEstados(){
   try{
     const res=await fetch(APPS_SCRIPT_URL+'?t='+Date.now());
@@ -460,8 +539,8 @@ async function syncEstados(){
 }
 
 async function toggleOk(dataIdx,section){
-  const data=section==='log'?LOG_DATA:PROD_DATA;
-  const rowMap=section==='log'?LOG_ROW_MAP:PROD_ROW_MAP;
+  const data=section==='log'?LOG_DATA:section==='prod'?PROD_DATA:MKT_DATA;
+  const rowMap=section==='log'?LOG_ROW_MAP:section==='prod'?PROD_ROW_MAP:MKT_ROW_MAP;
   const row=data[dataIdx];const sheetRow=rowMap[dataIdx];
   row.completado=!row.completado;const newVal=row.completado?'SI':'';
   document.querySelectorAll(`[data-ok-idx="${section}-${dataIdx}"]`).forEach(btn=>{btn.classList.toggle('done',row.completado);btn.classList.add('loading');btn.querySelector('.ok-label').textContent=row.completado?'Completado':'Pendiente';});
@@ -499,6 +578,47 @@ function renderProd(){
   const resp=document.getElementById('prod-sel-resp').value.toLowerCase().trim();
   const esp=document.getElementById('prod-inp-esp').value.toLowerCase().trim();
   renderSection({data:PROD_DATA,dia,resp,esp,countId:'prod-count',emptyId:'prod-empty',tbodyId:'prod-tbody',tableId:'prod-table',cardsId:'prod-cards-list',section:'prod',theme:'produccion'});
+}
+function renderMkt(){
+  const dia=document.getElementById('mkt-sel-dia').value||getTodayNorm();
+  const resp=document.getElementById('mkt-sel-resp').value.toLowerCase().trim();
+  const area=document.getElementById('mkt-sel-area').value.toLowerCase().trim();
+  const esp=document.getElementById('mkt-inp-esp').value.toLowerCase().trim();
+  const f=MKT_DATA.map((r,i)=>({r,i})).filter(({r})=>{
+    if(dia&&r.diaNorm!==dia)return false;
+    if(resp&&!r.resp.toLowerCase().includes(resp))return false;
+    if(area&&!r.area.toLowerCase().includes(area))return false;
+    if(esp&&!r.espacio.toLowerCase().includes(esp))return false;
+    return true;
+  });
+  document.getElementById('mkt-count').textContent=f.length+' fila'+(f.length!==1?'s':'');
+  const empty=document.getElementById('mkt-empty');const tbl=document.getElementById('mkt-table');
+  if(!f.length){document.getElementById('mkt-tbody').innerHTML='';document.getElementById('mkt-cards-list').innerHTML='';empty.style.display='block';tbl.style.display='none';return;}
+  empty.style.display='none';tbl.style.display='table';
+  const theme='mkt';
+  document.getElementById('mkt-tbody').innerHTML=f.map(({r,i})=>{
+    const rc=respClass(r.resp);
+    const respHtml=r.resp?`<div class="person ${rc}"><div class="avatar">${initials(r.resp)}</div><span class="resp-name">${r.resp}</span></div>`:`<span style="color:#aaa">—</span>`;
+    const areaPill=r.area?`<span style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:12px;background:var(--mkt-light);color:var(--mkt-dark);border:1px solid var(--mkt-border)">${r.area}</span>`:'—';
+    const proyectoPill=r.proyecto?`<span style="font-size:11px;color:var(--mkt-text2);font-weight:500">${r.proyecto}</span>`:'—';
+    return`<tr>
+      <td>${buildDiaBadge(r,theme)}</td>
+      <td>${buildHorarioBadge(r.horario,theme)}</td>
+      <td>${respHtml}</td>
+      <td>${areaPill}</td>
+      <td>${proyectoPill}</td>
+      <td><span class="esp-name ${theme}">${r.espacio||'—'}</span></td>
+      <td><div class="nec ${theme}">${r.tarea||'—'}</div></td>
+      <td><div style="font-size:11px;color:var(--mkt-text3);line-height:1.5;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${r.info}">${r.info||'—'}</div></td>
+      <td><div class="nota ${theme}">${r.notas||'—'}</div></td>
+      <td class="ok-cell">${okBtnHtml(i,r.completado,'mkt',theme)}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('mkt-cards-list').innerHTML=f.map(({r,i})=>{
+    const rc=respClass(r.resp);
+    const respHtml=r.resp?`<div class="person ${rc}"><div class="avatar">${initials(r.resp)}</div><span class="resp-name">${r.resp}</span></div>`:'';
+    return`<div class="card ${theme}"><div class="card-header ${theme}"><div class="card-header-left"><div class="card-dia-row"><span class="card-dia ${theme}">${(DIAS_LABELS[r.diaNorm]||r.dia).toUpperCase()}</span>${r.area?`<span style="font-size:9px;background:rgba(255,255,255,.2);color:#fff;padding:1px 6px;border-radius:8px;font-family:monospace">${r.area}</span>`:''}</div><span class="card-esp">${r.tarea||r.espacio}</span></div>${r.horario?`<div class="card-horario-badge"><span class="card-horario-text">${r.horario}</span></div>`:''}</div><div class="card-body">${respHtml}${r.proyecto?`<div style="font-size:11px;font-weight:600;color:var(--mkt-acc)">${r.proyecto}</div>`:''}<div class="card-nec ${theme}">${r.tarea}</div>${r.notas?`<div class="card-nota ${theme}">${r.notas}</div>`:''}</div><div class="card-footer ${theme}">${okBtnHtml(i,r.completado,'mkt',theme)}</div></div>`;
+  }).join('');
 }
 
 function renderSection({data,dia,resp,esp,countId,emptyId,tbodyId,tableId,cardsId,section,theme}){
@@ -539,10 +659,11 @@ function okBtnHtml(idx,done,section,theme){return`<button class="ok-btn ${theme}
 function pendBtnHtml(idx){return`<button class="ok-btn-pending" data-ok-idx="log-${idx}" onclick="toggleOk(${idx},'log')"><svg viewBox="0 0 16 16"><polyline points="2.5,8.5 6.5,12.5 13.5,4"/></svg><span class="ok-label">Marcar completado</span></button>`;}
 
 function showSection(which){
-  ['log','prod','ag'].forEach(s=>{document.getElementById('section-'+s).style.display=s===which?'block':'none';});
+  ['log','prod','ag','mkt'].forEach(s=>{document.getElementById('section-'+s).style.display=s===which?'block':'none';});
   document.getElementById('nav-log').className='nav-btn'+(which==='log'?' active log-active':'');
   document.getElementById('nav-prod').className='nav-btn'+(which==='prod'?' active prod-active':'');
   document.getElementById('nav-ag').className='nav-btn'+(which==='ag'?' active ag-active':'');
+  document.getElementById('nav-mkt').className='nav-btn'+(which==='mkt'?' active mkt-active':'');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -605,7 +726,6 @@ function buildAgendaTbody(rows,visibleDias){
     return`<tr class="ag-row-${row.franja}"><td class="ag-td-hora ag-franja-${row.franja}"><span class="ag-franja-label">${FRANJA_LABELS[row.franja]||row.franja}</span><br>${row.hora}</td>${cols}</tr>`;
   }).join('');
 }
-
 function updateDiaHeaders(visibleDias){
   DIAS_AG.forEach(d=>{
     const th=document.getElementById('th-'+d);
@@ -613,7 +733,6 @@ function updateDiaHeaders(visibleDias){
     th.style.display=(!visibleDias||visibleDias.includes(d))?'':'none';
   });
 }
-
 function filterAgenda(){
   const dia=document.getElementById('ag-dia').value;
   const franja=document.getElementById('ag-franja').value;
@@ -637,8 +756,9 @@ document.getElementById('agenda-tbody').innerHTML=buildAgendaTbody(AGENDA_ROWS,D
 
 fetchLog();
 fetchProd();
+fetchMkt();
 setInterval(syncEstados,30*1000);
-setInterval(()=>{fetchLog();fetchProd();},5*60*1000);
+setInterval(()=>{fetchLog();fetchProd();fetchMkt();},5*60*1000);
 </script>
 </body>
 </html>
