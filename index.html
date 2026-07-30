@@ -3,244 +3,235 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portal Bosque — Núcleo</title>
+<title>Portal Bosque — Seteos</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --dark:#1e3a2f;--green-btn:#1e3a2f;--green-light:#e8f0e4;--green-acc:#3a7a52;
-    --op-bg:#2d5c3e;--op-fg:#ffffff;--border:#c8d8c0;--border2:#dde8d8;
-    --bg:#f5f7f2;--bg2:#ffffff;--text:#1a2e20;--text2:#3a5040;--text3:#6a8070;--filter-bg:#eef3e8;
-    --heber-bg:#1e3a2f;--heber-fg:#a8d4b8;--heber-dot:#5aaf7a;
-    --daniel-bg:#1a2040;--daniel-fg:#8898d8;--daniel-dot:#6878c8;
-    --nahuel-bg:#3a2010;--nahuel-fg:#d8a868;--nahuel-dot:#c88848;
-    --facundo-bg:#3a0a14;--facundo-fg:#e8889a;--facundo-dot:#c8283e;
-    --karim-bg:#1a3040;--karim-fg:#80c8e8;--karim-dot:#2898c8;
-    --joaco-bg:#2a2010;--joaco-fg:#d0b870;--joaco-dot:#a88830;
-    --lucas-bg:#1e1a40;--lucas-fg:#a898e0;--lucas-dot:#7058c0;
-    --prod-filter-bg:#f5f5f5;--prod-border2:#e0e0e0;--prod-text:#111111;--prod-text2:#333333;--prod-text3:#888888;
-    --mkt-dark:#7a3200;--mkt-acc:#c85a00;--mkt-light:#fff3eb;--mkt-border:#f0c0a0;--mkt-border2:#fde0cc;--mkt-filter-bg:#fff8f3;--mkt-text:#5a2500;--mkt-text2:#7a3800;--mkt-text3:#b06030;
-    --pending-bg:#fff8e6;--pending-border:#e6a817;--pending-header:#c8860a;--pending-text:#7a5500;--pending-btn-done:#c8860a;
-    --ag-manana:#e8f4fd;--ag-mediodia:#fef9e7;--ag-tarde:#fdf2f8;
-    --ag-manana-border:#aed6f1;--ag-mediodia-border:#f9e79f;--ag-tarde-border:#d7bde2;
+    --dark:       #1e3a2f;
+    --green-btn:  #1e3a2f;
+    --green-light:#e8f0e4;
+    --green-acc:  #3a7a52;
+    --op-bg:      #2d5c3e;
+    --op-fg:      #ffffff;
+    --border:     #c8d8c0;
+    --border2:    #dde8d8;
+    --bg:         #f5f7f2;
+    --bg2:        #ffffff;
+    --text:       #1a2e20;
+    --text2:      #3a5040;
+    --text3:      #6a8070;
+    --filter-bg:  #eef3e8;
+    --heber-bg:   #1e3a2f; --heber-fg: #a8d4b8; --heber-dot: #5aaf7a;
+    --daniel-bg:  #1a2040; --daniel-fg:#8898d8; --daniel-dot: #6878c8;
+    --nahuel-bg:  #3a2010; --nahuel-fg:#d8a868; --nahuel-dot: #c88848;
+    --facundo-bg: #3a0a14; --facundo-fg:#e8889a; --facundo-dot:#c8283e;
+    --karim-bg:   #1a3040; --karim-fg: #80c8e8; --karim-dot:  #2898c8;
+    --joaco-bg:   #2a2010; --joaco-fg: #d0b870; --joaco-dot:  #a88830;
+    --lucas-bg:   #1e1a40; --lucas-fg: #a898e0; --lucas-dot:  #7058c0;
+    --prod-dark:      #111111;
+    --prod-btn:       #111111;
+    --prod-acc:       #555555;
+    --prod-light:     #f0f0f0;
+    --prod-border:    #333333;
+    --prod-border2:   #e0e0e0;
+    --prod-filter-bg: #f5f5f5;
+    --prod-op-bg:     #222222;
+    --prod-text:      #111111;
+    --prod-text2:     #333333;
+    --prod-text3:     #888888;
+    --pending-bg:     #fff8e6;
+    --pending-border: #e6a817;
+    --pending-header: #c8860a;
+    --pending-text:   #7a5500;
+    --pending-btn-done: #c8860a;
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh}
-  .header{background:var(--dark);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-  .header-logo{height:44px;filter:brightness(0) invert(1) opacity(.95)}
-  .header-logo-text{display:none;font-family:'Playfair Display',serif;font-size:20px;color:#fff}
-  .header-right{text-align:right}
-  .header-title{font-size:18px;font-weight:600;color:#fff}
-  .header-cycle{font-size:12px;color:#a8d4b8;font-family:'DM Mono',monospace;margin-top:2px;letter-spacing:.06em}
-  .today-bar{background:var(--dark);padding:.5rem 1.5rem .6rem;display:flex;align-items:center;gap:10px;border-bottom:2px solid var(--green-acc)}
-  .today-label{font-size:10px;font-weight:600;color:#a8d4b8;letter-spacing:.1em;text-transform:uppercase;font-family:'DM Mono',monospace}
-  .today-badge{background:var(--green-acc);color:#fff;font-size:13px;font-weight:700;padding:3px 14px;border-radius:20px}
-  .today-date{font-size:11px;color:#a8d4b8;font-family:'DM Mono',monospace;margin-left:auto}
-  .nav-bar{background:#fff;border-bottom:2px solid #e0e0e0;display:flex;position:sticky;top:74px;z-index:99}
-  .nav-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all .2s;background:#fff;color:#888;border-bottom:3px solid transparent;margin-bottom:-2px}
-  .nav-btn svg{width:15px;height:15px;flex-shrink:0}
-  .nav-btn:hover{background:#f5f5f5;color:#333}
-  .nav-btn.active.log-active{color:var(--dark);border-bottom-color:var(--green-acc);background:var(--green-light)}
-  .nav-btn.active.prod-active{color:#111;border-bottom-color:#111;background:#f0f0f0}
-  .nav-btn.active.ag-active{color:#5b2d8e;border-bottom-color:#8e44ad;background:#f5eef8}
-  .nav-btn.active.mkt-active{color:var(--mkt-dark);border-bottom-color:var(--mkt-acc);background:var(--mkt-light)}
-  .section-header{padding:.75rem 1.5rem;display:flex;align-items:center;gap:12px}
-  .section-header.logistica{background:var(--dark);border-bottom:2px solid var(--green-acc)}
-  .section-header.produccion{background:#111111;border-bottom:2px solid #444}
-  .section-header.agenda{background:#5b2d8e;border-bottom:2px solid #8e44ad}
-  .section-header.mkt{background:#7a3200;border-bottom:2px solid #c85a00}
-  .section-title{font-size:15px;font-weight:700;color:#fff;letter-spacing:.04em;text-transform:uppercase;font-family:'DM Mono',monospace}
-  .section-pill{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;font-family:'DM Mono',monospace;letter-spacing:.06em}
-  .section-pill.logistica{background:var(--green-acc);color:#fff}
-  .section-pill.produccion{background:#444;color:#fff}
-  .section-pill.agenda{background:#8e44ad;color:#fff}
-  .section-pill.mkt{background:#c85a00;color:#fff}
-  .filters{padding:.75rem 1.5rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--border)}
-  .filters.logistica{background:var(--filter-bg)}
-  .filters.produccion{background:var(--prod-filter-bg);border-color:var(--prod-border2)}
-  .filters.agenda{background:#f9f0ff;border-color:#d7bde2}
-  .filters.mkt{background:var(--mkt-filter-bg);border-color:var(--mkt-border)}
-  .filter-group{display:flex;align-items:center;gap:6px}
-  .filter-label{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;color:var(--text)}
-  .filters.produccion .filter-label{color:var(--prod-text)}
-  .filters.agenda .filter-label{color:#5b2d8e}
-  .filters.mkt .filter-label{color:var(--mkt-dark)}
-  select,input[type=text]{font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 10px;border-radius:6px;background:#fff;color:var(--text);outline:none;transition:border-color .15s;min-width:100px;border:1.5px solid var(--border)}
-  .filters.produccion select,.filters.produccion input{border-color:var(--prod-border2);color:var(--prod-text)}
-  .filters.agenda select,.filters.agenda input{border-color:#d7bde2;color:#5b2d8e}
-  .filters.mkt select,.filters.mkt input{border-color:var(--mkt-border);color:var(--mkt-dark)}
-  select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%233a5040' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;padding-right:26px}
-  select:focus,input:focus{border-color:var(--green-acc)}
-  .filters.produccion select:focus,.filters.produccion input:focus{border-color:#444}
-  .filters.agenda select:focus,.filters.agenda input:focus{border-color:#8e44ad}
-  .filters.mkt select:focus,.filters.mkt input:focus{border-color:var(--mkt-acc)}
-  .count{margin-left:auto;font-size:11px;font-family:'DM Mono',monospace;background:#fff;border:1px solid var(--border);padding:3px 10px;border-radius:20px;white-space:nowrap;color:var(--text3)}
-  .count.produccion{color:var(--prod-text3);border-color:var(--prod-border2)}
-  .count.mkt{color:var(--mkt-text3);border-color:var(--mkt-border)}
-  .status{padding:.45rem 1.5rem;font-size:10px;font-family:'DM Mono',monospace;border-bottom:1px solid;display:flex;align-items:center;gap:6px}
-  .status.logistica{color:var(--text3);background:var(--bg2);border-color:var(--border2)}
-  .status.produccion{color:var(--prod-text3);background:#fafafa;border-color:var(--prod-border2)}
-  .status.mkt{color:var(--mkt-text3);background:#fff8f3;border-color:var(--mkt-border2)}
-  .status-dot{width:6px;height:6px;border-radius:50%;animation:pulse 2s ease-in-out infinite;flex-shrink:0}
-  .status-dot.logistica{background:var(--green-acc)}
-  .status-dot.produccion{background:#555}
-  .status-dot.mkt{background:var(--mkt-acc)}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-  .table-wrap{padding:1.2rem 1.5rem;overflow-x:auto}
-  table{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-  table.logistica{background:var(--bg2)}
-  table.produccion{background:#fff}
-  thead tr.logistica{background:var(--green-btn)}
-  thead tr.produccion{background:#111}
-  th{text-align:left;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:#fff;letter-spacing:.04em;text-transform:uppercase;padding:10px 14px;white-space:nowrap}
-  thead tr th:first-child{border-radius:10px 0 0 0}
-  thead tr th:last-child{border-radius:0 10px 0 0}
-  td{padding:11px 14px;vertical-align:middle;line-height:1.5;font-size:13px}
-  tbody.logistica tr td{border-bottom:1px solid var(--border2)}
-  tbody.logistica tr:last-child td{border-bottom:none}
-  tbody.logistica tr:hover td{background:var(--green-light)!important;transition:background .12s}
-  tbody.produccion tr td{border-bottom:1px solid #ebebeb}
-  tbody.produccion tr:last-child td{border-bottom:none}
-  tbody.produccion tr:hover td{background:#f0f0f0!important;transition:background .12s}
-  tbody.mkt tr td{border-bottom:1px solid var(--mkt-border2)}
-  tbody.mkt tr:last-child td{border-bottom:none}
-  tbody.mkt tr:hover td{background:var(--mkt-light)!important;transition:background .12s}
-  .dia-badge{display:inline-flex;border-radius:7px;padding:4px 10px;min-width:68px;align-items:center}
-  .dia-badge.logistica{background:var(--dark);color:#a8d4b8}
-  .dia-badge.produccion{background:#111;color:#ccc}
-  .dia-badge.mkt{background:var(--mkt-dark);color:#ffd0a0}
-  .dia-badge-name{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-family:'DM Mono',monospace;color:#fff}
-  .horario-badge{display:inline-flex;align-items:center;gap:5px;border-radius:6px;padding:4px 10px}
-  .horario-badge.logistica{background:var(--green-light);border:1px solid var(--border)}
-  .horario-badge.produccion{background:#f0f0f0;border:1px solid #ddd}
-  .horario-badge.mkt{background:var(--mkt-light);border:1px solid var(--mkt-border)}
-  .horario-badge-text{font-family:'DM Mono',monospace;font-size:12px;font-weight:600;white-space:nowrap}
-  .horario-badge.logistica .horario-badge-text{color:var(--dark)}
-  .horario-badge.produccion .horario-badge-text{color:#111}
-  .horario-badge.mkt .horario-badge-text{color:var(--mkt-dark)}
-  .person{display:flex;align-items:center;gap:8px}
-  .avatar{width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;font-family:'DM Mono',monospace;border:2px solid}
-  .resp-name{font-size:12px;font-weight:600}
-  .resp-heber .avatar{background:var(--heber-bg);color:var(--heber-fg);border-color:var(--heber-dot)}.resp-heber .resp-name{color:var(--heber-dot)}
-  .resp-daniel .avatar{background:var(--daniel-bg);color:var(--daniel-fg);border-color:var(--daniel-dot)}.resp-daniel .resp-name{color:var(--daniel-dot)}
-  .resp-nahuel .avatar{background:var(--nahuel-bg);color:var(--nahuel-fg);border-color:var(--nahuel-dot)}.resp-nahuel .resp-name{color:var(--nahuel-dot)}
-  .resp-facundo .avatar{background:var(--facundo-bg);color:var(--facundo-fg);border-color:var(--facundo-dot)}.resp-facundo .resp-name{color:var(--facundo-dot)}
-  .resp-karim .avatar{background:var(--karim-bg);color:var(--karim-fg);border-color:var(--karim-dot)}.resp-karim .resp-name{color:var(--karim-dot)}
-  .resp-joaco .avatar{background:var(--joaco-bg);color:var(--joaco-fg);border-color:var(--joaco-dot)}.resp-joaco .resp-name{color:var(--joaco-dot)}
-  .resp-lucas .avatar{background:var(--lucas-bg);color:var(--lucas-fg);border-color:var(--lucas-dot)}.resp-lucas .resp-name{color:var(--lucas-dot)}
-  .esp-name{font-weight:600;font-size:13px}
-  .esp-name.logistica{color:var(--text)}.esp-name.produccion{color:var(--prod-text)}.esp-name.mkt{color:var(--mkt-dark)}
-  .nec{font-size:12px;line-height:1.55}
-  .nec.logistica{color:var(--text2)}.nec.produccion{color:var(--prod-text2)}.nec.mkt{color:var(--mkt-text2)}
-  .nota{font-size:11px;line-height:1.4}
-  .nota.logistica{color:var(--text3)}.nota.produccion{color:var(--prod-text3)}.nota.mkt{color:var(--mkt-text3)}
-  .op-tag{display:inline-block;font-size:11px;font-weight:600;border-radius:5px;padding:2px 8px}
-  .op-tag.logistica{background:var(--op-bg);color:var(--op-fg)}.op-tag.produccion{background:#222;color:#fff}.op-tag.mkt{background:var(--mkt-dark);color:#fff}
-  .info-act{font-size:12px;font-weight:500}
-  .info-act.logistica{color:var(--green-acc)}.info-act.produccion{color:#444}.info-act.mkt{color:var(--mkt-acc)}
-  .info-hora{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px}
-  .ok-btn{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;border:1.5px solid;background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;transition:all .18s;outline:none;white-space:nowrap;margin:0 auto}
-  .ok-btn.logistica{border-color:var(--border);color:var(--text3)}
-  .ok-btn.logistica:hover{border-color:var(--green-acc);background:var(--green-light);color:var(--green-acc)}
-  .ok-btn.logistica.done{background:var(--green-acc);border-color:var(--green-acc);color:#fff}
-  .ok-btn.produccion{border-color:#ccc;color:#888}
-  .ok-btn.produccion:hover{border-color:#444;background:#f0f0f0;color:#111}
-  .ok-btn.produccion.done{background:#111;border-color:#111;color:#fff}
-  .ok-btn.mkt{border-color:var(--mkt-border);color:var(--mkt-text3)}
-  .ok-btn.mkt:hover{border-color:var(--mkt-acc);background:var(--mkt-light);color:var(--mkt-acc)}
-  .ok-btn.mkt.done{background:var(--mkt-acc);border-color:var(--mkt-acc);color:#fff}
-  .ok-btn.loading{opacity:.6;pointer-events:none}
-  .ok-btn svg{width:13px;height:13px;stroke:currentColor;stroke-width:2.5;fill:none;flex-shrink:0}
-  td.ok-cell{text-align:center;width:150px}
-  .pending-section{margin:1rem 1.5rem .5rem;border:2px solid var(--pending-border);border-radius:10px;overflow:hidden;display:none}
-  .pending-section.visible{display:block}
-  .pending-header-bar{background:var(--pending-header);padding:.55rem 1rem;display:flex;align-items:center;gap:8px}
-  .pending-title{font-size:12px;font-weight:700;color:#fff;letter-spacing:.04em;text-transform:uppercase;font-family:'DM Mono',monospace}
-  .pending-count{margin-left:auto;background:rgba(255,255,255,.25);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;font-family:'DM Mono',monospace}
-  .pending-table{width:100%;border-collapse:collapse;background:var(--pending-bg)}
-  .pending-table td{padding:9px 14px;border-bottom:1px solid #f0d88a;vertical-align:middle;font-size:12px}
-  .pending-table tr:last-child td{border-bottom:none}
-  .pending-table .pend-esp{font-weight:700;color:var(--pending-text)}
-  .pending-table .pend-dia{font-size:11px;color:#9a7200;font-family:'DM Mono',monospace}
-  .pending-table .pend-resp{font-size:11px;color:var(--pending-text)}
-  .pending-table td.ok-cell{text-align:center;width:150px}
-  .ok-btn-pending{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;border:1.5px solid var(--pending-border);background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--pending-text);transition:all .18s;outline:none;white-space:nowrap;margin:0 auto}
-  .ok-btn-pending:hover{background:#fff3cc;border-color:var(--pending-btn-done)}
-  .ok-btn-pending.done{background:var(--pending-btn-done);border-color:var(--pending-btn-done);color:#fff}
-  .ok-btn-pending svg{width:13px;height:13px;stroke:currentColor;stroke-width:2.5;fill:none;flex-shrink:0}
-  .cards{display:none;padding:.8rem 1rem}
-  .card{background:var(--bg2);border-radius:10px;border:1px solid var(--border2);margin-bottom:.7rem;box-shadow:0 1px 3px rgba(0,0,0,.05);overflow:hidden}
-  .card.produccion{border-color:#ddd}.card.mkt{border-color:var(--mkt-border)}
-  .card-header{display:flex;align-items:center;justify-content:space-between;padding:.65rem 1rem;gap:8px}
-  .card-header.logistica{background:var(--green-btn)}.card-header.produccion{background:#111}.card-header.mkt{background:var(--mkt-dark)}
-  .card-header-left{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
-  .card-dia-row{display:flex;align-items:center;gap:6px}
-  .card-dia{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace}
-  .card-dia.logistica{color:#a8d4b8}.card-dia.produccion{color:#aaa}.card-dia.mkt{color:#ffd0a0}
-  .card-esp{font-size:14px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .card-horario-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:12px;padding:3px 9px;white-space:nowrap}
-  .card-horario-text{font-family:'DM Mono',monospace;font-size:11px;color:#fff;font-weight:600}
-  .card-body{padding:.7rem 1rem;display:flex;flex-direction:column;gap:.45rem}
-  .card-nec{font-size:13px;line-height:1.55}
-  .card-nec.logistica{color:var(--text2)}.card-nec.produccion{color:#333}.card-nec.mkt{color:var(--mkt-text2)}
-  .card-nota{font-size:11px;font-style:italic}
-  .card-nota.logistica{color:var(--text3)}.card-nota.produccion{color:#888}.card-nota.mkt{color:var(--mkt-text3)}
-  .card-footer{display:flex;align-items:center;justify-content:flex-end;padding:.5rem 1rem;border-top:1px solid;gap:8px}
-  .card-footer.logistica{border-color:var(--border2)}.card-footer.produccion{border-color:#ebebeb}.card-footer.mkt{border-color:var(--mkt-border2)}
-  .agenda-wrap{padding:1.2rem 1.5rem;overflow-x:auto}
-  .agenda-table{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06);background:#fff;min-width:900px}
-  .agenda-table thead tr{background:#5b2d8e}
-  .ag-th-hora{font-size:11px;font-weight:600;color:#fff;text-transform:uppercase;letter-spacing:.06em;padding:10px 14px;width:90px;white-space:nowrap;font-family:'DM Mono',monospace}
-  .ag-th-dia{font-size:11px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.06em;padding:10px 14px;text-align:left}
-  .ag-th-lunes{background:#1e5c8a!important}.ag-th-martes{background:#5a2d8e!important}.ag-th-miercoles{background:#1e7a52!important}
-  .ag-th-jueves{background:#8a4a1e!important}.ag-th-viernes{background:#1a6b6b!important}.ag-th-sabado{background:#7a2d5a!important}
-  .ag-col-lunes{background:#f0f7ff}.ag-col-martes{background:#f9f0ff}.ag-col-miercoles{background:#f0faf5}
-  .ag-col-jueves{background:#fff8f0}.ag-col-viernes{background:#f0fafa}.ag-col-sabado{background:#fff0f8}
-  .ag-col-lunes:hover{background:#ddeeff!important}.ag-col-martes:hover{background:#eedeff!important}
-  .ag-col-miercoles:hover{background:#ddfaee!important}.ag-col-jueves:hover{background:#ffeedd!important}
-  .ag-col-viernes:hover{background:#ddfafa!important}.ag-col-sabado:hover{background:#ffddf0!important}
-  .agenda-table thead tr th:first-child{border-radius:10px 0 0 0}
-  .agenda-table thead tr th:last-child{border-radius:0 10px 0 0}
-  .ag-td-hora{padding:10px 14px;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:#5b2d8e;background:#f9f0ff;border-bottom:1px solid #e8d5f5;border-right:2px solid #d7bde2;white-space:nowrap;vertical-align:top}
-  .ag-td{padding:10px 12px;border-bottom:1px solid #ede8f5;border-right:1px solid #ede8f5;vertical-align:top;font-size:12px;line-height:1.5;min-width:130px}
-  .ag-td:last-child{border-right:none}
-  .ag-row-manana .ag-td-hora{background:#e8f4fd;color:#1a5276;border-color:#aed6f1}
-  .ag-row-mediodia .ag-td-hora{background:#fef9e7;color:#7d6608;border-color:#f9e79f}
-  .ag-row-tarde .ag-td-hora{background:#fdf2f8;color:#6c3483;border-color:#d7bde2}
-  .ag-franja-label{display:inline-block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;border-radius:3px;padding:1px 6px;margin-bottom:4px;font-family:'DM Mono',monospace}
-  .ag-franja-manana .ag-franja-label{background:#aed6f1;color:#1a5276}
-  .ag-franja-mediodia .ag-franja-label{background:#f9e79f;color:#7d6608}
-  .ag-franja-tarde .ag-franja-label{background:#d7bde2;color:#6c3483}
-  .ag-event{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed #e0d8f0}
-  .ag-event:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
-  .ag-espacio{font-size:10px;font-weight:700;color:#5b2d8e;text-transform:uppercase;letter-spacing:.04em;margin-bottom:1px}
-  .ag-taller{font-size:12px;font-weight:600;color:#1a2e20;margin-bottom:2px}
-  .ag-meta{font-size:10px;color:#888;line-height:1.4}
-  .ag-empty{color:#ccc;font-size:11px;font-style:italic}
-  .loading{padding:4rem;text-align:center;font-family:'DM Mono',monospace;font-size:12px;color:var(--text3)}
-  .empty{padding:3rem;text-align:center;font-family:'DM Mono',monospace;font-size:12px;color:var(--text3)}
-  .footer{padding:.8rem 1.5rem;border-top:1px solid var(--border);font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);display:flex;justify-content:space-between;align-items:center;background:var(--bg2)}
-  .footer a{color:var(--green-acc);text-decoration:none}
-  .cards-pending-section{display:none;margin-bottom:.5rem}
-  .cards-pending-section.visible{display:block}
-  .cards-pending-header{background:var(--pending-header);border-radius:10px 10px 0 0;padding:.55rem 1rem;display:flex;align-items:center;gap:8px}
-  .cards-pending-title{font-size:12px;font-weight:700;color:#fff;letter-spacing:.04em;text-transform:uppercase;font-family:'DM Mono',monospace}
-  .cards-pending-count{margin-left:auto;background:rgba(255,255,255,.25);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;font-family:'DM Mono',monospace}
-  .cards-pending-list{border:2px solid var(--pending-border);border-top:none;border-radius:0 0 10px 10px;overflow:hidden;margin-bottom:.8rem}
-  .card-pending{background:var(--pending-bg);border-bottom:1px solid #f0d88a;overflow:hidden}
-  .card-pending:last-child{border-bottom:none}
-  .card-pending-header{display:flex;align-items:center;justify-content:space-between;padding:.65rem 1rem;background:var(--pending-header);gap:8px}
-  .card-dia-pending{font-size:10px;font-weight:700;color:#ffe5a0;text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace}
-  .card-nec-pending{font-size:13px;color:var(--pending-text);line-height:1.55}
-  .card-footer-pending{display:flex;align-items:center;justify-content:flex-end;padding:.5rem 1rem;border-top:1px solid #f0d88a;gap:8px}
-  @media(max-width:700px){
-    .table-wrap{display:none}.pending-section{display:none!important}.cards{display:block}
-    .filters{padding:.65rem 1rem;gap:.6rem}.filter-group{flex:1;min-width:130px}
-    select,input[type=text]{width:100%;min-width:unset;font-size:14px}
-    .header{padding:.8rem 1rem}.header-logo{height:36px}.header-title{font-size:15px}
-    .today-bar{padding:.45rem 1rem .5rem}.status{padding:.4rem 1rem}
-    .footer{padding:.6rem 1rem;flex-direction:column;gap:4px;text-align:center}
-    .nav-btn{font-size:11px;padding:12px 6px}
-    .agenda-wrap{padding:.8rem 1rem}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header { background: var(--dark); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .header-logo { height: 44px; filter: brightness(0) invert(1) opacity(.95); }
+  .header-logo-text { display: none; font-family: 'Playfair Display', serif; font-size: 20px; color: #fff; }
+  .header-right { text-align: right; }
+  .header-title { font-size: 18px; font-weight: 600; color: #fff; }
+  .header-cycle { font-size: 12px; color: #a8d4b8; font-family: 'DM Mono', monospace; margin-top: 2px; letter-spacing: .06em; }
+  .today-bar { background: var(--dark); padding: .5rem 1.5rem .6rem; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid var(--green-acc); }
+  .today-label { font-size: 10px; font-weight: 600; color: #a8d4b8; letter-spacing: .1em; text-transform: uppercase; font-family: 'DM Mono', monospace; }
+  .today-badge { background: var(--green-acc); color: #fff; font-size: 13px; font-weight: 700; padding: 3px 14px; border-radius: 20px; }
+  .today-date  { font-size: 11px; color: #a8d4b8; font-family: 'DM Mono', monospace; margin-left: auto; }
+  .section { margin-bottom: 0; }
+  .section-header { padding: .75rem 1.5rem; display: flex; align-items: center; gap: 12px; }
+  .section-header.logistica { background: var(--dark); border-bottom: 2px solid var(--green-acc); }
+  .section-header.produccion { background: #111111; border-bottom: 2px solid #444444; }
+  .section-title { font-size: 15px; font-weight: 700; color: #fff; letter-spacing: .04em; text-transform: uppercase; font-family: 'DM Mono', monospace; }
+  .section-pill { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; font-family: 'DM Mono', monospace; letter-spacing: .06em; }
+  .section-pill.logistica { background: var(--green-acc); color: #fff; }
+  .section-pill.produccion { background: #444; color: #fff; }
+  .filters { padding: .75rem 1.5rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; border-bottom: 1px solid var(--border); }
+  .filters.logistica { background: var(--filter-bg); border-color: var(--border); }
+  .filters.produccion { background: var(--prod-filter-bg); border-color: var(--prod-border2); }
+  .filter-group { display: flex; align-items: center; gap: 6px; }
+  .filter-label { font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
+  .filters.logistica .filter-label { color: var(--text); }
+  .filters.produccion .filter-label { color: var(--prod-text); }
+  select, input[type=text] { font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 6px 10px; border-radius: 6px; background: #fff; color: var(--text); outline: none; transition: border-color .15s; min-width: 100px; border: 1.5px solid var(--border); }
+  .filters.produccion select, .filters.produccion input[type=text] { border-color: var(--prod-border2); color: var(--prod-text); }
+  select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%233a5040' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; padding-right: 26px; }
+  select:focus, input:focus { border-color: var(--green-acc); }
+  .filters.produccion select:focus, .filters.produccion input:focus { border-color: #444; }
+  .count { margin-left: auto; font-size: 11px; font-family: 'DM Mono', monospace; background: #fff; border: 1px solid var(--border); padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+  .count.logistica { color: var(--text3); border-color: var(--border); }
+  .count.produccion { color: var(--prod-text3); border-color: var(--prod-border2); }
+  .status { padding: .45rem 1.5rem; font-size: 10px; font-family: 'DM Mono', monospace; border-bottom: 1px solid; display: flex; align-items: center; gap: 6px; }
+  .status.logistica { color: var(--text3); background: var(--bg2); border-color: var(--border2); }
+  .status.produccion { color: var(--prod-text3); background: #fafafa; border-color: var(--prod-border2); }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; animation: pulse 2s ease-in-out infinite; flex-shrink: 0; }
+  .status-dot.logistica { background: var(--green-acc); }
+  .status-dot.produccion { background: #555; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+  .table-wrap { padding: 1.2rem 1.5rem; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  table.logistica { background: var(--bg2); }
+  table.produccion { background: #fff; }
+  thead tr.logistica { background: var(--green-btn); }
+  thead tr.produccion { background: #111111; }
+  th { text-align: left; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; color: #fff; letter-spacing: .04em; text-transform: uppercase; padding: 10px 14px; white-space: nowrap; }
+  thead tr th:first-child { border-radius: 10px 0 0 0; }
+  thead tr th:last-child  { border-radius: 0 10px 0 0; }
+  td { padding: 11px 14px; vertical-align: middle; line-height: 1.5; font-size: 13px; }
+  tbody.logistica tr td { border-bottom: 1px solid var(--border2); }
+  tbody.logistica tr:last-child td { border-bottom: none; }
+  tbody.logistica tr:hover td { background: var(--green-light) !important; transition: background .12s; }
+  tbody.produccion tr td { border-bottom: 1px solid #ebebeb; }
+  tbody.produccion tr:last-child td { border-bottom: none; }
+  tbody.produccion tr:hover td { background: #f0f0f0 !important; transition: background .12s; }
+  .dia-badge { display: inline-flex; flex-direction: column; align-items: center; border-radius: 7px; padding: 4px 10px; min-width: 68px; }
+  .dia-badge.logistica { background: var(--dark); color: #a8d4b8; }
+  .dia-badge.produccion { background: #111; color: #ccc; }
+  .dia-badge-name { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; font-family: 'DM Mono', monospace; color: #fff; }
+  .horario-badge { display: inline-flex; align-items: center; gap: 5px; border-radius: 6px; padding: 4px 10px; }
+  .horario-badge.logistica { background: var(--green-light); border: 1px solid var(--border); }
+  .horario-badge.produccion { background: #f0f0f0; border: 1px solid #ddd; }
+  .horario-badge-text { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .horario-badge.logistica .horario-badge-text { color: var(--dark); }
+  .horario-badge.produccion .horario-badge-text { color: #111; }
+  .person { display: flex; align-items: center; gap: 8px; }
+  .avatar { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; font-family: 'DM Mono', monospace; border: 2px solid; }
+  .resp-name { font-size: 12px; font-weight: 600; }
+  .resp-heber   .avatar { background: var(--heber-bg);   color: var(--heber-fg);   border-color: var(--heber-dot); }
+  .resp-heber   .resp-name { color: var(--heber-dot); }
+  .resp-daniel  .avatar { background: var(--daniel-bg);  color: var(--daniel-fg);  border-color: var(--daniel-dot); }
+  .resp-daniel  .resp-name { color: var(--daniel-dot); }
+  .resp-nahuel  .avatar { background: var(--nahuel-bg);  color: var(--nahuel-fg);  border-color: var(--nahuel-dot); }
+  .resp-nahuel  .resp-name { color: var(--nahuel-dot); }
+  .resp-facundo .avatar { background: var(--facundo-bg); color: var(--facundo-fg); border-color: var(--facundo-dot); }
+  .resp-facundo .resp-name { color: var(--facundo-dot); }
+  .resp-karim   .avatar { background: var(--karim-bg);   color: var(--karim-fg);   border-color: var(--karim-dot); }
+  .resp-karim   .resp-name { color: var(--karim-dot); }
+  .resp-joaco   .avatar { background: var(--joaco-bg);   color: var(--joaco-fg);   border-color: var(--joaco-dot); }
+  .resp-joaco   .resp-name { color: var(--joaco-dot); }
+  .resp-lucas   .avatar { background: var(--lucas-bg);   color: var(--lucas-fg);   border-color: var(--lucas-dot); }
+  .resp-lucas   .resp-name { color: var(--lucas-dot); }
+  .esp-name { font-weight: 600; font-size: 13px; }
+  .esp-name.logistica { color: var(--text); }
+  .esp-name.produccion { color: var(--prod-text); }
+  .nec  { font-size: 12px; line-height: 1.55; }
+  .nec.logistica  { color: var(--text2); }
+  .nec.produccion { color: var(--prod-text2); }
+  .nota { font-size: 11px; line-height: 1.4; }
+  .nota.logistica  { color: var(--text3); }
+  .nota.produccion { color: var(--prod-text3); }
+  .op-tag { display: inline-block; font-size: 11px; font-weight: 600; border-radius: 5px; padding: 2px 8px; }
+  .op-tag.logistica  { background: var(--op-bg); color: var(--op-fg); }
+  .op-tag.produccion { background: #222; color: #fff; }
+  .info-act  { font-size: 12px; font-weight: 500; }
+  .info-act.logistica  { color: var(--green-acc); }
+  .info-act.produccion { color: #444; }
+  .info-hora { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); margin-top: 2px; }
+  .ok-btn { display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; border: 1.5px solid; background: #fff; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; transition: all .18s; outline: none; white-space: nowrap; margin: 0 auto; }
+  .ok-btn.logistica { border-color: var(--border); color: var(--text3); }
+  .ok-btn.logistica:hover { border-color: var(--green-acc); background: var(--green-light); color: var(--green-acc); }
+  .ok-btn.logistica.done { background: var(--green-acc); border-color: var(--green-acc); color: #fff; }
+  .ok-btn.produccion { border-color: #ccc; color: #888; }
+  .ok-btn.produccion:hover { border-color: #444; background: #f0f0f0; color: #111; }
+  .ok-btn.produccion.done { background: #111; border-color: #111; color: #fff; }
+  .ok-btn.loading { opacity: .6; pointer-events: none; }
+  .ok-btn svg { width: 13px; height: 13px; stroke: currentColor; stroke-width: 2.5; fill: none; flex-shrink: 0; }
+  td.ok-cell { text-align: center; width: 150px; }
+  .loading { padding: 4rem; text-align: center; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text3); }
+  .empty   { padding: 3rem; text-align: center; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text3); }
+  .pending-section { margin: 1rem 1.5rem .5rem; border: 2px solid var(--pending-border); border-radius: 10px; overflow: hidden; display: none; }
+  .pending-section.visible { display: block; }
+  .pending-header-bar { background: var(--pending-header); padding: .55rem 1rem; display: flex; align-items: center; gap: 8px; }
+  .pending-title { font-size: 12px; font-weight: 700; color: #fff; letter-spacing: .04em; text-transform: uppercase; font-family: 'DM Mono', monospace; }
+  .pending-count { margin-left: auto; background: rgba(255,255,255,.25); color: #fff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; font-family: 'DM Mono', monospace; }
+  .pending-table { width: 100%; border-collapse: collapse; background: var(--pending-bg); }
+  .pending-table td { padding: 9px 14px; border-bottom: 1px solid #f0d88a; vertical-align: middle; font-size: 12px; }
+  .pending-table tr:last-child td { border-bottom: none; }
+  .pending-table .pend-esp  { font-weight: 700; color: var(--pending-text); }
+  .pending-table .pend-dia  { font-size: 11px; color: #9a7200; font-family: 'DM Mono', monospace; }
+  .pending-table .pend-resp { font-size: 11px; color: var(--pending-text); }
+  .pending-table td.ok-cell { text-align: center; width: 150px; }
+  .ok-btn-pending { display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; border: 1.5px solid var(--pending-border); background: #fff; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; color: var(--pending-text); transition: all .18s; outline: none; white-space: nowrap; margin: 0 auto; }
+  .ok-btn-pending:hover { background: #fff3cc; border-color: var(--pending-btn-done); }
+  .ok-btn-pending.done { background: var(--pending-btn-done); border-color: var(--pending-btn-done); color: #fff; }
+  .ok-btn-pending.loading { opacity: .6; pointer-events: none; }
+  .ok-btn-pending svg { width: 13px; height: 13px; stroke: currentColor; stroke-width: 2.5; fill: none; flex-shrink: 0; }
+  .cards { display: none; padding: .8rem 1rem; }
+  .card { background: var(--bg2); border-radius: 10px; border: 1px solid var(--border2); margin-bottom: .7rem; box-shadow: 0 1px 3px rgba(0,0,0,.05); overflow: hidden; }
+  .card.produccion { border-color: #ddd; }
+  .card-header { display: flex; align-items: center; justify-content: space-between; padding: .65rem 1rem; gap: 8px; }
+  .card-header.logistica  { background: var(--green-btn); }
+  .card-header.produccion { background: #111; }
+  .card-header-left { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+  .card-dia-row { display: flex; align-items: center; gap: 6px; }
+  .card-dia { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-family: 'DM Mono', monospace; }
+  .card-dia.logistica  { color: #a8d4b8; }
+  .card-dia.produccion { color: #aaa; }
+  .card-esp { font-size: 14px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card-horario-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); border-radius: 12px; padding: 3px 9px; white-space: nowrap; }
+  .card-horario-text { font-family: 'DM Mono', monospace; font-size: 11px; color: #fff; font-weight: 600; }
+  .card-body { padding: .7rem 1rem; display: flex; flex-direction: column; gap: .45rem; }
+  .card-nec { font-size: 13px; line-height: 1.55; }
+  .card-nec.logistica  { color: var(--text2); }
+  .card-nec.produccion { color: #333; }
+  .card-nota { font-size: 11px; font-style: italic; }
+  .card-nota.logistica  { color: var(--text3); }
+  .card-nota.produccion { color: #888; }
+  .card-footer { display: flex; align-items: center; justify-content: flex-end; padding: .5rem 1rem; border-top: 1px solid; gap: 8px; }
+  .card-footer.logistica  { border-color: var(--border2); }
+  .card-footer.produccion { border-color: #ebebeb; }
+  .footer { padding: .8rem 1.5rem; border-top: 1px solid var(--border); font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); display: flex; justify-content: space-between; align-items: center; background: var(--bg2); }
+  .footer a { color: var(--green-acc); text-decoration: none; }
+  .cards-pending-section { display: none; margin-bottom: .5rem; }
+  .cards-pending-section.visible { display: block; }
+  .cards-pending-header { background: var(--pending-header); border-radius: 10px 10px 0 0; padding: .55rem 1rem; display: flex; align-items: center; gap: 8px; }
+  .cards-pending-title { font-size: 12px; font-weight: 700; color: #fff; letter-spacing: .04em; text-transform: uppercase; font-family: 'DM Mono', monospace; }
+  .cards-pending-count { margin-left: auto; background: rgba(255,255,255,.25); color: #fff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; font-family: 'DM Mono', monospace; }
+  .cards-pending-list { border: 2px solid var(--pending-border); border-top: none; border-radius: 0 0 10px 10px; overflow: hidden; margin-bottom: .8rem; }
+  .card-pending { background: var(--pending-bg); border-bottom: 1px solid #f0d88a; overflow: hidden; }
+  .card-pending:last-child { border-bottom: none; }
+  .card-pending-header { display: flex; align-items: center; justify-content: space-between; padding: .65rem 1rem; background: var(--pending-header); gap: 8px; }
+  .card-dia-pending { font-size: 10px; font-weight: 700; color: #ffe5a0; text-transform: uppercase; letter-spacing: .08em; font-family: 'DM Mono', monospace; }
+  .card-nec-pending { font-size: 13px; color: var(--pending-text); line-height: 1.55; }
+  .card-footer-pending { display: flex; align-items: center; justify-content: flex-end; padding: .5rem 1rem; border-top: 1px solid #f0d88a; gap: 8px; }
+  .nav-bar { background: #fff; border-bottom: 2px solid #e0e0e0; display: flex; gap: 0; position: sticky; top: 74px; z-index: 99; }
+  .nav-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: all .2s; letter-spacing: .02em; background: #fff; color: #888; border-bottom: 3px solid transparent; margin-bottom: -2px; }
+  .nav-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .nav-btn:hover { background: #f5f5f5; color: #333; }
+  .nav-btn.active.log-active  { color: var(--dark); border-bottom-color: var(--green-acc); background: var(--green-light); }
+  .nav-btn.active.prod-active { color: #111; border-bottom-color: #111; background: #f0f0f0; }
+  @media (max-width: 700px) {
+    .table-wrap { display: none; }
+    .pending-section { display: none !important; }
+    .cards { display: block; }
+    .filters { padding: .65rem 1rem; gap: .6rem; }
+    .filter-group { flex: 1; min-width: 130px; }
+    select, input[type=text] { width: 100%; min-width: unset; font-size: 14px; }
+    .header { padding: .8rem 1rem; }
+    .header-logo { height: 36px; }
+    .header-title { font-size: 15px; }
+    .today-bar { padding: .45rem 1rem .5rem; }
+    .status { padding: .4rem 1rem; }
+    .footer { padding: .6rem 1rem; flex-direction: column; gap: 4px; text-align: center; }
   }
 </style>
 </head>
@@ -251,7 +242,7 @@
        onerror="this.style.display='none';document.getElementById('logo-text').style.display='block'">
   <span id="logo-text" class="header-logo-text">Portal Bosque</span>
   <div class="header-right">
-    <div class="header-title">Núcleo</div>
+    <div class="header-title">Seteos Portal Bosque</div>
     <div class="header-cycle">Ciclo Invierno 2026</div>
   </div>
 </header>
@@ -265,23 +256,14 @@
 <div class="nav-bar">
   <button class="nav-btn active log-active" id="nav-log" onclick="showSection('log')">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h14M3 10h14M3 15h8"/></svg>
-    Logística
+    Seteos Logística
   </button>
   <button class="nav-btn" id="nav-prod" onclick="showSection('prod')">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polygon points="10,2 18,18 2,18"/></svg>
     Producción
   </button>
-  <button class="nav-btn" id="nav-ag" onclick="showSection('ag')">
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="14" height="13" rx="2"/><path d="M3 8h14M7 2v4M13 2v4"/></svg>
-    Agenda
-  </button>
-  <button class="nav-btn" id="nav-mkt" onclick="showSection('mkt')">
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10l4-6 4 4 3-3 3 5"/><circle cx="17" cy="15" r="2"/></svg>
-    MKT & Front
-  </button>
 </div>
 
-<!-- LOGÍSTICA -->
 <div id="section-log">
 <div class="section">
   <div class="section-header logistica">
@@ -289,27 +271,50 @@
     <span class="section-pill logistica">Logística</span>
   </div>
   <div class="filters logistica">
-    <div class="filter-group"><span class="filter-label">Día</span><select id="log-sel-dia" onchange="renderLog()"><option value="">Hoy</option></select></div>
-    <div class="filter-group"><span class="filter-label">Responsable</span><select id="log-sel-resp" onchange="renderLog()"><option value="">Todos</option></select></div>
-    <div class="filter-group"><span class="filter-label">Espacio</span><input id="log-inp-esp" type="text" placeholder="Ej: Yurta" oninput="renderLog()"></div>
-    <span class="count" id="log-count">—</span>
+    <div class="filter-group">
+      <span class="filter-label">Día</span>
+      <select id="log-sel-dia" onchange="renderLog()"><option value="">Hoy</option></select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Responsable</span>
+      <select id="log-sel-resp" onchange="renderLog()"><option value="">Todos</option></select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Espacio</span>
+      <input id="log-inp-esp" type="text" placeholder="Ej: Yurta" oninput="renderLog()">
+    </div>
+    <span class="count logistica" id="log-count">—</span>
   </div>
-  <div class="status logistica"><div class="status-dot logistica"></div><span id="log-status">Conectando...</span></div>
+  <div class="status logistica">
+    <div class="status-dot logistica"></div>
+    <span id="log-status">Conectando...</span>
+  </div>
   <div class="pending-section" id="pending-section">
-    <div class="pending-header-bar"><span class="pending-title">⚠ Pendientes de ayer sin completar</span><span class="pending-count" id="pending-count">0</span></div>
+    <div class="pending-header-bar">
+      <span class="pending-title">⚠ Pendientes de ayer sin completar</span>
+      <span class="pending-count" id="pending-count">0</span>
+    </div>
     <table class="pending-table" id="pending-table"></table>
   </div>
   <div class="table-wrap">
     <div id="log-loading" class="loading">Cargando datos...</div>
     <table id="log-table" class="logistica" style="display:none">
-      <thead><tr class="logistica"><th>Día</th><th>Responsable</th><th>Horario</th><th>Espacio</th><th>Necesidad</th><th>Info</th><th>Notas</th><th style="text-align:center">Completado</th></tr></thead>
+      <thead>
+        <tr class="logistica">
+          <th>Día</th><th>Responsable</th><th>Horario</th><th>Espacio</th>
+          <th>Necesidad</th><th>Info</th><th>Notas</th><th style="text-align:center">Completado</th>
+        </tr>
+      </thead>
       <tbody id="log-tbody" class="logistica"></tbody>
     </table>
     <div id="log-empty" class="empty" style="display:none">Sin resultados.</div>
   </div>
   <div class="cards" id="log-cards">
     <div class="cards-pending-section" id="log-cards-pending-section">
-      <div class="cards-pending-header"><span class="cards-pending-title">⚠ Pendientes de ayer</span><span class="cards-pending-count" id="log-cards-pending-count">0</span></div>
+      <div class="cards-pending-header">
+        <span class="cards-pending-title">⚠ Pendientes de ayer</span>
+        <span class="cards-pending-count" id="log-cards-pending-count">0</span>
+      </div>
       <div class="cards-pending-list" id="log-cards-pending-list"></div>
     </div>
     <div id="log-cards-list"></div>
@@ -317,7 +322,6 @@
 </div>
 </div>
 
-<!-- PRODUCCIÓN -->
 <div id="section-prod" style="display:none">
 <div class="section">
   <div class="section-header produccion">
@@ -325,101 +329,40 @@
     <span class="section-pill produccion">Producción</span>
   </div>
   <div class="filters produccion">
-    <div class="filter-group"><span class="filter-label">Día</span><select id="prod-sel-dia" onchange="renderProd()"><option value="">Hoy</option></select></div>
-    <div class="filter-group"><span class="filter-label">Responsable</span><select id="prod-sel-resp" onchange="renderProd()"><option value="">Todos</option></select></div>
-    <div class="filter-group"><span class="filter-label">Espacio</span><input id="prod-inp-esp" type="text" placeholder="Ej: Escenario" oninput="renderProd()"></div>
+    <div class="filter-group">
+      <span class="filter-label">Día</span>
+      <select id="prod-sel-dia" onchange="renderProd()"><option value="">Hoy</option></select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Responsable</span>
+      <select id="prod-sel-resp" onchange="renderProd()"><option value="">Todos</option></select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Espacio</span>
+      <input id="prod-inp-esp" type="text" placeholder="Ej: Escenario" oninput="renderProd()">
+    </div>
     <span class="count produccion" id="prod-count">—</span>
   </div>
-  <div class="status produccion"><div class="status-dot produccion"></div><span id="prod-status">Conectando...</span></div>
+  <div class="status produccion">
+    <div class="status-dot produccion"></div>
+    <span id="prod-status">Conectando...</span>
+  </div>
   <div class="table-wrap">
     <div id="prod-loading" class="loading">Cargando datos...</div>
     <table id="prod-table" class="produccion" style="display:none">
-      <thead><tr class="produccion"><th>Día</th><th>Responsable</th><th>Horario</th><th>Espacio</th><th>Necesidad</th><th>Info</th><th>Notas</th><th style="text-align:center">Completado</th></tr></thead>
+      <thead>
+        <tr class="produccion">
+          <th>Día</th><th>Responsable</th><th>Horario</th><th>Espacio</th>
+          <th>Necesidad</th><th>Info</th><th>Notas</th><th style="text-align:center">Completado</th>
+        </tr>
+      </thead>
       <tbody id="prod-tbody" class="produccion"></tbody>
     </table>
     <div id="prod-empty" class="empty" style="display:none">Sin resultados.</div>
   </div>
-  <div class="cards" id="prod-cards"><div id="prod-cards-list"></div></div>
-</div>
-</div>
-
-<!-- AGENDA -->
-<div id="section-ag" style="display:none">
-<div class="section">
-  <div class="section-header agenda">
-    <span class="section-title">Agenda Semana Tipo</span>
-    <span class="section-pill agenda">Invierno 2026</span>
+  <div class="cards" id="prod-cards">
+    <div id="prod-cards-list"></div>
   </div>
-  <div class="filters agenda">
-    <div class="filter-group">
-      <span class="filter-label">Día</span>
-      <select id="ag-dia" onchange="filterAgenda()">
-        <option value="">Todos</option>
-        <option value="lunes">Lunes</option>
-        <option value="martes">Martes</option>
-        <option value="miercoles">Miércoles</option>
-        <option value="jueves">Jueves</option>
-        <option value="viernes">Viernes</option>
-        <option value="sabado">Sábado</option>
-      </select>
-    </div>
-    <div class="filter-group">
-      <span class="filter-label">Franja</span>
-      <select id="ag-franja" onchange="filterAgenda()">
-        <option value="">Todas</option>
-        <option value="manana">Mañana (9:30–12)</option>
-        <option value="mediodia">Mediodía (12–16:30)</option>
-        <option value="tarde">Tarde (17–19)</option>
-      </select>
-    </div>
-    <div class="filter-group">
-      <span class="filter-label">Buscar</span>
-      <input id="ag-search" type="text" placeholder="Taller, espacio, tallerista..." oninput="filterAgenda()" style="width:200px">
-    </div>
-  </div>
-  <div class="agenda-wrap">
-    <table class="agenda-table" id="agenda-table">
-      <thead>
-        <tr>
-          <th class="ag-th-hora">Horario</th>
-          <th class="ag-th-dia ag-th-lunes" id="th-lunes">🔵 Lunes</th>
-          <th class="ag-th-dia ag-th-martes" id="th-martes">🟣 Martes</th>
-          <th class="ag-th-dia ag-th-miercoles" id="th-miercoles">🟢 Miércoles</th>
-          <th class="ag-th-dia ag-th-jueves" id="th-jueves">🟠 Jueves</th>
-          <th class="ag-th-dia ag-th-viernes" id="th-viernes">🩵 Viernes</th>
-          <th class="ag-th-dia ag-th-sabado" id="th-sabado">🩷 Sábado</th>
-        </tr>
-      </thead>
-      <tbody id="agenda-tbody"></tbody>
-    </table>
-  </div>
-</div>
-</div>
-
-<!-- MKT -->
-<div id="section-mkt" style="display:none">
-<div class="section">
-  <div class="section-header mkt">
-    <span class="section-title">MKT, Comunicación y Front</span>
-    <span class="section-pill mkt">MKT</span>
-  </div>
-  <div class="filters mkt">
-    <div class="filter-group"><span class="filter-label">Día</span><select id="mkt-sel-dia" onchange="renderMkt()"><option value="">Hoy</option></select></div>
-    <div class="filter-group"><span class="filter-label">Responsable</span><select id="mkt-sel-resp" onchange="renderMkt()"><option value="">Todos</option></select></div>
-    <div class="filter-group"><span class="filter-label">Área</span><select id="mkt-sel-area" onchange="renderMkt()"><option value="">Todas</option></select></div>
-    <div class="filter-group"><span class="filter-label">Espacio</span><input id="mkt-inp-esp" type="text" placeholder="Ej: Instagram" oninput="renderMkt()"></div>
-    <span class="count mkt" id="mkt-count">—</span>
-  </div>
-  <div class="status mkt"><div class="status-dot mkt"></div><span id="mkt-status">Conectando...</span></div>
-  <div class="table-wrap">
-    <div id="mkt-loading" class="loading">Cargando datos...</div>
-    <table id="mkt-table" class="produccion" style="display:none">
-      <thead><tr class="produccion" style="background:#7a3200"><th>Día</th><th>Horario</th><th>Responsable</th><th>Área</th><th>Proyecto</th><th>Espacio</th><th>Tarea</th><th>Info</th><th>Notas</th><th style="text-align:center">Completado</th></tr></thead>
-      <tbody id="mkt-tbody" class="mkt"></tbody>
-    </table>
-    <div id="mkt-empty" class="empty" style="display:none">Sin resultados.</div>
-  </div>
-  <div class="cards" id="mkt-cards"><div id="mkt-cards-list"></div></div>
 </div>
 </div>
 
@@ -431,13 +374,12 @@
 <script>
 const CSV_LOG  = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQAjbZFpNcEopTvKwlp2Nn6EpFWNPAf3hMK0vc_NRM5K3NhSTe73DsHUjEV3YjKGWT4auUjQ3kXpucf/pub?gid=0&single=true&output=csv';
 const CSV_PROD = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgW4spjoXNjkMCLzOgOUKjXZ76Jmw8sOi_in-lFjM4F74PoiCj-HeLDuNJlayrovYJaYbIhKtk37n2/pub?gid=574133870&single=true&output=csv';
-const CSV_MKT  = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSm1lPXA-zC1xnvBQHTPvANnTARn9kxz19EUG5tjK8mhU_bNkIJBftFpKnFmGxZEjK2jG74Ts3f5rdc/pub?gid=0&single=true&output=csv';
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbykJx6LauaXrGkUnmocIeNinK5fHDxL_zFlk2Os32s3yUiC42CnIzlp-pTSOUeqBuo/exec';
 
-let LOG_DATA=[],LOG_ROW_MAP=[],PROD_DATA=[],PROD_ROW_MAP=[],MKT_DATA=[],MKT_ROW_MAP=[];
+let LOG_DATA=[], LOG_ROW_MAP=[], PROD_DATA=[], PROD_ROW_MAP=[];
 const DIAS_ORDER=['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO'];
 const DIAS_LABELS={'LUNES':'Lunes','MARTES':'Martes','MIERCOLES':'Miércoles','JUEVES':'Jueves','VIERNES':'Viernes','SABADO':'Sábado','DOMINGO':'Domingo'};
-const RESPS_VALIDOS=['pacha','flor alvez','tute','chunka','heber','facundo','joaco','daniel','lucas','karim','guillermo','nahuel'];
+const RESPS_VALIDOS=['heber','daniel','nahuel','facundo','karim','joaco','lucas'];
 
 function getTodayNorm(){const dias=['DOMINGO','LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO'];return norm(dias[new Date().getDay()]);}
 function getYesterdayNorm(){const d=new Date();d.setDate(d.getDate()-1);const dias=['DOMINGO','LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO'];return norm(dias[d.getDay()]);}
@@ -448,7 +390,8 @@ function parseCSV(text,rowMapRef){
   const rows=[];const lines=text.split('\n');let lastDia='';let sheetRow=1;
   rowMapRef.length=0;
   for(let i=1;i<lines.length;i++){
-    sheetRow++;const line=lines[i].trim();if(!line)continue;
+    sheetRow++;
+    const line=lines[i].trim();if(!line)continue;
     const cols=splitCSVLine(line);if(cols.length<4)continue;
     let[dia,resp,horario,espacio,necesidad,info,notas,completado]=cols.map(c=>c.trim());
     if(dia)lastDia=dia;else dia=lastDia;
@@ -464,7 +407,8 @@ function splitCSVLine(line){
   r.push(cur);return r;
 }
 function populateSelect(id,items){
-  const sel=document.getElementById(id);while(sel.options.length>1)sel.remove(1);
+  const sel=document.getElementById(id);
+  while(sel.options.length>1)sel.remove(1);
   items.forEach(v=>{const o=document.createElement('option');o.value=v.val!==undefined?v.val:v;o.textContent=v.label!==undefined?v.label:v;sel.appendChild(o);});
 }
 
@@ -474,7 +418,7 @@ async function fetchLog(){
     LOG_DATA=parseCSV(await res.text(),LOG_ROW_MAP);
     const diasNorm=new Set(LOG_DATA.map(r=>r.diaNorm).filter(Boolean));
     populateSelect('log-sel-dia',DIAS_ORDER.filter(d=>diasNorm.has(d)).map(d=>({val:d,label:DIAS_LABELS[d]||d})));
-    populateSelect('log-sel-resp',RESPS_VALIDOS.map(r=>r.split(' ').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ')));
+    populateSelect('log-sel-resp',RESPS_VALIDOS.map(r=>r.charAt(0).toUpperCase()+r.slice(1)));
     document.getElementById('log-loading').style.display='none';
     document.getElementById('log-table').style.display='table';
     const n=new Date();
@@ -501,34 +445,6 @@ async function fetchProd(){
   }catch(e){document.getElementById('prod-loading').textContent='Error al cargar datos producción.';document.getElementById('prod-status').textContent='Sin conexión';}
 }
 
-async function fetchMkt(){
-  try{
-    const res=await fetch(CSV_MKT+'&t='+Date.now());if(!res.ok)throw new Error();
-    const text=await res.text();
-    const rows=[];const lines=text.split('\n');let lastDia='';let sheetRow=1;
-    MKT_ROW_MAP.length=0;
-    for(let i=1;i<lines.length;i++){
-      sheetRow++;const line=lines[i].trim();if(!line)continue;
-      const cols=splitCSVLine(line);if(cols.length<4)continue;
-      let[dia,horario,responsable,area,proyecto,espacio,tarea,info,notas,completado]=cols.map(c=>c.trim());
-      if(dia)lastDia=dia;else dia=lastDia;
-      if(!tarea&&!espacio)continue;
-      rows.push({dia,diaNorm:norm(dia),resp:responsable||'',horario:horario||'',area:area||'',proyecto:proyecto||'',espacio:espacio||'',tarea:tarea||'',info:info||'',notas:notas||'',completado:(completado||'').toUpperCase()==='SI'});
-      MKT_ROW_MAP.push(sheetRow);
-    }
-    MKT_DATA=rows;
-    const diasNorm=new Set(MKT_DATA.map(r=>r.diaNorm).filter(Boolean));
-    populateSelect('mkt-sel-dia',DIAS_ORDER.filter(d=>diasNorm.has(d)).map(d=>({val:d,label:DIAS_LABELS[d]||d})));
-    populateSelect('mkt-sel-resp',[...new Set(MKT_DATA.map(r=>r.resp).filter(Boolean))].sort());
-    populateSelect('mkt-sel-area',[...new Set(MKT_DATA.map(r=>r.area).filter(Boolean))].sort());
-    document.getElementById('mkt-loading').style.display='none';
-    document.getElementById('mkt-table').style.display='table';
-    const n=new Date();
-    document.getElementById('mkt-status').textContent=`Sincronizado · ${n.toLocaleDateString('es-UY')} ${n.toLocaleTimeString('es-UY',{hour:'2-digit',minute:'2-digit'})}`;
-    renderMkt();
-  }catch(e){document.getElementById('mkt-loading').textContent='Error al cargar datos MKT.';document.getElementById('mkt-status').textContent='Sin conexión';}
-}
-
 async function syncEstados(){
   try{
     const res=await fetch(APPS_SCRIPT_URL+'?t='+Date.now());
@@ -539,8 +455,8 @@ async function syncEstados(){
 }
 
 async function toggleOk(dataIdx,section){
-  const data=section==='log'?LOG_DATA:section==='prod'?PROD_DATA:MKT_DATA;
-  const rowMap=section==='log'?LOG_ROW_MAP:section==='prod'?PROD_ROW_MAP:MKT_ROW_MAP;
+  const data=section==='log'?LOG_DATA:PROD_DATA;
+  const rowMap=section==='log'?LOG_ROW_MAP:PROD_ROW_MAP;
   const row=data[dataIdx];const sheetRow=rowMap[dataIdx];
   row.completado=!row.completado;const newVal=row.completado?'SI':'';
   document.querySelectorAll(`[data-ok-idx="${section}-${dataIdx}"]`).forEach(btn=>{btn.classList.toggle('done',row.completado);btn.classList.add('loading');btn.querySelector('.ok-label').textContent=row.completado?'Completado':'Pendiente';});
@@ -561,10 +477,11 @@ function renderPendientes(){
   const ayer=getYesterdayNorm();
   const pend=LOG_DATA.map((r,i)=>({r,i})).filter(({r})=>r.diaNorm===ayer&&!r.completado);
   const sec=document.getElementById('pending-section');
+  const tbl=document.getElementById('pending-table');
   if(!pend.length){sec.classList.remove('visible');return;}
   sec.classList.add('visible');
   document.getElementById('pending-count').textContent=pend.length;
-  document.getElementById('pending-table').innerHTML=pend.map(({r,i})=>`<tr id="pend-row-${i}"><td><span class="pend-dia">${DIAS_LABELS[r.diaNorm]||r.dia} · ${r.horario||'—'}</span></td><td><span class="pend-esp">${r.espacio}</span></td><td><span class="pend-resp">${r.resp||'—'}</span></td><td><span style="font-size:11px;color:var(--pending-text)">${r.necesidad||''}</span></td><td class="ok-cell">${pendBtnHtml(i)}</td></tr>`).join('');
+  tbl.innerHTML=pend.map(({r,i})=>`<tr id="pend-row-${i}"><td><span class="pend-dia">${DIAS_LABELS[r.diaNorm]||r.dia} · ${r.horario||'—'}</span></td><td><span class="pend-esp">${r.espacio}</span></td><td><span class="pend-resp">${r.resp||'—'}</span></td><td><span style="font-size:11px;color:var(--pending-text)">${r.necesidad||''}</span></td><td class="ok-cell">${pendBtnHtml(i)}</td></tr>`).join('');
 }
 
 function renderLog(){
@@ -573,52 +490,12 @@ function renderLog(){
   const esp=document.getElementById('log-inp-esp').value.toLowerCase().trim();
   renderSection({data:LOG_DATA,dia,resp,esp,countId:'log-count',emptyId:'log-empty',tbodyId:'log-tbody',tableId:'log-table',cardsId:'log-cards-list',section:'log',theme:'logistica'});
 }
+
 function renderProd(){
   const dia=document.getElementById('prod-sel-dia').value||getTodayNorm();
   const resp=document.getElementById('prod-sel-resp').value.toLowerCase().trim();
   const esp=document.getElementById('prod-inp-esp').value.toLowerCase().trim();
   renderSection({data:PROD_DATA,dia,resp,esp,countId:'prod-count',emptyId:'prod-empty',tbodyId:'prod-tbody',tableId:'prod-table',cardsId:'prod-cards-list',section:'prod',theme:'produccion'});
-}
-function renderMkt(){
-  const dia=document.getElementById('mkt-sel-dia').value||getTodayNorm();
-  const resp=document.getElementById('mkt-sel-resp').value.toLowerCase().trim();
-  const area=document.getElementById('mkt-sel-area').value.toLowerCase().trim();
-  const esp=document.getElementById('mkt-inp-esp').value.toLowerCase().trim();
-  const f=MKT_DATA.map((r,i)=>({r,i})).filter(({r})=>{
-    if(dia&&r.diaNorm!==dia)return false;
-    if(resp&&!r.resp.toLowerCase().includes(resp))return false;
-    if(area&&!r.area.toLowerCase().includes(area))return false;
-    if(esp&&!r.espacio.toLowerCase().includes(esp))return false;
-    return true;
-  });
-  document.getElementById('mkt-count').textContent=f.length+' fila'+(f.length!==1?'s':'');
-  const empty=document.getElementById('mkt-empty');const tbl=document.getElementById('mkt-table');
-  if(!f.length){document.getElementById('mkt-tbody').innerHTML='';document.getElementById('mkt-cards-list').innerHTML='';empty.style.display='block';tbl.style.display='none';return;}
-  empty.style.display='none';tbl.style.display='table';
-  const theme='mkt';
-  document.getElementById('mkt-tbody').innerHTML=f.map(({r,i})=>{
-    const rc=respClass(r.resp);
-    const respHtml=r.resp?`<div class="person ${rc}"><div class="avatar">${initials(r.resp)}</div><span class="resp-name">${r.resp}</span></div>`:`<span style="color:#aaa">—</span>`;
-    const areaPill=r.area?`<span style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:12px;background:var(--mkt-light);color:var(--mkt-dark);border:1px solid var(--mkt-border)">${r.area}</span>`:'—';
-    const proyectoPill=r.proyecto?`<span style="font-size:11px;color:var(--mkt-text2);font-weight:500">${r.proyecto}</span>`:'—';
-    return`<tr>
-      <td>${buildDiaBadge(r,theme)}</td>
-      <td>${buildHorarioBadge(r.horario,theme)}</td>
-      <td>${respHtml}</td>
-      <td>${areaPill}</td>
-      <td>${proyectoPill}</td>
-      <td><span class="esp-name ${theme}">${r.espacio||'—'}</span></td>
-      <td><div class="nec ${theme}">${r.tarea||'—'}</div></td>
-      <td><div style="font-size:11px;color:var(--mkt-text3);line-height:1.5;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${r.info}">${r.info||'—'}</div></td>
-      <td><div class="nota ${theme}">${r.notas||'—'}</div></td>
-      <td class="ok-cell">${okBtnHtml(i,r.completado,'mkt',theme)}</td>
-    </tr>`;
-  }).join('');
-  document.getElementById('mkt-cards-list').innerHTML=f.map(({r,i})=>{
-    const rc=respClass(r.resp);
-    const respHtml=r.resp?`<div class="person ${rc}"><div class="avatar">${initials(r.resp)}</div><span class="resp-name">${r.resp}</span></div>`:'';
-    return`<div class="card ${theme}"><div class="card-header ${theme}"><div class="card-header-left"><div class="card-dia-row"><span class="card-dia ${theme}">${(DIAS_LABELS[r.diaNorm]||r.dia).toUpperCase()}</span>${r.area?`<span style="font-size:9px;background:rgba(255,255,255,.2);color:#fff;padding:1px 6px;border-radius:8px;font-family:monospace">${r.area}</span>`:''}</div><span class="card-esp">${r.tarea||r.espacio}</span></div>${r.horario?`<div class="card-horario-badge"><span class="card-horario-text">${r.horario}</span></div>`:''}</div><div class="card-body">${respHtml}${r.proyecto?`<div style="font-size:11px;font-weight:600;color:var(--mkt-acc)">${r.proyecto}</div>`:''}<div class="card-nec ${theme}">${r.tarea}</div>${r.notas?`<div class="card-nota ${theme}">${r.notas}</div>`:''}</div><div class="card-footer ${theme}">${okBtnHtml(i,r.completado,'mkt',theme)}</div></div>`;
-  }).join('');
 }
 
 function renderSection({data,dia,resp,esp,countId,emptyId,tbodyId,tableId,cardsId,section,theme}){
@@ -644,13 +521,7 @@ function renderSection({data,dia,resp,esp,countId,emptyId,tbodyId,tableId,cardsI
   }).join('');
 }
 
-function respClass(resp){
-  const k=(resp||'').toLowerCase();
-  if(k.includes('heber'))return'resp-heber';if(k.includes('daniel'))return'resp-daniel';
-  if(k.includes('nahuel'))return'resp-nahuel';if(k.includes('facundo'))return'resp-facundo';
-  if(k.includes('karim'))return'resp-karim';if(k.includes('joaco'))return'resp-joaco';
-  if(k.includes('lucas'))return'resp-lucas';return'';
-}
+function respClass(resp){const k=(resp||'').toLowerCase();if(k.includes('heber'))return'resp-heber';if(k.includes('daniel'))return'resp-daniel';if(k.includes('nahuel'))return'resp-nahuel';if(k.includes('facundo'))return'resp-facundo';if(k.includes('karim'))return'resp-karim';if(k.includes('joaco'))return'resp-joaco';if(k.includes('lucas'))return'resp-lucas';return'';}
 function initials(n){if(!n)return'?';const parts=n.trim().split(/[\s,]+/);return parts.length>=2?(parts[0][0]+(parts[1][0]||'')).toUpperCase():n.slice(0,2).toUpperCase();}
 function buildInfoHtml(r,theme){if((r.info||'').toLowerCase().includes('operativa'))return`<span class="op-tag ${theme}">Operativa</span>`;const lines=r.info.split('\n');const act=lines[0]||'';const hora=lines.slice(1).join(' ');if(!act)return`<span style="color:#aaa">—</span>`;return`<div class="info-act ${theme}">${act}</div>${hora?`<div class="info-hora">${hora}</div>`:''}`;}
 function buildDiaBadge(r,theme){return`<div class="dia-badge ${theme}"><span class="dia-badge-name">${(DIAS_LABELS[r.diaNorm]||r.dia).toUpperCase()}</span></div>`;}
@@ -659,106 +530,19 @@ function okBtnHtml(idx,done,section,theme){return`<button class="ok-btn ${theme}
 function pendBtnHtml(idx){return`<button class="ok-btn-pending" data-ok-idx="log-${idx}" onclick="toggleOk(${idx},'log')"><svg viewBox="0 0 16 16"><polyline points="2.5,8.5 6.5,12.5 13.5,4"/></svg><span class="ok-label">Marcar completado</span></button>`;}
 
 function showSection(which){
-  ['log','prod','ag','mkt'].forEach(s=>{document.getElementById('section-'+s).style.display=s===which?'block':'none';});
-  document.getElementById('nav-log').className='nav-btn'+(which==='log'?' active log-active':'');
-  document.getElementById('nav-prod').className='nav-btn'+(which==='prod'?' active prod-active':'');
-  document.getElementById('nav-ag').className='nav-btn'+(which==='ag'?' active ag-active':'');
-  document.getElementById('nav-mkt').className='nav-btn'+(which==='mkt'?' active mkt-active':'');
+  const logSec=document.getElementById('section-log');
+  const prodSec=document.getElementById('section-prod');
+  const btnLog=document.getElementById('nav-log');
+  const btnProd=document.getElementById('nav-prod');
+  if(which==='log'){logSec.style.display='block';prodSec.style.display='none';btnLog.className='nav-btn active log-active';btnProd.className='nav-btn';}
+  else{logSec.style.display='none';prodSec.style.display='block';btnLog.className='nav-btn';btnProd.className='nav-btn active prod-active';}
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-const AGENDA_ROWS=[
-  {franja:'manana',hora:'9:30 – 10:15',
-   lunes:'<div class="ag-event"><div class="ag-espacio">ALDEA – Exp Musical</div><div class="ag-taller">Baby Musicking I</div><div class="ag-meta">Mamá-Bebé 3-17m · Carla Leiva y Axel Montgomery</div></div>',
-   martes:'<div class="ag-event"><div class="ag-espacio">ALDEA – Taller Maker</div><div class="ag-taller">North School</div><div class="ag-meta">9:30 a 11:30</div></div>',
-   miercoles:'<div class="ag-event"><div class="ag-espacio">ALDEA – Cuerpo</div><div class="ag-taller">Yoga, Mindfulness y Alimentación</div><div class="ag-meta">Mamá-Bebé · Cora Castellanos y Coti Casanova</div></div>',
-   jueves:'<div class="ag-event"><div class="ag-espacio">ALDEA – Cuerpo</div><div class="ag-taller">Taller de Pikler</div><div class="ag-meta">Mamá-Bebé 3-17m · Carla Leiva</div></div>',
-   viernes:'',sabado:''},
-  {franja:'manana',hora:'9:30 – 12:00',
-   lunes:'<div class="ag-event"><div class="ag-espacio">FLOR – Arte</div><div class="ag-taller">Experiencias Sensoriales</div><div class="ag-meta">Mini aprender jugando 12-35m · Sabrina Meyrelles</div></div><div class="ag-event"><div class="ag-espacio">FLOR – Música</div><div class="ag-taller">Música Mini aprender jugando</div><div class="ag-meta">Carla Leiva</div></div><div class="ag-event"><div class="ag-espacio">TIERRA GRANDE</div><div class="ag-taller">Yoga para Hombres</div><div class="ag-meta">9:30-10:45 · Marcos Córdoba</div></div><div class="ag-event"><div class="ag-espacio">YURTA</div><div class="ag-taller">Yoga para Mujeres</div><div class="ag-meta">9:30-10:45 · Cora Castellanos</div></div>',
-   martes:'<div class="ag-event"><div class="ag-espacio">FLOR – Música</div><div class="ag-taller">Música Mini aprender jugando</div><div class="ag-meta">12-35m · Carla Leiva</div></div><div class="ag-event"><div class="ag-espacio">FLOR – Arte</div><div class="ag-taller">Cocina Mini aprender jugando</div><div class="ag-meta">25-35m · Diego Ruete</div></div><div class="ag-event"><div class="ag-espacio">TIERRA GRANDE</div><div class="ag-taller">Barré Fitness</div><div class="ag-meta">9:30-11 · Mar Amoroso</div></div><div class="ag-event"><div class="ag-espacio">ORIENTE</div><div class="ag-taller">Entrenamiento Integral Evolutivo</div><div class="ag-meta">10-11 · Giancarlo Manassi</div></div>',
-   miercoles:'<div class="ag-event"><div class="ag-espacio">DOMO</div><div class="ag-taller">Diversión en Movimiento</div><div class="ag-meta">Mini aprender jugando 12-24m · Mercedes Lavista</div></div><div class="ag-event"><div class="ag-espacio">BOSQUE / FLOR Música</div><div class="ag-taller">Juguemos en el Bosque</div><div class="ag-meta">25-35m · Carla Leiva</div></div><div class="ag-event"><div class="ag-espacio">TIERRA GRANDE</div><div class="ag-taller">Yoga Vinyasa Suave</div><div class="ag-meta">9:30-11 · Didi</div></div><div class="ag-event"><div class="ag-espacio">TIERRA CHICA</div><div class="ag-taller">Bases Funcionales</div><div class="ag-meta">10-11 · Giancarlo Manassi</div></div><div class="ag-event"><div class="ag-espacio">CARPINTERÍA</div><div class="ag-taller">Cerámica con Lola</div><div class="ag-meta">10-12 · Lola Piñeyrua</div></div>',
-   jueves:'<div class="ag-event"><div class="ag-espacio">DOMO</div><div class="ag-taller">Juego, Calma y Movimiento</div><div class="ag-meta">25-35m · Florencia Rodriguez</div></div><div class="ag-event"><div class="ag-espacio">TIERRA GRANDE</div><div class="ag-taller">Barré Fitness</div><div class="ag-meta">9:30-11 · Mar Amoroso</div></div><div class="ag-event"><div class="ag-espacio">ORIENTE</div><div class="ag-taller">Entrenamiento Integral Evolutivo</div><div class="ag-meta">10-11 · Giancarlo Manassi</div></div><div class="ag-event"><div class="ag-espacio">SEMILLA</div><div class="ag-taller">Escritura Creativa</div><div class="ag-meta">10-12 · Shumi Gauto</div></div>',
-   viernes:'<div class="ag-event"><div class="ag-espacio">FLOR – Arte</div><div class="ag-taller">Rituales Mini aprender jugando</div><div class="ag-meta">12-24m · Constanza Casanova</div></div><div class="ag-event"><div class="ag-espacio">DOMO</div><div class="ag-taller">Diversión en Movimiento</div><div class="ag-meta">25-35m · Mercedes Lavista</div></div><div class="ag-event"><div class="ag-espacio">TIERRA GRANDE</div><div class="ag-taller">Kundalini Yoga</div><div class="ag-meta">9:30-10 · Amit Wior</div></div><div class="ag-event"><div class="ag-espacio">SEMILLA</div><div class="ag-taller">Bioquímica para el Autoconocimiento</div><div class="ag-meta">11-12:30 · Ana Inés Gutiérrez</div></div>',
-   sabado:'<div class="ag-event"><div class="ag-espacio">NIÑOS 10-12 y 14-16</div><div class="ag-taller">Pequeños Aventureros</div><div class="ag-meta">2-4 años · Martina Pi</div></div><div class="ag-event"><div class="ag-espacio">FLOR – Arte</div><div class="ag-taller">Labores</div><div class="ag-meta">+5 años · Candela Balcarce y Valeria Martin</div></div><div class="ag-event"><div class="ag-espacio">DOMO</div><div class="ag-taller">Artes Marciales</div><div class="ag-meta">+5 años · Gonzalo Ciz</div></div><div class="ag-event"><div class="ag-espacio">FABLAB</div><div class="ag-taller">Robótica con Lego</div><div class="ag-meta">+5 años · Dario Dominguez y Zaida Lopez</div></div><div class="ag-event"><div class="ag-espacio">ALDEA Cuerpo</div><div class="ag-taller">Ritmos</div><div class="ag-meta">+5 años · Maria Noel Costa</div></div><div class="ag-event"><div class="ag-espacio">CRÁTER</div><div class="ag-taller">Puentes Colgantes</div><div class="ag-meta">+7 años · Ismael Lugo, Carolina Lugo y Nahuel Merlo</div></div><div class="ag-event"><div class="ag-espacio">MAKER</div><div class="ag-taller">Universo Creativo</div><div class="ag-meta">+5 años · Ornella Borroni / Jairolh Portillo</div></div><div class="ag-event"><div class="ag-espacio">CANCHITA</div><div class="ag-taller">Escuelita de Fútbol</div><div class="ag-meta">+5 años · Lucas Cisneros y Lautaro Colqui</div></div><div class="ag-event"><div class="ag-espacio">CARPINTERÍA</div><div class="ag-taller">Carpintería Abierta</div><div class="ag-meta">10-13 · Pedro Pereira</div></div><div class="ag-event"><div class="ag-espacio">YURTA</div><div class="ag-taller">Danza House</div><div class="ag-meta">10-12 · Ian Lockhart</div></div>'},
-  {franja:'manana',hora:'11:30 – 12:30',
-   lunes:'',
-   martes:'<div class="ag-event"><div class="ag-espacio">TIERRA GRANDE</div><div class="ag-taller">Barré Flow</div><div class="ag-meta">Mar Amoroso</div></div>',
-   miercoles:'<div class="ag-event"><div class="ag-espacio">TIERRA GRANDE</div><div class="ag-taller">Barré Flow</div><div class="ag-meta">Mar Amoroso</div></div><div class="ag-event"><div class="ag-espacio">ORIENTE</div><div class="ag-taller">La Propia Expresión</div><div class="ag-meta">10-12 · Shumi Gauto</div></div><div class="ag-event"><div class="ag-espacio">SEMILLA</div><div class="ag-taller">Plantas Medicinales</div><div class="ag-meta">10-12:30 · Vera Nazca y Ana Lucía Rapetti</div></div>',
-   jueves:'<div class="ag-event"><div class="ag-espacio">YURTA</div><div class="ag-taller">Tai Chi</div><div class="ag-meta">Jerónimo Correa</div></div><div class="ag-event"><div class="ag-espacio">SEMILLA</div><div class="ag-taller">Patchwork</div><div class="ag-meta">10-12 · Natalia Andriolo</div></div>',
-   viernes:'<div class="ag-event"><div class="ag-espacio">TIERRA GRANDE / CRÁTER / BOSQUE</div><div class="ag-taller">Ciclo Respiro: Meditar en la Naturaleza</div><div class="ag-meta">10-11 · Giancarlo Manassi y Fran Vanoni</div></div><div class="ag-event"><div class="ag-espacio">SEMILLA</div><div class="ag-taller">Poesía Experimental</div><div class="ag-meta">11-12:30 · Martin Barea Mattos</div></div><div class="ag-event"><div class="ag-espacio">CARPINTERÍA</div><div class="ag-taller">Cerámica con Lu</div><div class="ag-meta">10-12 · Lucía Acevedo</div></div>',
-   sabado:''},
-  {franja:'mediodia',hora:'12:00 – 14:00',
-   lunes:'<div class="ag-event"><div class="ag-espacio">ORIENTE – Galería y Comedor</div><div class="ag-taller">Ikigai Almuerzo</div><div class="ag-meta">12-14hs</div></div>',
-   martes:'<div class="ag-event"><div class="ag-espacio">ORIENTE – Galería y Comedor</div><div class="ag-taller">Ikigai Almuerzo</div><div class="ag-meta">12-14hs</div></div>',
-   miercoles:'<div class="ag-event"><div class="ag-espacio">ORIENTE – Galería y Comedor</div><div class="ag-taller">Ikigai Almuerzo</div><div class="ag-meta">12-14hs</div></div>',
-   jueves:'<div class="ag-event"><div class="ag-espacio">ORIENTE – Galería y Comedor</div><div class="ag-taller">Ikigai Almuerzo</div><div class="ag-meta">12-14hs</div></div>',
-   viernes:'<div class="ag-event"><div class="ag-espacio">ORIENTE – Galería y Comedor</div><div class="ag-taller">Ikigai Almuerzo</div><div class="ag-meta">12-14hs</div></div>',
-   sabado:''},
-  {franja:'mediodia',hora:'14:00 – 16:00',
-   lunes:'<div class="ag-event"><div class="ag-espacio">ORIENTE / FLOR / ALDEA / DOMO</div><div class="ag-taller">Ikigai Talleres</div><div class="ag-meta">Casa de niños · Phonics and Music · Espacio Proyecto · Taller 1 y 2 · Robótica con Lego · Expresiones Varias</div></div>',
-   martes:'<div class="ag-event"><div class="ag-espacio">ORIENTE / FLOR / ALDEA / FABLAB</div><div class="ag-taller">Ikigai Talleres</div><div class="ag-meta">Casa de niños · Taller 1 y 2 · Cocina · Club de Lego · Espacio Proyecto</div></div>',
-   miercoles:'<div class="ag-event"><div class="ag-espacio">ORIENTE / FLOR / ALDEA / MAKER</div><div class="ag-taller">Ikigai Talleres</div><div class="ag-meta">Casa de niños · Relatos y Labores · Espacio Proyecto · Taller 1 y 2 · Learning OS · Tejiendo Ideas</div></div><div class="ag-event"><div class="ag-espacio">BOSQUE / DOMO</div><div class="ag-taller">Jardincito de Majo</div><div class="ag-meta">Inicio Agosto</div></div>',
-   jueves:'<div class="ag-event"><div class="ag-espacio">ORIENTE / FLOR / ALDEA / DOMO</div><div class="ag-taller">Ikigai Talleres</div><div class="ag-meta">Casa de niños · Cocina · Espacio Proyecto · Taller 1 y 2 · Tejiendo Ideas</div></div>',
-   viernes:'<div class="ag-event"><div class="ag-espacio">ORIENTE / FLOR / ALDEA / CANCHITA / CRÁTER</div><div class="ag-taller">Ikigai Talleres</div><div class="ag-meta">Casa de niños · Deporte · Taller 1 y 2</div></div>',
-   sabado:'<div class="ag-event"><div class="ag-espacio">ALDEA – Arte</div><div class="ag-taller">Pintura Familiar</div><div class="ag-meta">10-12 y 14-16 · Sandra Férix</div></div>'},
-  {franja:'mediodia',hora:'15:00 – 17:00',
-   lunes:'<div class="ag-event"><div class="ag-espacio">ALDEA – Exp Musical</div><div class="ag-taller">First Steps I</div><div class="ag-meta">15-16hs · 3-4 años · Alex Montgomery y Carla Leiva</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Exp Musical</div><div class="ag-taller">First Steps II</div><div class="ag-meta">16-17hs · 4-5 años · Alex Montgomery y Carla Leiva</div></div>',
-   martes:'',
-   miercoles:'<div class="ag-event"><div class="ag-espacio">ALDEA – Exp Musical</div><div class="ag-taller">Baby Musicking II</div><div class="ag-meta">16-16:45hs · 18-35m + Adulto · Carla Leiva y Axel Montgomery</div></div>',
-   jueves:'',viernes:'',sabado:''},
-  {franja:'tarde',hora:'17:00 – 19:00',
-   lunes:'<div class="ag-event"><div class="ag-espacio">DOMO</div><div class="ag-taller">Diversión en Movimiento</div><div class="ag-meta">3 años · Mercedes Lavista</div></div><div class="ag-event"><div class="ag-espacio">FLOR – Ludolab</div><div class="ag-taller">Elige tu Propia Aventura</div><div class="ag-meta">3 años · Milagros Gutiérrez</div></div><div class="ag-event"><div class="ag-espacio">FLOR – Centro</div><div class="ag-taller">Telas</div><div class="ag-meta">5-6 años · Carolina Cohelo y Belén Bracco</div></div><div class="ag-event"><div class="ag-espacio">FLOR – Ludolab</div><div class="ag-taller">Arte y Conexión</div><div class="ag-meta">5-6 años · Natalia Fonsalia y Silvina Ekhort</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Cuerpo</div><div class="ag-taller">Ballet</div><div class="ag-meta">5-6 años · Marina Tortora</div></div><div class="ag-event"><div class="ag-espacio">CANCHITA</div><div class="ag-taller">Escuelita de Fútbol</div><div class="ag-meta">5-6 años · Lautaro Colqui y Lucas Cisneros</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Cuerpo</div><div class="ag-taller">Gimnasia Artística</div><div class="ag-meta">7 años · Natalia Bidegain</div></div><div class="ag-event"><div class="ag-espacio">ARTE – Aldea</div><div class="ag-taller">Elige tu Propia Aventura</div><div class="ag-meta">7 años · Victoria Zurdo</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Sala de Ensayo</div><div class="ag-taller">Mini Jammeros</div><div class="ag-meta">8-9 años · Axel Montgomery, Carla Leiva, Guillermo Sader y Luis Borja</div></div><div class="ag-event"><div class="ag-espacio">FABLAB</div><div class="ag-taller">Robótica y Programación</div><div class="ag-meta">8-9 años · Rodrigo de Armas y Nahuel Merlo</div></div><div class="ag-event"><div class="ag-espacio">FLOR – Centro</div><div class="ag-taller">Telas</div><div class="ag-meta">8-9 años · Belén Bracco</div></div><div class="ag-event"><div class="ag-espacio">CRÁTER</div><div class="ag-taller">Vida en la Naturaleza y Parkour</div><div class="ag-meta">7 años · Adrian Martinez e Ismael Lugo</div></div><div class="ag-event"><div class="ag-espacio">CARPINTERÍA</div><div class="ag-taller">Carpintería</div><div class="ag-meta">+10 años · Nicolás Lagues</div></div><div class="ag-event"><div class="ag-espacio">ALDEA Audiovisual / MAKER</div><div class="ag-taller">La Productora</div><div class="ag-meta">+10 años · Pietro Scalone, Sol Nogueira, Matías Valenza y Jairolh Portillo</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Biblioteca</div><div class="ag-taller">Astrología</div><div class="ag-meta">+10 años · Sofía Trujillo</div></div><div class="ag-event"><div class="ag-espacio">YURTA</div><div class="ag-taller">Yoga Vinyasa</div><div class="ag-meta">17:30-19 · Vero Savalesky</div></div><div class="ag-event"><div class="ag-espacio">TIERRA GRANDE</div><div class="ag-taller">Pilates Fusion</div><div class="ag-meta">17:30-19 · Mar Amoroso</div></div><div class="ag-event"><div class="ag-espacio">TIERRA CHICA</div><div class="ag-taller">Movilidad y Entrenamiento Funcional</div><div class="ag-meta">17:30-19 · Conrado Forcher</div></div><div class="ag-event"><div class="ag-espacio">SEMILLA</div><div class="ag-taller">Comunidad Sonora</div><div class="ag-meta">17:30-19 · Roque Bellini</div></div>',
-   martes:'<div class="ag-event"><div class="ag-espacio">BOSQUE / FLOR – Juego Libre</div><div class="ag-taller">Cuenta Cuentos en el Bosque</div><div class="ag-meta">3-4 años · Magali Bornes</div></div><div class="ag-event"><div class="ag-espacio">FLOR – Arte</div><div class="ag-taller">Labores</div><div class="ag-meta">4-6 años · Candela Balcarce y Valeria Martin</div></div><div class="ag-event"><div class="ag-espacio">FLOR – Música</div><div class="ag-taller">Música</div><div class="ag-meta">3-4 años · Ignacio Croci</div></div><div class="ag-event"><div class="ag-espacio">FLOR – Juego Libre</div><div class="ag-taller">Mini Programadores</div><div class="ag-meta">4-5 años · Julia Lagues y Ornella Borroni</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Cuerpo</div><div class="ag-taller">Artes Marciales</div><div class="ag-meta">6-7 años · Gonzalo Ciz</div></div><div class="ag-event"><div class="ag-espacio">CANCHITA</div><div class="ag-taller">Escuelita de Fútbol</div><div class="ag-meta">5-6 años · Lautaro Colqui y Lucas Cisneros</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Arte</div><div class="ag-taller">Arte y Pintura</div><div class="ag-meta">7 años · Pía Ruiz</div></div><div class="ag-event"><div class="ag-espacio">FABLAB</div><div class="ag-taller">Robótica y Programación</div><div class="ag-meta">6-7 años · Rodrigo de Armas y Nahuel Merlo</div></div><div class="ag-event"><div class="ag-espacio">CARPINTERÍA</div><div class="ag-taller">Cerámica</div><div class="ag-meta">7-9 años · Lucía Acevedo, Noel Soto y Sofía Hernández</div></div><div class="ag-event"><div class="ag-espacio">MAKER</div><div class="ag-taller">Universo Creativo</div><div class="ag-meta">7-9 años · Magdalena Fiori y Maria Luján Raptis</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Sala de Ensayo</div><div class="ag-taller">Mini Jammeros</div><div class="ag-meta">8-9 años · Carla Leiva, Axel Montgomery, Guillermo Sader y Luis Borja</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Arte</div><div class="ag-taller">Pintura y Arte</div><div class="ag-meta">8-9 años · Sandra Férix</div></div><div class="ag-event"><div class="ag-espacio">CRÁTER</div><div class="ag-taller">Vida en la Naturaleza</div><div class="ag-meta">8-9 años · Adrian Martinez e Ismael Lugo</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Sala de Ensayo</div><div class="ag-taller">Mini Jammeros</div><div class="ag-meta">+10 años · Carla Leiva, Axel Montgomery, Guillermo Sader y Luis Borja</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Arte</div><div class="ag-taller">Pintura</div><div class="ag-meta">+10 años · Sandra Férix</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Cuerpo</div><div class="ag-taller">Danza Urbana</div><div class="ag-meta">+10 años · Maria Noel Costa</div></div><div class="ag-event"><div class="ag-espacio">CANCHITA</div><div class="ag-taller">Fútbol y Parkour</div><div class="ag-meta">+10 años · Lautaro Colqui, Adrian Martinez y Lucas Cisneros</div></div><div class="ag-event"><div class="ag-espacio">TIERRA GRANDE</div><div class="ag-taller">Experiencia Compañía Teatral: Actuación</div><div class="ag-meta">17:30-19 · Sofía Campal</div></div><div class="ag-event"><div class="ag-espacio">TIERRA GRANDE</div><div class="ag-taller">Ciclo Música Medicina</div><div class="ag-meta">17:30-19 · Varios talleristas</div></div><div class="ag-event"><div class="ag-espacio">YURTA</div><div class="ag-taller">Yoga del Corazón</div><div class="ag-meta">17:30-19 · Cora Castellanos</div></div><div class="ag-event"><div class="ag-espacio">SEMILLA</div><div class="ag-taller">Experiencia Compañía Teatral: Producción y Puesta en Escena</div><div class="ag-meta">17:30-19 · Magdalena Fiori y Jimena Vignolo</div></div>',
-   miercoles:'<div class="ag-event"><div class="ag-espacio">FLOR – Arte</div><div class="ag-taller">Cocina</div><div class="ag-meta">5-6 años · Diego Ruete</div></div><div class="ag-event"><div class="ag-espacio">FLOR – Ludolab</div><div class="ag-taller">Inventos y Experimentos</div><div class="ag-meta">4-6 años · Ornella Borroni y Julia Lagues</div></div><div class="ag-event"><div class="ag-espacio">FLOR – Juego Libre</div><div class="ag-taller">Gimnasia Artística</div><div class="ag-meta">5-6 años · Melanny Estévez</div></div><div class="ag-event"><div class="ag-espacio">CANCHITA</div><div class="ag-taller">Escuelita de Fútbol</div><div class="ag-meta">5-6 años · Lautaro Colqui y Lucas Cisneros</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Exp Musical</div><div class="ag-taller">Canto</div><div class="ag-meta">6-7 años · Valentina Estol</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Arte</div><div class="ag-taller">Arte y Pintura / Universo Creativo</div><div class="ag-meta">7 años</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Cuerpo</div><div class="ag-taller">Gimnasia Artística</div><div class="ag-meta">7 años · Natalia Bidegain</div></div><div class="ag-event"><div class="ag-espacio">CANCHITA</div><div class="ag-taller">Escuelita de Fútbol</div><div class="ag-meta">7-8 años · Lucas Cisneros y Lautaro Colqui</div></div><div class="ag-event"><div class="ag-espacio">DOMO</div><div class="ag-taller">Yoga y Conexión</div><div class="ag-meta">8-9 años · Florencia González</div></div><div class="ag-event"><div class="ag-espacio">MAKER</div><div class="ag-taller">Arte y Diseño Digital</div><div class="ag-meta">8-9 años · Matías Valenza y Jairolh Portillo</div></div><div class="ag-event"><div class="ag-espacio">CARPINTERÍA</div><div class="ag-taller">Cerámica</div><div class="ag-meta">+10 años · Lucía Acevedo</div></div><div class="ag-event"><div class="ag-espacio">FABLAB</div><div class="ag-taller">Fab Lab Creativo</div><div class="ag-meta">+10 años · Rodrigo de Armas y Ornella Borroni</div></div><div class="ag-event"><div class="ag-espacio">TALLER MAKERS</div><div class="ag-taller">Téxtil Creativo</div><div class="ag-meta">+10 años · María Pons y Ornella Borroni</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Audiovisual</div><div class="ag-taller">Radio Portal</div><div class="ag-meta">3 a +10 años · Jairolh Portillo y Nicolás Vivo</div></div><div class="ag-event"><div class="ag-espacio">TIERRA GRANDE</div><div class="ag-taller">Ciclo Ronda</div><div class="ag-meta">17:30-19</div></div><div class="ag-event"><div class="ag-espacio">TIERRA CHICA</div><div class="ag-taller">Movilidad y Entrenamiento Funcional</div><div class="ag-meta">17:30-19 · Conrado Forcher</div></div><div class="ag-event"><div class="ag-espacio">SEMILLA</div><div class="ag-taller">Astrología 2 / Maquillaje</div><div class="ag-meta">17:30-19 · Sofía Trujillo / Sile Lewis</div></div>',
-   jueves:'<div class="ag-event"><div class="ag-espacio">FLOR – Arte</div><div class="ag-taller">Cocina</div><div class="ag-meta">5-6 años · Diego Ruete</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Exp Musical</div><div class="ag-taller">Canto</div><div class="ag-meta">8-9 años · Valentina Estol</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Sala de Ensayo</div><div class="ag-taller">Mini Jammeros</div><div class="ag-meta">8-9 años · Carla Leiva, Axel Montgomery, Guillermo Sader y Luis Borja</div></div><div class="ag-event"><div class="ag-espacio">Ludolab</div><div class="ag-taller">Descubrite Bailando</div><div class="ag-meta">8-9 años · Nicolás Vivo y Maria Noel Costa</div></div><div class="ag-event"><div class="ag-espacio">CARPINTERÍA</div><div class="ag-taller">Carpintería y Ebanistería</div><div class="ag-meta">17:30-19 · Nicolás Lagues y Pedro Pereira</div></div><div class="ag-event"><div class="ag-espacio">TIERRA CHICA</div><div class="ag-taller">Movilidad y Entrenamiento Funcional</div><div class="ag-meta">17:30-19 · Conrado Forcher</div></div>',
-   viernes:'<div class="ag-event"><div class="ag-espacio">FLOR – Música</div><div class="ag-taller">Música</div><div class="ag-meta">3-4 años · Ignacio Croci</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Audiovisual</div><div class="ag-taller">Radio Portal</div><div class="ag-meta">3 a +10 años · Jairolh Portillo y Nicolás Vivo</div></div><div class="ag-event"><div class="ag-espacio">SEMILLA</div><div class="ag-taller">Cocina con Mapadres</div><div class="ag-meta">3-4 años · Diego Ruete</div></div><div class="ag-event"><div class="ag-espacio">CANCHITA</div><div class="ag-taller">Escuelita de Fútbol</div><div class="ag-meta">5-8 años · Lautaro Colqui y Lucas Cisneros</div></div><div class="ag-event"><div class="ag-espacio">FABLAB</div><div class="ag-taller">Robótica y Programación</div><div class="ag-meta">6-7 años · Rodrigo de Armas y Nahuel Merlo</div></div><div class="ag-event"><div class="ag-espacio">CRÁTER</div><div class="ag-taller">Vida en la Naturaleza</div><div class="ag-meta">7 años · Adrian Martinez e Ismael Lugo</div></div><div class="ag-event"><div class="ag-espacio">ALDEA – Cuerpo</div><div class="ag-taller">Danza Urbana</div><div class="ag-meta">+10 años · Maria Noel Costa</div></div><div class="ag-event"><div class="ag-espacio">CARPINTERÍA</div><div class="ag-taller">Cerámica</div><div class="ag-meta">+10 años · Lucía Acevedo</div></div><div class="ag-event"><div class="ag-espacio">TIERRA GRANDE</div><div class="ag-taller">Pilates Fusion</div><div class="ag-meta">17:30-19 · Mar Amoroso</div></div><div class="ag-event"><div class="ag-espacio">TIERRA CHICA</div><div class="ag-taller">HIT Cardio</div><div class="ag-meta">17:30-19 · Conrado Forcher</div></div><div class="ag-event"><div class="ag-espacio">SEMILLA</div><div class="ag-taller">Comunidad Sonora</div><div class="ag-meta">17:30-19 · Roque Bellini</div></div>',
-   sabado:''},
-];
-
-const DIAS_AG=['lunes','martes','miercoles','jueves','viernes','sabado'];
-const FRANJA_LABELS={manana:'Mañana',mediodia:'Mediodía',tarde:'Tarde'};
-
-function buildAgendaTbody(rows,visibleDias){
-  const dias=visibleDias||DIAS_AG;
-  return rows.map(row=>{
-    const cols=dias.map(d=>`<td class="ag-td ag-col-${d}">${row[d]||'<span class="ag-empty">—</span>'}</td>`).join('');
-    return`<tr class="ag-row-${row.franja}"><td class="ag-td-hora ag-franja-${row.franja}"><span class="ag-franja-label">${FRANJA_LABELS[row.franja]||row.franja}</span><br>${row.hora}</td>${cols}</tr>`;
-  }).join('');
-}
-function updateDiaHeaders(visibleDias){
-  DIAS_AG.forEach(d=>{
-    const th=document.getElementById('th-'+d);
-    if(!th)return;
-    th.style.display=(!visibleDias||visibleDias.includes(d))?'':'none';
-  });
-}
-function filterAgenda(){
-  const dia=document.getElementById('ag-dia').value;
-  const franja=document.getElementById('ag-franja').value;
-  const search=document.getElementById('ag-search').value.toLowerCase().trim();
-  const visibleDias=dia?[dia]:DIAS_AG;
-  updateDiaHeaders(visibleDias);
-  let rows=AGENDA_ROWS;
-  if(franja)rows=rows.filter(r=>r.franja===franja);
-  if(search){
-    rows=rows.map(r=>{
-      const filtered={...r};
-      visibleDias.forEach(d=>{if(filtered[d]&&!filtered[d].toLowerCase().includes(search))filtered[d]='';});
-      const hasContent=visibleDias.some(d=>filtered[d]);
-      return hasContent?filtered:null;
-    }).filter(Boolean);
-  }
-  document.getElementById('agenda-tbody').innerHTML=buildAgendaTbody(rows,visibleDias);
-}
-
-document.getElementById('agenda-tbody').innerHTML=buildAgendaTbody(AGENDA_ROWS,DIAS_AG);
-
 fetchLog();
 fetchProd();
-fetchMkt();
 setInterval(syncEstados,30*1000);
-setInterval(()=>{fetchLog();fetchProd();fetchMkt();},5*60*1000);
+setInterval(()=>{fetchLog();fetchProd();},5*60*1000);
 </script>
 </body>
 </html>
