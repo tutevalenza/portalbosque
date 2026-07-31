@@ -17,7 +17,7 @@
     --karim-bg:#1a3040;--karim-fg:#80c8e8;--karim-dot:#2898c8;
     --joaco-bg:#2a2010;--joaco-fg:#d0b870;--joaco-dot:#a88830;
     --lucas-bg:#1e1a40;--lucas-fg:#a898e0;--lucas-dot:#7058c0;
-    --prod-dark:#111111;--prod-filter-bg:#f5f5f5;--prod-border2:#e0e0e0;
+    --prod-filter-bg:#f5f5f5;--prod-border2:#e0e0e0;
     --prod-text:#111111;--prod-text2:#333333;--prod-text3:#888888;
     --pending-bg:#fff8e6;--pending-border:#e6a817;--pending-header:#c8860a;
     --pending-text:#7a5500;--pending-btn-done:#c8860a;
@@ -177,11 +177,8 @@
   .footer{padding:.8rem 1.5rem;border-top:1px solid var(--border);font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);display:flex;justify-content:space-between;align-items:center;background:var(--bg2)}
   .footer a{color:var(--green-acc);text-decoration:none}
   @media(max-width:700px){
-    .table-wrap{display:none}
-    .pending-section{display:none!important}
-    .cards{display:block}
-    .filters{padding:.65rem 1rem;gap:.6rem}
-    .filter-group{flex:1;min-width:130px}
+    .table-wrap{display:none}.pending-section{display:none!important}.cards{display:block}
+    .filters{padding:.65rem 1rem;gap:.6rem}.filter-group{flex:1;min-width:130px}
     select,input[type=text]{width:100%;min-width:unset;font-size:14px}
     .header{padding:.8rem 1rem}.header-logo{height:36px}.header-title{font-size:15px}
     .today-bar{padding:.45rem 1rem .5rem}.status{padding:.4rem 1rem}
@@ -219,7 +216,6 @@
   </button>
 </div>
 
-<!-- LOGÍSTICA -->
 <div id="section-log">
 <div class="section">
   <div class="section-header logistica">
@@ -261,7 +257,6 @@
 </div>
 </div>
 
-<!-- PRODUCCIÓN -->
 <div id="section-prod" style="display:none">
 <div class="section">
   <div class="section-header produccion">
@@ -308,23 +303,61 @@ const RESPS_VALIDOS=['pacha','flor alvez','tute','chunka','heber','facundo','joa
 function getTodayNorm(){const d=['DOMINGO','LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO'];return norm(d[new Date().getDay()]);}
 function getYesterdayNorm(){const d=new Date();d.setDate(d.getDate()-1);const dias=['DOMINGO','LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO'];return norm(dias[d.getDay()]);}
 function formatTodayDate(){return new Date().toLocaleDateString('es-UY',{weekday:'long',day:'numeric',month:'long'});}
-function norm(s){return(s||'').toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+function norm(s){return(s||'').toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();}
 
-function parseCSV(text,rowMapRef){
+function splitCSVLine(line){
+  const r=[];let cur='',inQ=false;
+  for(let i=0;i<line.length;i++){
+    const ch=line[i];
+    if(ch==='"'){if(inQ&&line[i+1]==='"'){cur+='"';i++;}else{inQ=!inQ;}}
+    else if(ch===','&&!inQ){r.push(cur);cur='';}
+    else{cur+=ch;}
+  }
+  r.push(cur);return r;
+}
+
+function findCol(headers,...candidates){
+  for(const cand of candidates){
+    const cn=norm(cand);
+    const idx=headers.findIndex(h=>norm(h)===cn);
+    if(idx>=0)return idx;
+  }
+  for(const cand of candidates){
+    const cn=norm(cand);
+    const idx=headers.findIndex(h=>norm(h).includes(cn));
+    if(idx>=0)return idx;
+  }
+  return -1;
+}
+
+function parseCSV(text,rowMapRef,label){
   const rows=[];
-  const lines=text.replace(/\r/g,'').split('\n');
+  const raw=text.replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+  const lines=[];
+  let current='',inQuote=false;
+  for(let i=0;i<raw.length;i++){
+    const ch=raw[i];
+    if(ch==='"')inQuote=!inQuote;
+    if(ch==='\n'&&!inQuote){lines.push(current);current='';}
+    else{current+=ch;}
+  }
+  if(current)lines.push(current);
+  if(lines.length<2){console.warn(`[${label}] CSV vacío`);return rows;}
+  const headerCols=splitCSVLine(lines[0]);
+  const headers=headerCols.map(h=>h.trim());
+  const iDia       =findCol(headers,'DIA','DÍA','Dia','Día');
+  const iResp      =findCol(headers,'RESPONSABLE LOGISTICO','RESPONSABLE','Responsable');
+  const iHorario   =findCol(headers,'HORARIO ARMADO','HORARIO','Horario');
+  const iEspacio   =findCol(headers,'ESPACIO','Espacio');
+  const iNecesidad =findCol(headers,'NECESIDAD','Necesidad');
+  const iInfo      =findCol(headers,'INFO','Info');
+  const iNotas     =findCol(headers,'NOTAS','Notas','NOTA');
+  const iCompletado=findCol(headers,'COMPLETADO','Completado');
+  console.log(`[${label}] Headers (${headers.length}):`,headers);
+  console.log(`[${label}] Índices → DIA:${iDia} RESP:${iResp} HOR:${iHorario} ESP:${iEspacio} NEC:${iNecesidad} INFO:${iInfo} NOTAS:${iNotas} COMP:${iCompletado}`);
   let lastDia='',lastHorario='',lastEspacio='';
   let sheetRow=1;
   rowMapRef.length=0;
-  const headers=splitCSVLine(lines[0]||'').map(h=>norm(h.trim()));
-  const iDia      =headers.findIndex(h=>h.includes('DIA')||h.includes('DÍA'));
-  const iResp     =headers.findIndex(h=>h.includes('RESPONSABLE'));
-  const iHorario  =headers.findIndex(h=>h.includes('HORARIO'));
-  const iEspacio  =headers.findIndex(h=>h.includes('ESPACIO'));
-  const iNecesidad=headers.findIndex(h=>h.includes('NECESIDAD'));
-  const iInfo     =headers.findIndex(h=>h==='INFO'||h.startsWith('INFO'));
-  const iNotas    =headers.findIndex(h=>h.includes('NOTA'));
-  const iCompletado=headers.findIndex(h=>h.includes('COMPLETADO'));
   for(let i=1;i<lines.length;i++){
     sheetRow++;
     const line=lines[i].trim();if(!line)continue;
@@ -338,27 +371,17 @@ function parseCSV(text,rowMapRef){
     let info     =get(iInfo>=0?iInfo:5);
     let notas    =get(iNotas>=0?iNotas:6);
     let completado=get(iCompletado>=0?iCompletado:7);
-    if(dia)    lastDia=dia;      else dia=lastDia;
+    if(dia)    lastDia    =dia;     else dia    =lastDia;
     if(horario)lastHorario=horario; else horario=lastHorario;
     if(espacio)lastEspacio=espacio; else espacio=lastEspacio;
-    const hayDatos=necesidad||info||notas||espacio;
-    if(!hayDatos)continue;
+    if(!dia&&!espacio&&!necesidad&&!info&&!notas)continue;
     if(!dia)continue;
     rows.push({dia,diaNorm:norm(dia),resp:resp||'',horario:horario||'',espacio:espacio||'',necesidad:necesidad||'',info:info||'',notas:notas||'',completado:(completado||'').toUpperCase()==='SI'});
     rowMapRef.push(sheetRow);
   }
+  const conInfo=rows.filter(r=>r.info).length;
+  console.log(`[${label}] Total: ${rows.length} | Con INFO: ${conInfo} | Sin INFO: ${rows.length-conInfo}`);
   return rows;
-}
-
-function splitCSVLine(line){
-  const r=[];let cur='',inQ=false;
-  for(let i=0;i<line.length;i++){
-    const ch=line[i];
-    if(ch==='"'){inQ=!inQ;}
-    else if(ch===','&&!inQ){r.push(cur);cur='';}
-    else{cur+=ch;}
-  }
-  r.push(cur);return r;
 }
 
 function populateSelect(id,items){
@@ -371,7 +394,7 @@ async function fetchLog(){
   try{
     const res=await fetch(CSV_LOG+'&t='+Date.now());
     if(!res.ok)throw new Error('HTTP '+res.status);
-    LOG_DATA=parseCSV(await res.text(),LOG_ROW_MAP);
+    LOG_DATA=parseCSV(await res.text(),LOG_ROW_MAP,'LOGÍSTICA');
     const diasNorm=new Set(LOG_DATA.map(r=>r.diaNorm).filter(Boolean));
     populateSelect('log-sel-dia',DIAS_ORDER.filter(d=>diasNorm.has(d)).map(d=>({val:d,label:DIAS_LABELS[d]||d})));
     populateSelect('log-sel-resp',RESPS_VALIDOS.map(r=>r.split(' ').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ')));
@@ -388,7 +411,7 @@ async function fetchLog(){
     document.getElementById('log-status').textContent='Sin conexión con Google Sheets';
     document.querySelector('.status-dot.logistica').style.background='#c05050';
     document.querySelector('.status-dot.logistica').style.animation='none';
-    console.error('fetchLog:',e);
+    console.error('[LOGÍSTICA] Error:',e);
   }
 }
 
@@ -396,7 +419,7 @@ async function fetchProd(){
   try{
     const res=await fetch(CSV_PROD+'&t='+Date.now());
     if(!res.ok)throw new Error('HTTP '+res.status);
-    PROD_DATA=parseCSV(await res.text(),PROD_ROW_MAP);
+    PROD_DATA=parseCSV(await res.text(),PROD_ROW_MAP,'PRODUCCIÓN');
     const diasNorm=new Set(PROD_DATA.map(r=>r.diaNorm).filter(Boolean));
     populateSelect('prod-sel-dia',DIAS_ORDER.filter(d=>diasNorm.has(d)).map(d=>({val:d,label:DIAS_LABELS[d]||d})));
     populateSelect('prod-sel-resp',[...new Set(PROD_DATA.map(r=>r.resp).filter(Boolean))].sort());
@@ -408,7 +431,7 @@ async function fetchProd(){
   }catch(e){
     document.getElementById('prod-loading').textContent='Error al cargar datos de producción.';
     document.getElementById('prod-status').textContent='Sin conexión';
-    console.error('fetchProd:',e);
+    console.error('[PRODUCCIÓN] Error:',e);
   }
 }
 
@@ -417,7 +440,7 @@ async function syncEstados(){
     const res=await fetch(APPS_SCRIPT_URL+'?t='+Date.now());
     const data=await res.json();
     if(data.ok&&data.estados){data.estados.forEach(e=>{const idx=LOG_ROW_MAP.indexOf(e.row);if(idx!==-1&&LOG_DATA[idx])LOG_DATA[idx].completado=e.completado;});}
-  }catch(e){console.log('syncEstados (no crítico):',e);}
+  }catch(e){console.log('[syncEstados] no crítico:',e);}
   renderLog();
   renderPendientes();
 }
@@ -518,7 +541,7 @@ function renderSection({data,dia,resp,esp,countId,emptyId,tbodyId,tableId,cardsI
       <td>${buildHorarioBadge(r.horario,theme)}</td>
       <td><span class="esp-name ${theme}">${r.espacio||'—'}</span></td>
       <td><div class="nec ${theme}">${r.necesidad||'—'}</div></td>
-      <td>${buildInfoHtml(r,theme)}</td>
+      <td>${buildInfoHtml(r)}</td>
       <td><div class="nota ${theme}">${r.notas||'—'}</div></td>
       <td class="ok-cell">${okBtnHtml(i,r.completado,section,theme)}</td>
     </tr>`;
@@ -537,7 +560,7 @@ function renderSection({data,dia,resp,esp,countId,emptyId,tbodyId,tableId,cardsI
       <div class="card-body">
         ${respHtml}
         ${r.necesidad?`<div class="card-nec ${theme}">${r.necesidad}</div>`:''}
-        <div>${buildInfoHtml(r,theme)}</div>
+        <div>${buildInfoHtml(r)}</div>
         ${r.notas?`<div class="card-nota ${theme}">${r.notas}</div>`:''}
       </div>
       <div class="card-footer ${theme}">${okBtnHtml(i,r.completado,section,theme)}</div>
@@ -552,15 +575,20 @@ function respClass(resp){
   if(k.includes('karim'))return'resp-karim';if(k.includes('joaco'))return'resp-joaco';
   if(k.includes('lucas'))return'resp-lucas';return'';
 }
-function initials(n){if(!n)return'?';const parts=n.trim().split(/[\s,]+/);return parts.length>=2?(parts[0][0]+(parts[1][0]||'')).toUpperCase():n.slice(0,2).toUpperCase();}
-
-function buildInfoHtml(r,theme){
+function initials(n){
+  if(!n)return'?';
+  const parts=n.trim().split(/[\s\/,]+/);
+  return parts.length>=2?(parts[0][0]+(parts[1][0]||'')).toUpperCase():n.slice(0,2).toUpperCase();
+}
+function buildInfoHtml(r){
   const info=(r.info||'').trim();
   if(!info||info==='—')return`<span style="color:#aaa">—</span>`;
-  if(info.toLowerCase().includes('operativa'))return`<span class="op-tag">Operativa</span>`;
+  if(info.toLowerCase().includes('operativa')||info.toLowerCase().includes('tarea operativa')){
+    return`<span class="op-tag">Operativa</span>`;
+  }
   const lines=info.split('\n');
-  const titulo=lines[0];
-  const detalle=lines.slice(1).join(' ').trim();
+  const titulo=lines[0].trim();
+  const detalle=lines.slice(1).map(l=>l.trim()).filter(Boolean).join(' · ');
   return`<div><span class="info-tag">${titulo}</span>${detalle?`<div class="info-hora">${detalle}</div>`:''}</div>`;
 }
 function buildDiaBadge(r,theme){return`<div class="dia-badge ${theme}"><span class="dia-badge-name">${(DIAS_LABELS[r.diaNorm]||r.dia).toUpperCase()}</span></div>`;}
