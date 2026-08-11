@@ -305,6 +305,25 @@ function getYesterdayNorm(){const d=new Date();d.setDate(d.getDate()-1);const di
 function formatTodayDate(){return new Date().toLocaleDateString('es-UY',{weekday:'long',day:'numeric',month:'long'});}
 function norm(s){return(s||'').toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();}
 
+// --- Orden por Día (Lunes→Domingo) y Horario (hh:mm asc) ---
+function diaOrderIndex(diaNorm){
+  const idx=DIAS_ORDER.indexOf(diaNorm);
+  return idx===-1?99:idx;
+}
+function horarioMinutos(h){
+  if(!h)return 99999;
+  const m=String(h).match(/(\d{1,2}):(\d{2})/);
+  if(!m)return 99999;
+  return parseInt(m[1],10)*60+parseInt(m[2],10);
+}
+function ordenarPorDiaYHorario(arr){
+  return arr.slice().sort((a,b)=>{
+    const da=diaOrderIndex(a.r.diaNorm),db=diaOrderIndex(b.r.diaNorm);
+    if(da!==db)return da-db;
+    return horarioMinutos(a.r.horario)-horarioMinutos(b.r.horario);
+  });
+}
+
 function splitCSVLine(line){
   const r=[];let cur='',inQ=false;
   for(let i=0;i<line.length;i++){
@@ -470,7 +489,8 @@ function refreshPendingCount(){
 
 function renderPendientes(){
   const ayer=getYesterdayNorm();
-  const pend=LOG_DATA.map((r,i)=>({r,i})).filter(({r})=>r.diaNorm===ayer&&!r.completado);
+  let pend=LOG_DATA.map((r,i)=>({r,i})).filter(({r})=>r.diaNorm===ayer&&!r.completado);
+  pend=ordenarPorDiaYHorario(pend);
   const sec=document.getElementById('pending-section');
   if(!pend.length){sec.classList.remove('visible');}
   else{
@@ -522,12 +542,13 @@ function renderProd(){
 }
 
 function renderSection({data,dia,resp,esp,countId,emptyId,tbodyId,tableId,cardsId,section,theme}){
-  const f=data.map((r,i)=>({r,i})).filter(({r})=>{
+  let f=data.map((r,i)=>({r,i})).filter(({r})=>{
     if(dia&&r.diaNorm!==dia)return false;
     if(resp&&!r.resp.toLowerCase().includes(resp))return false;
     if(esp&&!r.espacio.toLowerCase().includes(esp))return false;
     return true;
   });
+  f=ordenarPorDiaYHorario(f);
   document.getElementById(countId).textContent=f.length+' fila'+(f.length!==1?'s':'');
   const empty=document.getElementById(emptyId);const tbl=document.getElementById(tableId);
   if(!f.length){document.getElementById(tbodyId).innerHTML='';document.getElementById(cardsId).innerHTML='';empty.style.display='block';tbl.style.display='none';return;}
