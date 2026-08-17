@@ -40,7 +40,7 @@
   .nav-btn svg{width:15px;height:15px;flex-shrink:0}
   .nav-btn:hover{background:#f5f5f5;color:#333}
   .nav-btn.active.log-active{color:var(--dark);border-bottom-color:var(--green-acc);background:var(--green-light)}
-  .nav-btn.active.prod-active{color:#111;border-bottom-color:#111;background:#f0f0f0}
+  .nav-btn.active.agenda-active{color:#7a4a8f;border-bottom-color:#a870c0;background:#f5edf7}
   .section-header{padding:.75rem 1.5rem;display:flex;align-items:center;gap:12px}
   .section-header.logistica{background:var(--dark);border-bottom:2px solid var(--green-acc)}
   .section-header.produccion{background:#111111;border-bottom:2px solid #444}
@@ -176,6 +176,44 @@
   .empty{padding:3rem;text-align:center;font-family:'DM Mono',monospace;font-size:12px;color:var(--text3)}
   .footer{padding:.8rem 1.5rem;border-top:1px solid var(--border);font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);display:flex;justify-content:space-between;align-items:center;background:var(--bg2)}
   .footer a{color:var(--green-acc);text-decoration:none}
+
+  /* ---- Agenda (Semana Tipo) ---- */
+  .section-header.agenda{background:#3a2a4a;border-bottom:2px solid #a870c0}
+  .section-pill.agenda{background:#a870c0;color:#fff}
+  .filters.agenda{background:#f5edf7;border-color:#ddc8e5}
+  .filters.agenda .filter-label{color:#3a2a4a}
+  .filters.agenda select{border-color:#ddc8e5}
+  .agenda-note{padding:.5rem 1.5rem;font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;border-bottom:1px solid var(--border2);background:var(--bg2)}
+  .agenda-table-wrap{padding:1.2rem 1.5rem;overflow-x:auto}
+  table.agenda-table{width:100%;min-width:900px;border-collapse:collapse;table-layout:fixed}
+  table.agenda-table th{background:#3a2a4a;color:#fff;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:9px 10px;text-align:left;border:1px solid #2a1d38;position:sticky;top:0;z-index:5}
+  table.agenda-table td{vertical-align:top;width:16.6%;border:1px solid #ddd0e4;padding:8px;background:#fff}
+  table.agenda-table td.ag-label-td{background:#f0e9f4;width:64px}
+  .ag-block-label{position:sticky;top:46px;background:#8d94a2;color:#fff;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;text-align:center;padding:8px 4px;border-radius:8px;white-space:pre-line;line-height:1.3}
+  .ag-cell{display:flex;flex-direction:column;gap:6px}
+  .ag-card{border-radius:8px;padding:8px 10px;font-family:'DM Sans',sans-serif;box-shadow:0 1px 2px rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.08)}
+  .ag-card .ag-esp{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:rgba(0,0,0,.55);margin-bottom:2px}
+  .ag-card .ag-tit{font-size:12px;font-weight:700;color:#1a1a1a;line-height:1.3}
+  .ag-card .ag-hor{font-size:10.5px;font-weight:600;color:rgba(0,0,0,.6);font-family:'DM Mono',monospace;margin-top:3px;line-height:1.35}
+  .ag-card .ag-det{font-size:10.5px;color:rgba(0,0,0,.68);margin-top:4px;line-height:1.45}
+  .ag-card .ag-det div{margin-top:2px}
+  .ag-empty-cell{color:#ccc;font-size:11px;text-align:center;padding:1rem 0;font-family:'DM Mono',monospace}
+  .agenda-foot-note{margin-top:.8rem;font-size:10.5px;color:var(--text3);font-family:'DM Mono',monospace;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px}
+  .agenda-cards{display:none;padding:.8rem 1rem}
+  .agenda-block-title{font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#7a4a8f;margin:1rem 0 .5rem;padding-bottom:4px;border-bottom:2px solid #e5d5ec}
+  .agenda-block-title:first-child{margin-top:0}
+  .agenda-day-title{font-family:'DM Mono',monospace;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#fff;background:#3a2a4a;padding:8px 12px;border-radius:8px;margin:1.2rem 0 .6rem}
+  .agenda-day-title:first-child{margin-top:0}
+  .ag-card-mobile{border-radius:10px;padding:.7rem 1rem;margin-bottom:.6rem;box-shadow:0 1px 3px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.1)}
+  .ag-card-mobile .ag-esp{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:rgba(0,0,0,.55)}
+  .ag-card-mobile .ag-tit{font-size:14px;font-weight:700;color:#1a1a1a;margin-top:2px;line-height:1.35}
+  .ag-card-mobile .ag-hor{font-size:11.5px;font-weight:600;color:rgba(0,0,0,.6);font-family:'DM Mono',monospace;margin-top:3px}
+  .ag-card-mobile .ag-det{font-size:11.5px;color:rgba(0,0,0,.68);margin-top:5px;line-height:1.5}
+  .ag-card-mobile .ag-det div{margin-top:2px}
+  @media(max-width:700px){
+    .agenda-table-wrap{display:none}
+    .agenda-cards{display:block}
+  }
   @media(max-width:700px){
     .table-wrap{display:none}.pending-section{display:none!important}.cards{display:block}
     .filters{padding:.65rem 1rem;gap:.6rem}.filter-group{flex:1;min-width:130px}
@@ -210,9 +248,9 @@
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h14M3 10h14M3 15h8"/></svg>
     Seteos Logística
   </button>
-  <button class="nav-btn" id="nav-prod" onclick="showSection('prod')">
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polygon points="10,2 18,18 2,18"/></svg>
-    Producción
+  <button class="nav-btn" id="nav-agenda" onclick="showSection('agenda')">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="14" height="13" rx="1.5"/><path d="M3 8h14M7 2v4M13 2v4"/></svg>
+    Agenda
   </button>
 </div>
 
@@ -257,31 +295,35 @@
 </div>
 </div>
 
-<div id="section-prod" style="display:none">
+<div id="section-agenda" style="display:none">
 <div class="section">
-  <div class="section-header produccion">
-    <span class="section-title">Producción Portal Bosque</span>
-    <span class="section-pill produccion">Producción</span>
+  <div class="section-header agenda">
+    <span class="section-title">📅 Semana Tipo</span>
+    <span class="section-pill agenda">Agenda</span>
   </div>
-  <div class="filters produccion">
-    <div class="filter-group"><span class="filter-label">Día</span><select id="prod-sel-dia" onchange="renderProd()"><option value="">Hoy</option></select></div>
-    <div class="filter-group"><span class="filter-label">Responsable</span><select id="prod-sel-resp" onchange="renderProd()"><option value="">Todos</option></select></div>
-    <div class="filter-group"><span class="filter-label">Espacio</span><input id="prod-inp-esp" type="text" placeholder="Ej: Escenario" oninput="renderProd()"></div>
-    <span class="count produccion" id="prod-count">—</span>
+  <div class="filters agenda" id="agenda-daybar">
+    <div class="filter-group" style="flex:1"><span class="filter-label">Día</span>
+      <select id="agenda-sel-dia" onchange="renderAgendaAll()">
+        <option value="TODOS">Todos los días</option>
+        <option value="LUNES">Lunes</option>
+        <option value="MARTES">Martes</option>
+        <option value="MIERCOLES">Miércoles</option>
+        <option value="JUEVES">Jueves</option>
+        <option value="VIERNES">Viernes</option>
+        <option value="SABADO">Sábado</option>
+      </select>
+    </div>
   </div>
-  <div class="status produccion"><div class="status-dot produccion"></div><span id="prod-status">Conectando...</span></div>
-  <div class="table-wrap">
-    <div id="prod-loading" class="loading">Cargando datos...</div>
-    <table id="prod-table" class="produccion" style="display:none">
-      <thead><tr class="produccion">
-        <th>Día</th><th>Responsable</th><th>Horario</th><th>Espacio</th>
-        <th>Necesidad</th><th>Info</th><th>Notas</th><th style="text-align:center">Completado</th>
-      </tr></thead>
-      <tbody id="prod-tbody" class="produccion"></tbody>
-    </table>
-    <div id="prod-empty" class="empty" style="display:none">Sin resultados.</div>
+  <div class="agenda-note">Ciclo Invierno 2026 · actividades regulares niños / niñas / adultos · info a modo de referencia, no editable</div>
+
+  <!-- Vista escritorio: grilla completa -->
+  <div class="agenda-table-wrap">
+    <table class="agenda-table" id="agenda-table"></table>
+    <div class="agenda-foot-note">17:00 a 19:00 — Fuego prendido siempre a las 17hs. 4 carritos en Oriente, 4 en la Flor y 4 en la Aldea.</div>
   </div>
-  <div class="cards" id="prod-cards"><div id="prod-cards-list"></div></div>
+
+  <!-- Vista mobile: por día seleccionado -->
+  <div class="agenda-cards" id="agenda-cards"></div>
 </div>
 </div>
 
@@ -292,13 +334,1354 @@
 
 <script>
 const CSV_LOG  = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQAjbZFpNcEopTvKwlp2Nn6EpFWNPAf3hMK0vc_NRM5K3NhSTe73DsHUjEV3YjKGWT4auUjQ3kXpucf/pub?gid=0&single=true&output=csv';
-const CSV_PROD = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgW4spjoXNjkMCLzOgOUKjXZ76Jmw8sOi_in-lFjM4F74PoiCj-HeLDuNJlayrovYJaYbIhKtk37n2/pub?gid=574133870&single=true&output=csv';
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbykJx6LauaXrGkUnmocIeNinK5fHDxL_zFlk2Os32s3yUiC42CnIzlp-pTSOUeqBuo/exec';
 
-let LOG_DATA=[],LOG_ROW_MAP=[],PROD_DATA=[],PROD_ROW_MAP=[];
+let LOG_DATA=[],LOG_ROW_MAP=[];
 const DIAS_ORDER=['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO'];
 const DIAS_LABELS={'LUNES':'Lunes','MARTES':'Martes','MIERCOLES':'Miércoles','JUEVES':'Jueves','VIERNES':'Viernes','SABADO':'Sábado','DOMINGO':'Domingo'};
 const RESPS_VALIDOS=['pacha','flor alvez','tute','chunka','heber','facundo','joaco','daniel','lucas','karim','guillermo','nahuel'];
+
+const AGENDA_DATA = {
+  "LUNES": {
+    "A": [
+      {
+        "espacio": "ALDEA - Exp Musical",
+        "titulo": "BABY MUSICKING I",
+        "horario": "9:30 a 10:15",
+        "detalle": [
+          "MAMA-BEBE",
+          "3 a 17 meses.",
+          "Con Carla Leiva y Axel Montgomery"
+        ],
+        "color": "#dd7e6b"
+      },
+      {
+        "espacio": "FLOR - Arte",
+        "titulo": "EXPERIENCIAS SENSORIALES",
+        "horario": "9.30 a 12",
+        "detalle": [
+          "Mini aprender jugando",
+          "12 a 24 meses y 25 a 30 meses",
+          "Con Sabrina Meyrelles"
+        ],
+        "color": "#f9cb9b"
+      },
+      {
+        "espacio": "FLOR- Música",
+        "titulo": "MÚSICA",
+        "horario": "9.30 a 12",
+        "detalle": [
+          "Mini aprender jugando",
+          "25 a 35 meses",
+          "Con Carla Leiva"
+        ],
+        "color": "#f9cb9b"
+      },
+      {
+        "espacio": "TIERRA GRANDE",
+        "titulo": "YOGA PARA HOMBRES",
+        "horario": "9.30 a 10.45",
+        "detalle": [
+          "Con Marcos Cordoba"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "YURTA",
+        "titulo": "YOGA PARA MUJERES",
+        "horario": "9.30 a 10.45",
+        "detalle": [
+          "Con Cora Castellanos"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "TIERRA CHICA",
+        "titulo": "BASES FUNCIONALES",
+        "horario": "10 a 11",
+        "detalle": [
+          "Con Giancarlo Manassi"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "SEMILLA",
+        "titulo": "POESIA EXPERIMENTAL",
+        "horario": "11 a 12:30",
+        "detalle": [
+          "Con Martin Barea Mattos",
+          "FECHAS: 3, 10 y 17 de agosto (3 Encuentros)"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "SEMILLA",
+        "titulo": "FANZINES",
+        "horario": "11 a 12:30",
+        "detalle": [
+          "Con Alexa Miller",
+          "Inicio: 24 de Agosto — Cierre: 14 de Septiembre (4 encuentros)"
+        ],
+        "color": "#6fa8dc"
+      }
+    ],
+    "B": [
+      {
+        "espacio": "ORIENTE (galería y comedor)",
+        "titulo": "IKIGAI ALMUERZO",
+        "horario": "12 a 14hs",
+        "detalle": [],
+        "color": "#93c47d"
+      },
+      {
+        "espacio": "ORIENTE / FLOR / ALDEA / DOMO",
+        "titulo": "IKIGAI TALLERES",
+        "horario": "14 a 16:00hs",
+        "detalle": [
+          "Casa de niños: Phonics and music, Espacio proyecto",
+          "Taller 1 y 2: Robotica con Lego, Expresiones varias"
+        ],
+        "color": "#93c47d"
+      }
+    ],
+    "C": [
+      {
+        "espacio": "DOMO",
+        "titulo": "DIVERSION EN MOVIMIENTO",
+        "horario": "—",
+        "detalle": [
+          "3 años",
+          "Con Mercedes Lavista"
+        ],
+        "color": "#d5a6bd"
+      },
+      {
+        "espacio": "FLOR - Arte",
+        "titulo": "LABORES",
+        "horario": "—",
+        "detalle": [
+          "4 a 6 años",
+          "Con Candela Balcarce y Valeria Martin"
+        ],
+        "color": "#f6b26b"
+      },
+      {
+        "espacio": "FLOR - Centro",
+        "titulo": "TELAS",
+        "horario": "—",
+        "detalle": [
+          "5 y 6 años",
+          "Con Carolina Cohelo y Belen Bracco"
+        ],
+        "color": "#f6b26b"
+      },
+      {
+        "espacio": "FLOR - Juego libre",
+        "titulo": "GIMNASIA ARTÍSTICA",
+        "horario": "—",
+        "detalle": [
+          "5 y 6 años",
+          "Con Melanny Estevez"
+        ],
+        "color": "#f6b26b"
+      },
+      {
+        "espacio": "ALDEA - Arte",
+        "titulo": "ARTE Y PINTURA",
+        "horario": "—",
+        "detalle": [
+          "7 años",
+          "Con Pia Ruiz"
+        ],
+        "color": "#b6d7a8"
+      },
+      {
+        "espacio": "MAKER",
+        "titulo": "UNIVERSO CREATIVO",
+        "horario": "—",
+        "detalle": [
+          "7, 8 y 9 años",
+          "Magdalena Fiori y Maria Lujan Raptis"
+        ],
+        "color": "#b6d7a8"
+      },
+      {
+        "espacio": "ALDEA - Sala de ensayo",
+        "titulo": "MINI JAMMEROS",
+        "horario": "—",
+        "detalle": [
+          "8 y 9 años",
+          "Con Axel Montgomery, Carla Leiva, Guillermo Sader y Luis Borja"
+        ],
+        "color": "#ea9999"
+      },
+      {
+        "espacio": "CANCHITA / ALDEA - Biblioteca si llueve",
+        "titulo": "ESCUELITA DE FUTBOL",
+        "horario": "—",
+        "detalle": [
+          "7 y 8 años",
+          "Con Lautaro Colqui Y Lucas Cisneros"
+        ],
+        "color": "#ea9999"
+      },
+      {
+        "espacio": "CARPINTERIA",
+        "titulo": "CARPINTERIA",
+        "horario": "—",
+        "detalle": [
+          "+10 años",
+          "Con Nicolas Lagues"
+        ],
+        "color": "#d5a6bd"
+      },
+      {
+        "espacio": "ALDEA - Cuerpo",
+        "titulo": "DANZA URBANA",
+        "horario": "—",
+        "detalle": [
+          "+10 años",
+          "Con Maria Noel Costa"
+        ],
+        "color": "#d5a6bd"
+      },
+      {
+        "espacio": "SEMILLA",
+        "titulo": "ASTROLOGÍA 2",
+        "horario": "17.30 a 19",
+        "detalle": [
+          "Con Sofia Trujillo"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "YURTA",
+        "titulo": "YOGA DEL CORAZÓN",
+        "horario": "17.30 a 19",
+        "detalle": [
+          "Con Cora Castellanos"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "TIERRA CHICA",
+        "titulo": "MOVILIDAD Y ENTRENAMIENTO FUNCIONAL",
+        "horario": "17.30 a 19",
+        "detalle": [
+          "Con Conrado Forcher"
+        ],
+        "color": "#6fa8dc"
+      }
+    ]
+  },
+  "MARTES": {
+    "A": [
+      {
+        "espacio": "LA ALDEA TALLER MAKER",
+        "titulo": "NORTH SCHOOL",
+        "horario": "9:30 a 11:30",
+        "detalle": [],
+        "color": "#ffe599"
+      },
+      {
+        "espacio": "FLOR- Música",
+        "titulo": "MÚSICA",
+        "horario": "9.30 a 12",
+        "detalle": [
+          "Mini aprender jugando",
+          "12 a 24 meses y 25 a 30 meses",
+          "Con Carla Leiva"
+        ],
+        "color": "#f9cb9b"
+      },
+      {
+        "espacio": "FLOR- Arte",
+        "titulo": "COCINA",
+        "horario": "9.30 a 12",
+        "detalle": [
+          "Mini aprender jugando",
+          "25 a 35 meses",
+          "Con Diego Ruete"
+        ],
+        "color": "#f9cb9b"
+      },
+      {
+        "espacio": "TIERRA GRANDE",
+        "titulo": "BARRÉ FITNESS",
+        "horario": "9.30 a 11",
+        "detalle": [
+          "Con Mar Amoroso"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "ORIENTE",
+        "titulo": "ENTRENAMIENTO INTEGRAL EVOLUTIVO",
+        "horario": "10 a 11",
+        "detalle": [
+          "Con Giancarlo Manassi"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "CARPINTERIA",
+        "titulo": "CERÁMICA CON LOLA",
+        "horario": "10 a 12",
+        "detalle": [
+          "Con Lola Piñeyrua",
+          "Ciclo Julio: 4 encuentros — Inicio: 21 de julio — Cierre: 11 de agosto",
+          "Ciclo Agosto: 4 encuentros — Inicio: 18 de agosto — Cierre: 15 septiembre",
+          "Excepto 25 de agosto"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "SEMILLA",
+        "titulo": "PATCHWORK",
+        "horario": "10 a 12",
+        "detalle": [
+          "Con Natalia Andriolo",
+          "Inicio: 4 de agosto — Cierre: 1 de septiembre",
+          "Excepto 25 de agosto"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "TIERRA GRANDE",
+        "titulo": "BARRE FLOW",
+        "horario": "11:30 a 12:30hs",
+        "detalle": [
+          "Con Mar Amoroso"
+        ],
+        "color": "#6fa8dc"
+      }
+    ],
+    "B": [
+      {
+        "espacio": "ORIENTE (galería y comedor)",
+        "titulo": "IKIGAI ALMUERZO",
+        "horario": "12 a 14hs",
+        "detalle": [],
+        "color": "#93c47d"
+      },
+      {
+        "espacio": "ORIENTE / FLOR / ALDEA / FABLAB",
+        "titulo": "IKIGAI TALLERES",
+        "horario": "14 a 16:00hs",
+        "detalle": [
+          "Casa de niños",
+          "Taller 1 y 2: Cocina, Club de Lego, Espacio proyecto, Learning OS"
+        ],
+        "color": "#93c47d"
+      },
+      {
+        "espacio": "ALDEA - Exp Musical",
+        "titulo": "FIRST STEPS I",
+        "horario": "15 a 16hs",
+        "detalle": [
+          "3 y 4 años",
+          "Con Alex Montgomery y Carla Leiva"
+        ],
+        "color": "#dd7e6b"
+      }
+    ],
+    "C": [
+      {
+        "espacio": "ALDEA - Exp Musical",
+        "titulo": "FIRST STEPS II",
+        "horario": "16 a 17hs",
+        "detalle": [
+          "4 y 5 años",
+          "Con Alex Montgomery y Carla Leiva"
+        ],
+        "color": "#dd7e6b"
+      },
+      {
+        "espacio": "FLOR - Música",
+        "titulo": "MÚSICA",
+        "horario": "—",
+        "detalle": [
+          "3 y 4 años",
+          "Con Ignacio Croci"
+        ],
+        "color": "#d5a6bd"
+      },
+      {
+        "espacio": "FLOR - Ludolab",
+        "titulo": "ARTE Y CONEXIÓN",
+        "horario": "—",
+        "detalle": [
+          "5 y 6 años",
+          "Con Natalia Fonsalia y Silvina Ekhort"
+        ],
+        "color": "#f6b26b"
+      },
+      {
+        "espacio": "CANCHITA",
+        "titulo": "ESCUELITA DE FUTBOL",
+        "horario": "—",
+        "detalle": [
+          "5 y 6 años",
+          "Con Lautaro Colqui y Lucas Cisneros"
+        ],
+        "color": "#f6b26b"
+      },
+      {
+        "espacio": "ALDEA - Cuerpo",
+        "titulo": "GIMNASIA ARTÍSTICA",
+        "horario": "—",
+        "detalle": [
+          "7 años",
+          "Con Natalia Bidegain"
+        ],
+        "color": "#b6d7a8"
+      },
+      {
+        "espacio": "FLOR - Arte",
+        "titulo": "COCINA",
+        "horario": "—",
+        "detalle": [
+          "7 años",
+          "Con Diego Ruete"
+        ],
+        "color": "#b6d7a8"
+      },
+      {
+        "espacio": "FABLAB",
+        "titulo": "ROBÓTICA Y PROGRAMACIÓN",
+        "horario": "—",
+        "detalle": [
+          "8 y 9 años",
+          "Con Rodrigo de Armas y Nahuel Merlo"
+        ],
+        "color": "#ea9999"
+      },
+      {
+        "espacio": "CRATER / ALDEA si llueve",
+        "titulo": "VIDA EN LA NATURALEZA",
+        "horario": "—",
+        "detalle": [
+          "8 y 9 años",
+          "Con Adrian Martinez y Ismael Lugo"
+        ],
+        "color": "#ea9999"
+      },
+      {
+        "espacio": "ALDEA - Arte",
+        "titulo": "PINTURA Y ARTE",
+        "horario": "—",
+        "detalle": [
+          "8 y 9 años",
+          "Con Sandra Ferix"
+        ],
+        "color": "#ea9999"
+      },
+      {
+        "espacio": "CARPINTERIA",
+        "titulo": "CERÁMICA",
+        "horario": "—",
+        "detalle": [
+          "+10 años",
+          "Con Lucia Acevedo"
+        ],
+        "color": "#d5a6bd"
+      },
+      {
+        "espacio": "TALLER MAKERS",
+        "titulo": "TÉXTIL CREATIVO",
+        "horario": "—",
+        "detalle": [
+          "+10 años",
+          "Con María Pons y Ornella Borroni"
+        ],
+        "color": "#d5a6bd"
+      },
+      {
+        "espacio": "ALDEA - Audiovisual",
+        "titulo": "RADIO PORTAL",
+        "horario": "—",
+        "detalle": [
+          "3 a +10 años",
+          "Con Jairolh Portillo y Nicolás Vivo"
+        ],
+        "color": "#b4a7d6"
+      },
+      {
+        "espacio": "TIERRA GRANDE",
+        "titulo": "EXPERIENCIA COMPAÑIA TEATRAL: ACTUACIÓN",
+        "horario": "17.30 a 19",
+        "detalle": [
+          "Con Sofia Campal"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "SEMILLA / CARPINTERIA (últimos encuentros)",
+        "titulo": "EXPERIENCIA COMPAÑIA TEATRAL: PRODUCCIÓN Y PUESTA EN ESCENA",
+        "horario": "17.30 a 19",
+        "detalle": [
+          "Con Magdalena Fiori y Jimena Vignolo"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "TIERRA CHICA",
+        "titulo": "HIT CARDIO",
+        "horario": "17.30 a 19",
+        "detalle": [
+          "Con Conrado Forcher"
+        ],
+        "color": "#6fa8dc"
+      }
+    ]
+  },
+  "MIERCOLES": {
+    "A": [
+      {
+        "espacio": "ALDEA - Exp Músical",
+        "titulo": "YOGA, MINDFULLNES Y ALIMENTACIÓN",
+        "horario": "9:30 a 10:30",
+        "detalle": [
+          "MAMA-BEBE",
+          "3 a 17 meses.",
+          "Con Cora Castellanos y Coti Casanova"
+        ],
+        "color": "#ead1dc"
+      },
+      {
+        "espacio": "DOMO",
+        "titulo": "DIVERSION EN MOVIMIENTO",
+        "horario": "9.30 a 12",
+        "detalle": [
+          "Mini aprender jugando",
+          "12 a 24 meses",
+          "Con Mercedes Lavista"
+        ],
+        "color": "#f9cb9b"
+      },
+      {
+        "espacio": "BOSQUE / FLOR- Música",
+        "titulo": "JUGUEMOS EN EL BOSQUE",
+        "horario": "9.30 a 12",
+        "detalle": [
+          "Mini aprender jugando",
+          "25 a 35 meses",
+          "Con Carla Leiva"
+        ],
+        "color": "#f9cb9b"
+      },
+      {
+        "espacio": "TIERRA GRANDE",
+        "titulo": "YOGA VINYASA SUAVE",
+        "horario": "9.30 a 11",
+        "detalle": [
+          "Con Didi"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "TIERRA CHICA",
+        "titulo": "BASES FUNCIONALES",
+        "horario": "10 a 11",
+        "detalle": [
+          "Con Giancarlo Manassi"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "ORIENTE",
+        "titulo": "LA PROPIA EXPRESIÓN",
+        "horario": "10 a 12",
+        "detalle": [
+          "Con Shumi Gauto",
+          "Inicio: 2 de septiembre — Cierre: 16 de septiembre"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "SEMILLA",
+        "titulo": "PLANTAS MEDICINALES",
+        "horario": "10 a 12.30",
+        "detalle": [
+          "Con Vera Nazca y Ana Lucia Rapetti"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "YURTA",
+        "titulo": "TAI CHI",
+        "horario": "11.30 a 12.30",
+        "detalle": [
+          "Con Jeronimo Correa"
+        ],
+        "color": "#6fa8dc"
+      }
+    ],
+    "B": [
+      {
+        "espacio": "BOSQUE (Domo si llueve)",
+        "titulo": "JARDINCITO DE MAJO",
+        "horario": "14 a 16hs",
+        "detalle": [
+          "Inicio: AGOSTO"
+        ],
+        "color": "#d9c384"
+      },
+      {
+        "espacio": "ORIENTE (galería y comedor)",
+        "titulo": "IKIGAI ALMUERZO",
+        "horario": "12 a 14hs",
+        "detalle": [],
+        "color": "#93c47d"
+      },
+      {
+        "espacio": "ORIENTE / FLOR / ALDEA / MAKER",
+        "titulo": "IKIGAI TALLERES",
+        "horario": "14 a 16:00hs",
+        "detalle": [
+          "Casa de niños: Relatos y labores, Espacio proyecto",
+          "Taller 1 y 2: Learning OS, Espacio proyecto, Tejiendo ideas"
+        ],
+        "color": "#93c47d"
+      },
+      {
+        "espacio": "ALDEA - Exp Musical",
+        "titulo": "BABY MUSICKING II",
+        "horario": "16 a 16:45hs.",
+        "detalle": [
+          "Mini aprender jugando",
+          "18 a 35 meses + Adulto",
+          "Con Carla Leiva y Axel Montgomery"
+        ],
+        "color": "#dd7e6b"
+      }
+    ],
+    "C": [
+      {
+        "espacio": "FLOR - Ludolab",
+        "titulo": "ELIGE TU PROPIA AVENTURA",
+        "horario": "—",
+        "detalle": [
+          "3 años",
+          "Con Milagros Gutierrez"
+        ],
+        "color": "#d5a6bd"
+      },
+      {
+        "espacio": "FLOR - Juego libre",
+        "titulo": "MINI PROGRAMADORES",
+        "horario": "—",
+        "detalle": [
+          "4 y 5 años",
+          "Con Julia Lagues y Ornella Borroni"
+        ],
+        "color": "#f6b26b"
+      },
+      {
+        "espacio": "ALDEA - Cuerpo",
+        "titulo": "BALLET",
+        "horario": "—",
+        "detalle": [
+          "5 y 6 años",
+          "Con Marina Tortora"
+        ],
+        "color": "#f6b26b"
+      },
+      {
+        "espacio": "ALDEA - Exp Musical",
+        "titulo": "CANTO",
+        "horario": "—",
+        "detalle": [
+          "6 y 7 años",
+          "Con Valentina Estol"
+        ],
+        "color": "#b6d7a8"
+      },
+      {
+        "espacio": "CANCHITA / ALDEA - Biblioteca si llueve",
+        "titulo": "ESCUELITA DE FUTBOL",
+        "horario": "—",
+        "detalle": [
+          "7 y 8 años",
+          "Con Lucas Cisneros y Lautaro Colqui"
+        ],
+        "color": "#ea9999"
+      },
+      {
+        "espacio": "FABLAB",
+        "titulo": "ROBOTICA Y PROGRAMACIÓN",
+        "horario": "17 a 19",
+        "detalle": [
+          "6 y 7 años",
+          "Con Rodrigo de Armas y Nahuel Merlo"
+        ],
+        "color": "#ea9999"
+      },
+      {
+        "espacio": "FLOR - Arte",
+        "titulo": "COCINA",
+        "horario": "—",
+        "detalle": [
+          "8 y 9 años",
+          "Con Diego Ruete"
+        ],
+        "color": "#d5a6bd"
+      },
+      {
+        "espacio": "DOMO",
+        "titulo": "YOGA Y CONEXIÓN",
+        "horario": "—",
+        "detalle": [
+          "8 y 9 años",
+          "Con Florencia Gonzalez"
+        ],
+        "color": "#d5a6bd"
+      },
+      {
+        "espacio": "ALDEA - Sala de ensayo",
+        "titulo": "MINI JAMMEROS",
+        "horario": "—",
+        "detalle": [
+          "+10 años",
+          "Con Carla Leiva, Axel Montgmery, Guillermo Sader y Luis Borja"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "ALDEA - Audiovisual / MAKER",
+        "titulo": "LA PRODUCTORA: Podcast, Arte y Diseño Digital",
+        "horario": "—",
+        "detalle": [
+          "+10 años",
+          "Con Pietro Scalone, Sol Nogueira, Matias Valenza y Jairolh Portillo"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "YURTA",
+        "titulo": "YOGA VINYASA",
+        "horario": "17.30 a 19",
+        "detalle": [
+          "Con Vero Savalesky"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "TIERRA CHICA",
+        "titulo": "MOVILIDAD Y ENTRENAMIENTO FUNCIONAL",
+        "horario": "17.30 a 19",
+        "detalle": [
+          "Con Conrado Forcher"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "TIERRA GRANDE",
+        "titulo": "CICLO MÚSICA MEDICINA",
+        "horario": "17.30 a 19",
+        "detalle": [
+          "Con Varios Profes",
+          "22/7 Natalia Olivera - Danzar los elementos.",
+          "29/7 Carolina Jaurena - Danza de la luna llena en Acuario. Shakti Flow.",
+          "5/8 Lola Sosa - Musica adentro",
+          "12/8 Maria Margarita - cinco ritmos",
+          "19/8 Denise y Santi - Baño sonoro, musica plantas maestras",
+          "2/9 Aham Prema (Marcos Córdoba y Sara Nothley)",
+          "9/9 Amit y Gigi (matter music) Ecstatic Dance + Baño sonoro",
+          "16/9 Tiana Robledo - Ceremonia de Voces"
+        ],
+        "color": "#6fa8dc"
+      }
+    ]
+  },
+  "JUEVES": {
+    "A": [
+      {
+        "espacio": "FLOR - Arte",
+        "titulo": "RITUALES",
+        "horario": "9.30 a 12",
+        "detalle": [
+          "Mini aprender jugando",
+          "12 a 24 meses.",
+          "Con Constanza Casanova"
+        ],
+        "color": "#f9cb9b"
+      },
+      {
+        "espacio": "DOMO",
+        "titulo": "JUEGO, CALMA Y MOVIMIENTO",
+        "horario": "9.30 a 12",
+        "detalle": [
+          "Mini aprender jugando",
+          "25 a 35 meses",
+          "Con Florencia Rodriguez"
+        ],
+        "color": "#f9cb9b"
+      },
+      {
+        "espacio": "TIERRA GRANDE",
+        "titulo": "BARRÉ FITNESS",
+        "horario": "9.30 a 11",
+        "detalle": [
+          "Con Mar Amoroso"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "SEMILLA",
+        "titulo": "ESCRITURA CREATIVA",
+        "horario": "10 a 12",
+        "detalle": [
+          "Con Shumi Gauto",
+          "Inicio: 13 de Agosto — Cierre: 17 de septiembre"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "ORIENTE",
+        "titulo": "ENTRENAMIENTO INTEGRAL EVOLUTIVO",
+        "horario": "10 a 11",
+        "detalle": [
+          "Con Giancarlo Manassi"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "TIERRA GRANDE",
+        "titulo": "BARRE FLOW",
+        "horario": "11.30 a 12.30",
+        "detalle": [
+          "Con Mar Amoroso"
+        ],
+        "color": "#6fa8dc"
+      }
+    ],
+    "B": [
+      {
+        "espacio": "ORIENTE (galería y comedor)",
+        "titulo": "IKIGAI ALMUERZO",
+        "horario": "12 a 14hs",
+        "detalle": [],
+        "color": "#93c47d"
+      },
+      {
+        "espacio": "ORIENTE / FLOR / ALDEA",
+        "titulo": "IKIGAI TALLERES",
+        "horario": "14 a 16:00hs",
+        "detalle": [
+          "Casa de niños: Cocina, Espacio proyecto",
+          "Taller 1 y 2: Tejiendo ideas, Cocina, Espacio proyecto, Learning OS"
+        ],
+        "color": "#93c47d"
+      }
+    ],
+    "C": [
+      {
+        "espacio": "BOSQUE / FLOR - Juego libre",
+        "titulo": "CUENTA CUENTOS EN EL BOSQUE",
+        "horario": "—",
+        "detalle": [
+          "3 y 4 años",
+          "Con Magali Bornes"
+        ],
+        "color": "#d5a6bd"
+      },
+      {
+        "espacio": "ALDEA - Audiovisual",
+        "titulo": "RADIO PORTAL",
+        "horario": "—",
+        "detalle": [
+          "3 a +10 años",
+          "Con Jairolh Portillo y Nicolás Vivo"
+        ],
+        "color": "#b4a7d6"
+      },
+      {
+        "espacio": "CANCHITA / FLOR - Ludolab si Llueve",
+        "titulo": "ESCUELITA DE FUTBOL",
+        "horario": "—",
+        "detalle": [
+          "5 y 6 años",
+          "Con Lautaro Colqui y Lucas Cisneros"
+        ],
+        "color": "#f6b26b"
+      },
+      {
+        "espacio": "FLOR - Arte",
+        "titulo": "COCINA",
+        "horario": "—",
+        "detalle": [
+          "5 y 6 años",
+          "Con Diego Ruete"
+        ],
+        "color": "#f6b26b"
+      },
+      {
+        "espacio": "FLOR - Ludolab",
+        "titulo": "ELIGE TU PROPIA AVENTURA",
+        "horario": "—",
+        "detalle": [
+          "7 años",
+          "Con Victoria Zurdo"
+        ],
+        "color": "#b6d7a8"
+      },
+      {
+        "espacio": "CRATER (ARTE - Aldea si llueve)",
+        "titulo": "VIDA EN LA NATURALEZA y PARKOUR",
+        "horario": "—",
+        "detalle": [
+          "7 años",
+          "Con Adrian Martinez y Ismael Lugo"
+        ],
+        "color": "#b6d7a8"
+      },
+      {
+        "espacio": "ALDEA - Cuerpo",
+        "titulo": "DESCUBRITE BAILANDO",
+        "horario": "17 a 19",
+        "detalle": [
+          "8 y 9 años",
+          "Con Nicolas Vivo y Maria Noel Costa"
+        ],
+        "color": "#ea9999"
+      },
+      {
+        "espacio": "MAKER",
+        "titulo": "ARTE Y DISEÑO DIGITAL",
+        "horario": "—",
+        "detalle": [
+          "8 y 9 años",
+          "Con Matias Valenza y Jairolh Portillo"
+        ],
+        "color": "#ea9999"
+      },
+      {
+        "espacio": "ALDEA - Exp Musical",
+        "titulo": "CANTO",
+        "horario": "—",
+        "detalle": [
+          "8 y 9 años",
+          "Con Valentina Estol"
+        ],
+        "color": "#ea9999"
+      },
+      {
+        "espacio": "FABLAB",
+        "titulo": "FAB LAB CREATIVO",
+        "horario": "—",
+        "detalle": [
+          "+10 años",
+          "Con Rodrigo de Armas y Ornella Borroni"
+        ],
+        "color": "#d5a6bd"
+      },
+      {
+        "espacio": "ALDEA - Biblioteca",
+        "titulo": "ASTROLOGIA",
+        "horario": "—",
+        "detalle": [
+          "+10 años",
+          "Con Sofia Trujillo"
+        ],
+        "color": "#d5a6bd"
+      },
+      {
+        "espacio": "SEMILLA",
+        "titulo": "COMUNIDAD SONORA",
+        "horario": "17.30 a 19",
+        "detalle": [
+          "Con Roque Bellini"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "TIERRA GRANDE",
+        "titulo": "CICLO RONDA 1. Sistemica familiar",
+        "horario": "17.30 a 19",
+        "detalle": [
+          "Con Agustina Menchaca",
+          "Inicio: 23 de julio — Cierre: 13 de agosto"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "TIERRA GRANDE",
+        "titulo": "CICLO RONDA 2. Una experiencia Gestalt",
+        "horario": "17.30 a 19",
+        "detalle": [
+          "Con Natalia Olivera",
+          "Inicio: 20 de agosto — Cierre: 3 de septiembre"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "TIERRA GRANDE",
+        "titulo": "CICLO RONDA 3. Exploración somática",
+        "horario": "17.30 a 19",
+        "detalle": [
+          "Con Natalia Olivera",
+          "Inicio: 10 de septiembre — Cierre: 17 de septiembre"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "CARPINTERIA",
+        "titulo": "CARPINTERÍA Y EBANISTERÍA",
+        "horario": "16.30 a 19",
+        "detalle": [
+          "Con Nicolas Lagues y Pedro Pereira"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "TIERRA CHICA",
+        "titulo": "HIT CARDIO",
+        "horario": "17.30 a 19 hrs",
+        "detalle": [
+          "Con Conrado Forcher"
+        ],
+        "color": "#6fa8dc"
+      }
+    ]
+  },
+  "VIERNES": {
+    "A": [
+      {
+        "espacio": "ALDEA - Cuerpo",
+        "titulo": "TALLER DE PIKLER",
+        "horario": "9:30 a 10:30",
+        "detalle": [
+          "MAMA-BEBE",
+          "3 a 17 meses",
+          "Con Carla Leiva"
+        ],
+        "color": "#dd7e6b"
+      },
+      {
+        "espacio": "FLOR- Juego Libre",
+        "titulo": "CUENTA CUENTOS",
+        "horario": "9.30 a 12",
+        "detalle": [
+          "Mini aprender jugando",
+          "12 a 24 meses",
+          "Con Magali Bornes"
+        ],
+        "color": "#f9cb9b"
+      },
+      {
+        "espacio": "DOMO",
+        "titulo": "DIVERSION EN MOVIMIENTO",
+        "horario": "9.30 a 12",
+        "detalle": [
+          "Mini aprender jugando",
+          "25 a 35 meses",
+          "Con Mercedes Lavista"
+        ],
+        "color": "#f9cb9b"
+      },
+      {
+        "espacio": "TIERRA GRANDE",
+        "titulo": "KUNDALINI YOGA",
+        "horario": "9.30 a 10",
+        "detalle": [
+          "Con Amit Wior",
+          "Inicio: 31 de Julio"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "TIERRA GRANDE / CRATER / BOSQUE / BIOPISCINA",
+        "titulo": "CICLO RESPIRO: Meditar en la naturaleza",
+        "horario": "10 a 11",
+        "detalle": [
+          "Con Giancarlo Manassi y Fran Vanoni",
+          "Inicio: 31 de Julio"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "SEMILLA",
+        "titulo": "BIOQUIMICA PARA EL AUTOCONOCIMIENTO",
+        "horario": "11 a 12.30",
+        "detalle": [
+          "Con Ana Ines Gutierrez"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "CARPINTERIA",
+        "titulo": "CERÁMICA CON LU",
+        "horario": "10 a 12",
+        "detalle": [
+          "Con Lucia Acevedo",
+          "Ciclo Julio: 4 encuentros — Inicio: 31 de julio — Cierre: 21 de agosto",
+          "Ciclo Agosto: 4 encuentros — Inicio: 28 de agosto — Cierre: 18 septiembre"
+        ],
+        "color": "#6fa8dc"
+      }
+    ],
+    "B": [
+      {
+        "espacio": "ORIENTE (galería y comedor)",
+        "titulo": "IKIGAI ALMUERZO",
+        "horario": "12 a 14hs",
+        "detalle": [],
+        "color": "#93c47d"
+      },
+      {
+        "espacio": "ORIENTE / FLOR / ALDEA / CANCHITA / CRATER",
+        "titulo": "IKIGAI TALLERES",
+        "horario": "14 a 16:00hs",
+        "detalle": [
+          "Casa de niños: Deporte",
+          "Taller 1 y 2: Deporte"
+        ],
+        "color": "#93c47d"
+      }
+    ],
+    "C": [
+      {
+        "espacio": "SEMILLA",
+        "titulo": "COCINA CON MAPADRES",
+        "horario": "—",
+        "detalle": [
+          "3 y 4 años",
+          "Con Diego Ruete"
+        ],
+        "color": "#d5a6bd"
+      },
+      {
+        "espacio": "FLOR - Ludolab",
+        "titulo": "INVENTOS Y EXPERIMENTOS",
+        "horario": "—",
+        "detalle": [
+          "4, 5 y 6 años",
+          "Con Ornella Borroni y Julia Lagues"
+        ],
+        "color": "#f6b26b"
+      },
+      {
+        "espacio": "ALDEA - Cuerpo",
+        "titulo": "ARTES MARCIALES",
+        "horario": "—",
+        "detalle": [
+          "6 y 7 años",
+          "Con Gonzalos Ciz"
+        ],
+        "color": "#f6b26b"
+      },
+      {
+        "espacio": "CARPINTERIA / MAKERS",
+        "titulo": "CERAMICA",
+        "horario": "—",
+        "detalle": [
+          "7, 8 y 9 años",
+          "Con Lucia Acevedo, Noel Soto y Sofia Hernandez"
+        ],
+        "color": "#b6d7a8"
+      },
+      {
+        "espacio": "ALDEA - Exp Músical",
+        "titulo": "GIMNASIA ARTISTICA",
+        "horario": "—",
+        "detalle": [
+          "7, 8 y 9 años",
+          "Con Natalia Bidegain"
+        ],
+        "color": "#b6d7a8"
+      },
+      {
+        "espacio": "FLOR - Centro",
+        "titulo": "TELAS",
+        "horario": "—",
+        "detalle": [
+          "8 y 9 años",
+          "Belen bracco"
+        ],
+        "color": "#ea9999"
+      },
+      {
+        "espacio": "ALDEA - Sala de Ensayo",
+        "titulo": "MINI JAMMEROS",
+        "horario": "—",
+        "detalle": [
+          "8 y 9 años",
+          "Con Carla Leiva, Axel Montgmery, Guillermo Sader y Luis Borja"
+        ],
+        "color": "#ea9999"
+      },
+      {
+        "espacio": "ALDEA - Arte",
+        "titulo": "PINTURA",
+        "horario": "—",
+        "detalle": [
+          "+10 años",
+          "Con Sandra Ferix"
+        ],
+        "color": "#d5a6bd"
+      },
+      {
+        "espacio": "CANCHITA / CRATER (ALDEA - Biblioteca si llueve)",
+        "titulo": "FUTBOL Y PARKOUR",
+        "horario": "—",
+        "detalle": [
+          "+10 años",
+          "Con Lautaro Colqui, Adrian Martinez y Lucas Cisneros"
+        ],
+        "color": "#d5a6bd"
+      },
+      {
+        "espacio": "TIERRA GRANDE",
+        "titulo": "PILATES FUSION",
+        "horario": "17.30 a 19",
+        "detalle": [
+          "Con Mar Amoroso"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "SEMILLA",
+        "titulo": "MAQUILLAJE",
+        "horario": "17.30 a 19",
+        "detalle": [
+          "Con Sile Lewis",
+          "Inicio: 7 de agosto — Cierre: 28 de agosto (4 encuentros)"
+        ],
+        "color": "#6fa8dc"
+      },
+      {
+        "espacio": "TIERRA CHICA",
+        "titulo": "MOVILIDAD Y ENTRENAMIENTO FUNCIONAL",
+        "horario": "17.30 a 19",
+        "detalle": [
+          "Con Conrado Forcher"
+        ],
+        "color": "#6fa8dc"
+      }
+    ]
+  },
+  "SABADO_NINOS": [
+    {
+      "espacio": "ALDEA - Audiovisual",
+      "titulo": "PEQUEÑOS AVENTUREROS",
+      "horario": "10 a 12hs y 14 a 16hs",
+      "detalle": [
+        "2, 3 y 4 años",
+        "Con Martina Pi"
+      ],
+      "color": "#f4cccc"
+    },
+    {
+      "espacio": "FLOR - ARTE",
+      "titulo": "LABORES",
+      "horario": "10 a 12hs y 14 a 16hs.",
+      "detalle": [
+        "+5 años",
+        "Con Candela Balcarce y Valeria Martin"
+      ],
+      "color": "#f4cccc"
+    },
+    {
+      "espacio": "DOMO",
+      "titulo": "ARTES MARCIALES",
+      "horario": "10 a 12hs y 14 a 16hs.",
+      "detalle": [
+        "+5 años",
+        "Con Gonzalo Ciz"
+      ],
+      "color": "#f4cccc"
+    },
+    {
+      "espacio": "FABLAB",
+      "titulo": "ROBOTICA CON LEGO",
+      "horario": "10 a 12hs y 14 a 16hs.",
+      "detalle": [
+        "+5 años",
+        "Con Dario Dominguez y Zaida Lopez"
+      ],
+      "color": "#f4cccc"
+    },
+    {
+      "espacio": "ALDEA - Cuerpo",
+      "titulo": "RITMOS",
+      "horario": "10 a 12hs y 14 a 16hs.",
+      "detalle": [
+        "+5 años",
+        "Con Maria Noel Costa"
+      ],
+      "color": "#f4cccc"
+    },
+    {
+      "espacio": "CRÁTER",
+      "titulo": "PUENTES COLGANTES",
+      "horario": "10 a 12hs y 14 a 16hs.",
+      "detalle": [
+        "+7 años",
+        "Con Ismael Lugo, Carolina Lugo y Nahuel Merlo"
+      ],
+      "color": "#f4cccc"
+    },
+    {
+      "espacio": "MAKER",
+      "titulo": "UNIVERSO CREATIVO",
+      "horario": "10 a 12hs y 14 a 16hs.",
+      "detalle": [
+        "+5 años",
+        "Con Ornella Borroni / Maria Lujan Raptis / Jairolh Portillo (talleristas rotativos)"
+      ],
+      "color": "#f4cccc"
+    },
+    {
+      "espacio": "CANCHITA",
+      "titulo": "ESCUELITA DE FUTBOL/ ENCUENTROS",
+      "horario": "10 a 12 hs y 14 a 16hs",
+      "detalle": [
+        "+5 años",
+        "Con Lucas Cisneros y Lautaro Colqui"
+      ],
+      "color": "#f4cccc"
+    },
+    {
+      "espacio": "CRÁTER",
+      "titulo": "PARKOUR FAMILIAR",
+      "horario": "10 a 12hs y 14 a 16hs.",
+      "detalle": [
+        "Con Adrian Martinez"
+      ],
+      "color": "#d9d2e9"
+    },
+    {
+      "espacio": "ALDEA - Arte",
+      "titulo": "PINTURA FAMILIAR",
+      "horario": "10 a 12 y 14 a 16",
+      "detalle": [
+        "Con Sandra Ferix"
+      ],
+      "color": "#d9d2e9"
+    }
+  ],
+  "SABADO_ADULTOS": [
+    {
+      "espacio": "CARPINTERIA",
+      "titulo": "CARPINTERIA ABIERTA",
+      "horario": "10 a 13",
+      "detalle": [
+        "Con Pedro Pereira"
+      ],
+      "color": "#6fa8dc"
+    },
+    {
+      "espacio": "YURTA",
+      "titulo": "DANZA HOUSE",
+      "horario": "10 a 12 hs",
+      "detalle": [
+        "Con Ian Lockhart"
+      ],
+      "color": "#6fa8dc"
+    }
+  ]
+};
 
 function getTodayNorm(){const d=['DOMINGO','LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO'];return norm(d[new Date().getDay()]);}
 function getYesterdayNorm(){const d=new Date();d.setDate(d.getDate()-1);const dias=['DOMINGO','LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO'];return norm(dias[d.getDay()]);}
@@ -434,26 +1817,6 @@ async function fetchLog(){
   }
 }
 
-async function fetchProd(){
-  try{
-    const res=await fetch(CSV_PROD+'&t='+Date.now());
-    if(!res.ok)throw new Error('HTTP '+res.status);
-    PROD_DATA=parseCSV(await res.text(),PROD_ROW_MAP,'PRODUCCIÓN');
-    const diasNorm=new Set(PROD_DATA.map(r=>r.diaNorm).filter(Boolean));
-    populateSelect('prod-sel-dia',DIAS_ORDER.filter(d=>diasNorm.has(d)).map(d=>({val:d,label:DIAS_LABELS[d]||d})));
-    populateSelect('prod-sel-resp',[...new Set(PROD_DATA.map(r=>r.resp).filter(Boolean))].sort());
-    document.getElementById('prod-loading').style.display='none';
-    document.getElementById('prod-table').style.display='table';
-    const n=new Date();
-    document.getElementById('prod-status').textContent=`Sincronizado · ${n.toLocaleDateString('es-UY')} ${n.toLocaleTimeString('es-UY',{hour:'2-digit',minute:'2-digit'})} · ${PROD_DATA.length} registros`;
-    renderProd();
-  }catch(e){
-    document.getElementById('prod-loading').textContent='Error al cargar datos de producción.';
-    document.getElementById('prod-status').textContent='Sin conexión';
-    console.error('[PRODUCCIÓN] Error:',e);
-  }
-}
-
 async function syncEstados(){
   try{
     const res=await fetch(APPS_SCRIPT_URL+'?t='+Date.now());
@@ -465,15 +1828,11 @@ async function syncEstados(){
 }
 
 async function toggleOk(dataIdx,section){
-  const data=section==='log'?LOG_DATA:PROD_DATA;
-  const rowMap=section==='log'?LOG_ROW_MAP:PROD_ROW_MAP;
-  const row=data[dataIdx];const sheetRow=rowMap[dataIdx];
+  const row=LOG_DATA[dataIdx];const sheetRow=LOG_ROW_MAP[dataIdx];
   row.completado=!row.completado;const newVal=row.completado?'SI':'';
   document.querySelectorAll(`[data-ok-idx="${section}-${dataIdx}"]`).forEach(btn=>{btn.classList.toggle('done',row.completado);btn.classList.add('loading');btn.querySelector('.ok-label').textContent=row.completado?'Completado':'Pendiente';});
-  if(section==='log'){
-    try{await fetch(`${APPS_SCRIPT_URL}?row=${sheetRow}&value=${encodeURIComponent(newVal)}`,{method:'GET',mode:'no-cors'});}catch(e){}
-    if(row.completado){[`pend-row-${dataIdx}`,`pend-card-${dataIdx}`].forEach(id=>{const el=document.getElementById(id);if(el){el.style.transition='opacity .3s';el.style.opacity='0';setTimeout(()=>{el.remove();refreshPendingCount();},300);}});}
-  }
+  try{await fetch(`${APPS_SCRIPT_URL}?row=${sheetRow}&value=${encodeURIComponent(newVal)}`,{method:'GET',mode:'no-cors'});}catch(e){}
+  if(row.completado){[`pend-row-${dataIdx}`,`pend-card-${dataIdx}`].forEach(id=>{const el=document.getElementById(id);if(el){el.style.transition='opacity .3s';el.style.opacity='0';setTimeout(()=>{el.remove();refreshPendingCount();},300);}});}
   setTimeout(()=>{document.querySelectorAll(`[data-ok-idx="${section}-${dataIdx}"]`).forEach(btn=>btn.classList.remove('loading'));},1000);
 }
 
@@ -532,13 +1891,6 @@ function renderLog(){
   const resp=document.getElementById('log-sel-resp').value.toLowerCase().trim();
   const esp=document.getElementById('log-inp-esp').value.toLowerCase().trim();
   renderSection({data:LOG_DATA,dia,resp,esp,countId:'log-count',emptyId:'log-empty',tbodyId:'log-tbody',tableId:'log-table',cardsId:'log-cards-list',section:'log',theme:'logistica'});
-}
-
-function renderProd(){
-  const dia=document.getElementById('prod-sel-dia').value||getTodayNorm();
-  const resp=document.getElementById('prod-sel-resp').value.toLowerCase().trim();
-  const esp=document.getElementById('prod-inp-esp').value.toLowerCase().trim();
-  renderSection({data:PROD_DATA,dia,resp,esp,countId:'prod-count',emptyId:'prod-empty',tbodyId:'prod-tbody',tableId:'prod-table',cardsId:'prod-cards-list',section:'prod',theme:'produccion'});
 }
 
 function renderSection({data,dia,resp,esp,countId,emptyId,tbodyId,tableId,cardsId,section,theme}){
@@ -617,18 +1969,104 @@ function buildHorarioBadge(h,theme){if(!h||h==='—')return`<span style="color:#
 function okBtnHtml(idx,done,section,theme){return`<button class="ok-btn ${theme}${done?' done':''}" data-ok-idx="${section}-${idx}" onclick="toggleOk(${idx},'${section}')"><svg viewBox="0 0 16 16"><polyline points="2.5,8.5 6.5,12.5 13.5,4"/></svg><span class="ok-label">${done?'Completado':'Pendiente'}</span></button>`;}
 function pendBtnHtml(idx){return`<button class="ok-btn-pending" data-ok-idx="log-${idx}" onclick="toggleOk(${idx},'log')"><svg viewBox="0 0 16 16"><polyline points="2.5,8.5 6.5,12.5 13.5,4"/></svg><span class="ok-label">Marcar completado</span></button>`;}
 
+const AGENDA_DIAS_SEM=['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES'];
+const AGENDA_DIAS_LABEL={LUNES:'Lunes',MARTES:'Martes',MIERCOLES:'Miércoles',JUEVES:'Jueves',VIERNES:'Viernes',SABADO:'Sábado'};
+const AGENDA_BLOQUES=[
+  {key:'A',label:'9:30\nA\n12'},
+  {key:'B',label:'12\nA\n16:30'},
+  {key:'C',label:'17:00\nA\n19:00'},
+];
+const AGENDA_BLOQUE_TITULOS={A:'9:30 a 12',B:'12 a 16:30',C:'17:00 a 19:00'};
+
+function agCardHtml(item,mobile){
+  const cls=mobile?'ag-card-mobile':'ag-card';
+  const det=(item.detalle||[]).map(d=>`<div>${d}</div>`).join('');
+  return `<div class="${cls}" style="background:${item.color}">
+    <div class="ag-esp">${item.espacio}</div>
+    <div class="ag-tit">${item.titulo}</div>
+    ${item.horario&&item.horario!=='—'?`<div class="ag-hor">🕐 ${item.horario}</div>`:''}
+    ${det?`<div class="ag-det">${det}</div>`:''}
+  </div>`;
+}
+
+function agSabadoItemsForBloque(key){
+  if(key==='A')return AGENDA_DATA.SABADO_NINOS;
+  if(key==='B')return AGENDA_DATA.SABADO_ADULTOS;
+  return [];
+}
+
+// ---- Vista escritorio ----
+function renderAgendaDesktop(diaFiltro){
+  const tbl=document.getElementById('agenda-table');
+  const dias = diaFiltro==='TODOS' ? AGENDA_DIAS_SEM.concat(['SABADO']) : [diaFiltro];
+  let thead=`<thead><tr><th style="width:64px"></th>${dias.map(d=>`<th>${AGENDA_DIAS_LABEL[d]}</th>`).join('')}</tr></thead>`;
+  let rows='';
+  AGENDA_BLOQUES.forEach(b=>{
+    let cells=`<td class="ag-label-td"><div class="ag-block-label">${b.label}</div></td>`;
+    dias.forEach(d=>{
+      const items = d==='SABADO' ? agSabadoItemsForBloque(b.key) : (AGENDA_DATA[d][b.key]||[]);
+      cells+=`<td><div class="ag-cell">${items.length?items.map(it=>agCardHtml(it,false)).join(''):'<div class="ag-empty-cell">—</div>'}</div></td>`;
+    });
+    rows+=`<tr>${cells}</tr>`;
+  });
+  tbl.innerHTML=thead+`<tbody>${rows}</tbody>`;
+}
+
+// ---- Vista mobile (cards) ----
+function renderAgendaCardsForDay(dia){
+  if(dia==='SABADO'){
+    return `<div class="agenda-block-title">Niños · 10 a 12hs // 14 a 16hs</div>`+
+      AGENDA_DATA.SABADO_NINOS.map(it=>agCardHtml(it,true)).join('')+
+      `<div class="agenda-block-title">Adultos · 10 a 13hs</div>`+
+      AGENDA_DATA.SABADO_ADULTOS.map(it=>agCardHtml(it,true)).join('');
+  }
+  const dataDia=AGENDA_DATA[dia];
+  let html='';
+  AGENDA_BLOQUES.forEach(b=>{
+    const items=dataDia[b.key]||[];
+    if(!items.length)return;
+    html+=`<div class="agenda-block-title">${AGENDA_BLOQUE_TITULOS[b.key]}</div>`;
+    html+=items.map(it=>agCardHtml(it,true)).join('');
+  });
+  return html;
+}
+
+function renderAgendaMobile(diaFiltro){
+  const cont=document.getElementById('agenda-cards');
+  if(diaFiltro==='TODOS'){
+    const dias = AGENDA_DIAS_SEM.concat(['SABADO']);
+    cont.innerHTML = dias.map(d=>`<div class="agenda-day-title">${AGENDA_DIAS_LABEL[d]}</div>${renderAgendaCardsForDay(d)}`).join('');
+  }else{
+    cont.innerHTML = renderAgendaCardsForDay(diaFiltro);
+  }
+}
+
+function renderAgendaAll(){
+  const dia=document.getElementById('agenda-sel-dia').value;
+  renderAgendaDesktop(dia);
+  renderAgendaMobile(dia);
+}
+
+function initAgendaDefaultDay(){
+  const map={1:'LUNES',2:'MARTES',3:'MIERCOLES',4:'JUEVES',5:'VIERNES',6:'SABADO'};
+  const today=map[new Date().getDay()]||'LUNES';
+  document.getElementById('agenda-sel-dia').value=today;
+}
+
 function showSection(which){
   document.getElementById('section-log').style.display=which==='log'?'block':'none';
-  document.getElementById('section-prod').style.display=which==='prod'?'block':'none';
+  document.getElementById('section-agenda').style.display=which==='agenda'?'block':'none';
   document.getElementById('nav-log').className='nav-btn'+(which==='log'?' active log-active':'');
-  document.getElementById('nav-prod').className='nav-btn'+(which==='prod'?' active prod-active':'');
+  document.getElementById('nav-agenda').className='nav-btn'+(which==='agenda'?' active agenda-active':'');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+initAgendaDefaultDay();
+renderAgendaAll();
+
 fetchLog();
-fetchProd();
 setInterval(syncEstados,30*1000);
-setInterval(()=>{fetchLog();fetchProd();},5*60*1000);
+setInterval(fetchLog,5*60*1000);
 </script>
 </body>
 </html>
