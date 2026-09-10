@@ -41,6 +41,7 @@
   .nav-btn:hover{background:#f5f5f5;color:#333}
   .nav-btn.active.log-active{color:var(--dark);border-bottom-color:var(--green-acc);background:var(--green-light)}
   .nav-btn.active.agenda-active{color:#7a4a8f;border-bottom-color:#a870c0;background:#f5edf7}
+  .nav-btn.active.prod-active{color:#111;border-bottom-color:#111;background:#f0f0f0}
   .section-header{padding:.75rem 1.5rem;display:flex;align-items:center;gap:12px}
   .section-header.logistica{background:var(--dark);border-bottom:2px solid var(--green-acc)}
   .section-header.produccion{background:#111111;border-bottom:2px solid #444}
@@ -246,11 +247,15 @@
 <div class="nav-bar">
   <button class="nav-btn active log-active" id="nav-log" onclick="showSection('log')">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h14M3 10h14M3 15h8"/></svg>
-    Seteos Logística
+    Logística
   </button>
   <button class="nav-btn" id="nav-agenda" onclick="showSection('agenda')">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="14" height="13" rx="1.5"/><path d="M3 8h14M7 2v4M13 2v4"/></svg>
     Agenda
+  </button>
+  <button class="nav-btn" id="nav-prod" onclick="showSection('prod')">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M10 1.5l2.47 5.51 6.03.55-4.55 4.02 1.36 5.92L10 14.5l-5.31 3 1.36-5.92-4.55-4.02 6.03-.55z"/></svg>
+    Producción
   </button>
 </div>
 
@@ -327,16 +332,64 @@
 </div>
 </div>
 
+<div id="section-prod" style="display:none">
+<div class="section">
+  <div class="section-header produccion">
+    <span class="section-title">⚫ Producción Portal Bosque</span>
+    <span class="section-pill produccion">Producción</span>
+  </div>
+  <div class="filters produccion">
+    <div class="filter-group"><span class="filter-label">Día</span><select id="prod-sel-dia" onchange="renderProd()"><option value="">Hoy</option></select></div>
+    <div class="filter-group"><span class="filter-label">Responsable</span><select id="prod-sel-resp" onchange="renderProd()"><option value="">Todos</option></select></div>
+    <div class="filter-group"><span class="filter-label">Espacio</span><input id="prod-inp-esp" type="text" placeholder="Ej: Escenario" oninput="renderProd()"></div>
+    <span class="count produccion" id="prod-count">—</span>
+  </div>
+  <div class="status produccion"><div class="status-dot produccion"></div><span id="prod-status">Conectando...</span></div>
+  <div class="pending-section" id="prod-pending-section">
+    <div class="pending-header-bar" style="background:#111"><span class="pending-title">⚠ Pendientes de ayer sin completar</span><span class="pending-count" id="prod-pending-count">0</span></div>
+    <table class="pending-table" id="prod-pending-table"></table>
+  </div>
+  <div class="table-wrap">
+    <div id="prod-loading" class="loading">Cargando datos...</div>
+    <table id="prod-table" class="produccion" style="display:none">
+      <thead><tr class="produccion">
+        <th>Día</th><th>Responsable</th><th>Horario</th><th>Espacio</th>
+        <th>Necesidad</th><th>Info</th><th>Notas</th><th style="text-align:center">Completado</th>
+      </tr></thead>
+      <tbody id="prod-tbody" class="produccion"></tbody>
+    </table>
+    <div id="prod-empty" class="empty" style="display:none">Sin resultados.</div>
+  </div>
+  <div class="cards" id="prod-cards">
+    <div class="cards-pending-section" id="prod-cards-pending-section">
+      <div class="cards-pending-header" style="background:#111">
+        <span class="cards-pending-title">⚠ Pendientes de ayer</span>
+        <span class="cards-pending-count" id="prod-cards-pending-count">0</span>
+      </div>
+      <div class="cards-pending-list" id="prod-cards-pending-list"></div>
+    </div>
+    <div id="prod-cards-list"></div>
+  </div>
+</div>
+</div>
+
 <footer class="footer">
   <span>Portal Bosque · <a href="https://www.portalbosque.com" target="_blank">portalbosque.com</a></span>
+
   <span id="last-update">—</span>
 </footer>
 
 <script>
 const CSV_LOG  = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQAjbZFpNcEopTvKwlp2Nn6EpFWNPAf3hMK0vc_NRM5K3NhSTe73DsHUjEV3YjKGWT4auUjQ3kXpucf/pub?gid=0&single=true&output=csv';
+const CSV_PROD = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgW4spjoXNjkMCLzOgOUKjXZ76Jmw8sOi_in-lFjM4F74PoiCj-HeLDuNJlayrovYJaYbIhKtk37n2/pub?gid=574133870&single=true&output=csv';
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbykJx6LauaXrGkUnmocIeNinK5fHDxL_zFlk2Os32s3yUiC42CnIzlp-pTSOUeqBuo/exec';
 
-let LOG_DATA=[],LOG_ROW_MAP=[];
+let LOG_DATA=[],LOG_ROW_MAP=[],PROD_DATA=[],PROD_ROW_MAP=[];
+
+const PEND_IDS={
+  log:{section:'pending-section',table:'pending-table',count:'pending-count',cardsSection:'log-cards-pending-section',cardsCount:'log-cards-pending-count',cardsList:'log-cards-pending-list',rowPrefix:'pend-row-',cardPrefix:'pend-card-'},
+  prod:{section:'prod-pending-section',table:'prod-pending-table',count:'prod-pending-count',cardsSection:'prod-cards-pending-section',cardsCount:'prod-cards-pending-count',cardsList:'prod-cards-pending-list',rowPrefix:'prod-pend-row-',cardPrefix:'prod-pend-card-'}
+};
 const DIAS_ORDER=['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO'];
 const DIAS_LABELS={'LUNES':'Lunes','MARTES':'Martes','MIERCOLES':'Miércoles','JUEVES':'Jueves','VIERNES':'Viernes','SABADO':'Sábado','DOMINGO':'Domingo'};
 const RESPS_VALIDOS=['pacha','flor alvez','tute','chunka','heber','facundo','joaco','daniel','lucas','karim','guillermo','nahuel'];
@@ -1807,7 +1860,7 @@ async function fetchLog(){
     document.getElementById('today-badge').textContent=(DIAS_LABELS[getTodayNorm()]||getTodayNorm()).toUpperCase();
     document.getElementById('today-date').textContent=formatTodayDate();
     document.getElementById('last-update').textContent=`Actualizado: ${n.toLocaleDateString('es-UY')}`;
-    await syncEstados();
+    await syncEstados('log');
   }catch(e){
     document.getElementById('log-loading').textContent='Error al cargar datos. Verificá la conexión.';
     document.getElementById('log-status').textContent='Sin conexión con Google Sheets';
@@ -1817,61 +1870,96 @@ async function fetchLog(){
   }
 }
 
-async function syncEstados(){
+async function fetchProd(){
   try{
-    const res=await fetch(APPS_SCRIPT_URL+'?t='+Date.now());
-    const data=await res.json();
-    if(data.ok&&data.estados){data.estados.forEach(e=>{const idx=LOG_ROW_MAP.indexOf(e.row);if(idx!==-1&&LOG_DATA[idx])LOG_DATA[idx].completado=e.completado;});}
-  }catch(e){console.log('[syncEstados] no crítico:',e);}
-  renderLog();
-  renderPendientes();
+    const res=await fetch(CSV_PROD+'&t='+Date.now());
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    PROD_DATA=parseCSV(await res.text(),PROD_ROW_MAP,'PRODUCCIÓN');
+    const diasNorm=new Set(PROD_DATA.map(r=>r.diaNorm).filter(Boolean));
+    populateSelect('prod-sel-dia',DIAS_ORDER.filter(d=>diasNorm.has(d)).map(d=>({val:d,label:DIAS_LABELS[d]||d})));
+    populateSelect('prod-sel-resp',RESPS_VALIDOS.map(r=>r.split(' ').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ')));
+    document.getElementById('prod-loading').style.display='none';
+    document.getElementById('prod-table').style.display='table';
+    const n=new Date();
+    document.getElementById('prod-status').textContent=`Sincronizado · ${n.toLocaleDateString('es-UY')} ${n.toLocaleTimeString('es-UY',{hour:'2-digit',minute:'2-digit'})} · ${PROD_DATA.length} registros`;
+    await syncEstados('prod');
+  }catch(e){
+    document.getElementById('prod-loading').textContent='Error al cargar datos. Verificá la conexión.';
+    document.getElementById('prod-status').textContent='Sin conexión con Google Sheets';
+    document.querySelector('.status-dot.produccion').style.background='#c05050';
+    document.querySelector('.status-dot.produccion').style.animation='none';
+    console.error('[PRODUCCIÓN] Error:',e);
+  }
+}
+
+async function syncEstados(section){
+  section = section||'log';
+  const data = section==='log'?LOG_DATA:PROD_DATA;
+  const rowMap = section==='log'?LOG_ROW_MAP:PROD_ROW_MAP;
+  const sheetParam = section==='prod' ? '&sheet=produccion' : '';
+  try{
+    const res=await fetch(APPS_SCRIPT_URL+'?t='+Date.now()+sheetParam);
+    const resData=await res.json();
+    if(resData.ok&&resData.estados){resData.estados.forEach(e=>{const idx=rowMap.indexOf(e.row);if(idx!==-1&&data[idx])data[idx].completado=e.completado;});}
+  }catch(e){console.log(`[syncEstados:${section}] no crítico:`,e);}
+  if(section==='log'){renderLog();}else{renderProd();}
+  renderPendientes(section);
 }
 
 async function toggleOk(dataIdx,section){
-  const row=LOG_DATA[dataIdx];const sheetRow=LOG_ROW_MAP[dataIdx];
+  const data = section==='log'?LOG_DATA:PROD_DATA;
+  const rowMap = section==='log'?LOG_ROW_MAP:PROD_ROW_MAP;
+  const row=data[dataIdx];const sheetRow=rowMap[dataIdx];
   row.completado=!row.completado;const newVal=row.completado?'SI':'';
   document.querySelectorAll(`[data-ok-idx="${section}-${dataIdx}"]`).forEach(btn=>{btn.classList.toggle('done',row.completado);btn.classList.add('loading');btn.querySelector('.ok-label').textContent=row.completado?'Completado':'Pendiente';});
-  try{await fetch(`${APPS_SCRIPT_URL}?row=${sheetRow}&value=${encodeURIComponent(newVal)}`,{method:'GET',mode:'no-cors'});}catch(e){}
-  if(row.completado){[`pend-row-${dataIdx}`,`pend-card-${dataIdx}`].forEach(id=>{const el=document.getElementById(id);if(el){el.style.transition='opacity .3s';el.style.opacity='0';setTimeout(()=>{el.remove();refreshPendingCount();},300);}});}
+  const sheetParam = section==='prod' ? '&sheet=produccion' : '';
+  try{await fetch(`${APPS_SCRIPT_URL}?row=${sheetRow}&value=${encodeURIComponent(newVal)}${sheetParam}`,{method:'GET',mode:'no-cors'});}catch(e){}
+  if(row.completado){
+    const ids=PEND_IDS[section];
+    [`${ids.rowPrefix}${dataIdx}`,`${ids.cardPrefix}${dataIdx}`].forEach(id=>{const el=document.getElementById(id);if(el){el.style.transition='opacity .3s';el.style.opacity='0';setTimeout(()=>{el.remove();refreshPendingCount(section);},300);}});
+  }
   setTimeout(()=>{document.querySelectorAll(`[data-ok-idx="${section}-${dataIdx}"]`).forEach(btn=>btn.classList.remove('loading'));},1000);
 }
 
-function refreshPendingCount(){
-  const rows=document.getElementById('pending-table').querySelectorAll('tr');
-  if(!rows.length)document.getElementById('pending-section').classList.remove('visible');
-  else document.getElementById('pending-count').textContent=rows.length;
-  const cards=document.getElementById('log-cards-pending-list').querySelectorAll('.card-pending');
-  const mSec=document.getElementById('log-cards-pending-section');
+function refreshPendingCount(section){
+  const ids=PEND_IDS[section];
+  const rows=document.getElementById(ids.table).querySelectorAll('tr');
+  if(!rows.length)document.getElementById(ids.section).classList.remove('visible');
+  else document.getElementById(ids.count).textContent=rows.length;
+  const cards=document.getElementById(ids.cardsList).querySelectorAll('.card-pending');
+  const mSec=document.getElementById(ids.cardsSection);
   if(!cards.length)mSec.classList.remove('visible');
-  else document.getElementById('log-cards-pending-count').textContent=cards.length;
+  else document.getElementById(ids.cardsCount).textContent=cards.length;
 }
 
-function renderPendientes(){
+function renderPendientes(section){
+  const ids=PEND_IDS[section];
+  const data = section==='log'?LOG_DATA:PROD_DATA;
   const ayer=getYesterdayNorm();
-  let pend=LOG_DATA.map((r,i)=>({r,i})).filter(({r})=>r.diaNorm===ayer&&!r.completado);
+  let pend=data.map((r,i)=>({r,i})).filter(({r})=>r.diaNorm===ayer&&!r.completado);
   pend=ordenarPorDiaYHorario(pend);
-  const sec=document.getElementById('pending-section');
+  const sec=document.getElementById(ids.section);
   if(!pend.length){sec.classList.remove('visible');}
   else{
     sec.classList.add('visible');
-    document.getElementById('pending-count').textContent=pend.length;
-    document.getElementById('pending-table').innerHTML=pend.map(({r,i})=>`
-      <tr id="pend-row-${i}">
+    document.getElementById(ids.count).textContent=pend.length;
+    document.getElementById(ids.table).innerHTML=pend.map(({r,i})=>`
+      <tr id="${ids.rowPrefix}${i}">
         <td><span class="pend-dia">${DIAS_LABELS[r.diaNorm]||r.dia} · ${r.horario||'—'}</span></td>
         <td><span class="pend-esp">${r.espacio}</span></td>
         <td><span class="pend-resp">${r.resp||'—'}</span></td>
         <td><span style="font-size:11px;color:var(--pending-text)">${r.necesidad||''}</span></td>
-        <td class="ok-cell">${pendBtnHtml(i)}</td>
+        <td class="ok-cell">${pendBtnHtml(i,section)}</td>
       </tr>`).join('');
   }
-  const mSec=document.getElementById('log-cards-pending-section');
-  const mList=document.getElementById('log-cards-pending-list');
+  const mSec=document.getElementById(ids.cardsSection);
+  const mList=document.getElementById(ids.cardsList);
   if(!pend.length){mSec.classList.remove('visible');}
   else{
     mSec.classList.add('visible');
-    document.getElementById('log-cards-pending-count').textContent=pend.length;
+    document.getElementById(ids.cardsCount).textContent=pend.length;
     mList.innerHTML=pend.map(({r,i})=>`
-      <div class="card-pending" id="pend-card-${i}">
+      <div class="card-pending" id="${ids.cardPrefix}${i}">
         <div class="card-pending-header">
           <span class="card-dia-pending">⚠ ${(DIAS_LABELS[r.diaNorm]||r.dia).toUpperCase()}</span>
           ${r.horario?`<span style="font-size:10px;color:#ffe5a0;font-family:monospace">${r.horario}</span>`:''}
@@ -1881,7 +1969,7 @@ function renderPendientes(){
           ${r.resp?`<div style="font-size:11px;color:#9a7200;margin-top:2px">${r.resp}</div>`:''}
           ${r.necesidad?`<div class="card-nec-pending" style="margin-top:5px">${r.necesidad}</div>`:''}
         </div>
-        <div class="card-footer-pending">${pendBtnHtml(i)}</div>
+        <div class="card-footer-pending">${pendBtnHtml(i,section)}</div>
       </div>`).join('');
   }
 }
@@ -1891,6 +1979,13 @@ function renderLog(){
   const resp=document.getElementById('log-sel-resp').value.toLowerCase().trim();
   const esp=document.getElementById('log-inp-esp').value.toLowerCase().trim();
   renderSection({data:LOG_DATA,dia,resp,esp,countId:'log-count',emptyId:'log-empty',tbodyId:'log-tbody',tableId:'log-table',cardsId:'log-cards-list',section:'log',theme:'logistica'});
+}
+
+function renderProd(){
+  const dia=document.getElementById('prod-sel-dia').value||getTodayNorm();
+  const resp=document.getElementById('prod-sel-resp').value.toLowerCase().trim();
+  const esp=document.getElementById('prod-inp-esp').value.toLowerCase().trim();
+  renderSection({data:PROD_DATA,dia,resp,esp,countId:'prod-count',emptyId:'prod-empty',tbodyId:'prod-tbody',tableId:'prod-table',cardsId:'prod-cards-list',section:'prod',theme:'produccion'});
 }
 
 function renderSection({data,dia,resp,esp,countId,emptyId,tbodyId,tableId,cardsId,section,theme}){
@@ -1967,7 +2062,7 @@ function buildInfoHtml(r){
 function buildDiaBadge(r,theme){return`<div class="dia-badge ${theme}"><span class="dia-badge-name">${(DIAS_LABELS[r.diaNorm]||r.dia).toUpperCase()}</span></div>`;}
 function buildHorarioBadge(h,theme){if(!h||h==='—')return`<span style="color:#aaa">—</span>`;return`<div class="horario-badge ${theme}"><span class="horario-badge-text">${h}</span></div>`;}
 function okBtnHtml(idx,done,section,theme){return`<button class="ok-btn ${theme}${done?' done':''}" data-ok-idx="${section}-${idx}" onclick="toggleOk(${idx},'${section}')"><svg viewBox="0 0 16 16"><polyline points="2.5,8.5 6.5,12.5 13.5,4"/></svg><span class="ok-label">${done?'Completado':'Pendiente'}</span></button>`;}
-function pendBtnHtml(idx){return`<button class="ok-btn-pending" data-ok-idx="log-${idx}" onclick="toggleOk(${idx},'log')"><svg viewBox="0 0 16 16"><polyline points="2.5,8.5 6.5,12.5 13.5,4"/></svg><span class="ok-label">Marcar completado</span></button>`;}
+function pendBtnHtml(idx,section){return`<button class="ok-btn-pending" data-ok-idx="${section}-${idx}" onclick="toggleOk(${idx},'${section}')"><svg viewBox="0 0 16 16"><polyline points="2.5,8.5 6.5,12.5 13.5,4"/></svg><span class="ok-label">Marcar completado</span></button>`;}
 
 const AGENDA_DIAS_SEM=['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES'];
 const AGENDA_DIAS_LABEL={LUNES:'Lunes',MARTES:'Martes',MIERCOLES:'Miércoles',JUEVES:'Jueves',VIERNES:'Viernes',SABADO:'Sábado'};
@@ -2056,8 +2151,10 @@ function initAgendaDefaultDay(){
 function showSection(which){
   document.getElementById('section-log').style.display=which==='log'?'block':'none';
   document.getElementById('section-agenda').style.display=which==='agenda'?'block':'none';
+  document.getElementById('section-prod').style.display=which==='prod'?'block':'none';
   document.getElementById('nav-log').className='nav-btn'+(which==='log'?' active log-active':'');
   document.getElementById('nav-agenda').className='nav-btn'+(which==='agenda'?' active agenda-active':'');
+  document.getElementById('nav-prod').className='nav-btn'+(which==='prod'?' active prod-active':'');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -2065,8 +2162,9 @@ initAgendaDefaultDay();
 renderAgendaAll();
 
 fetchLog();
-setInterval(syncEstados,30*1000);
-setInterval(fetchLog,5*60*1000);
+fetchProd();
+setInterval(()=>{syncEstados('log');syncEstados('prod');},30*1000);
+setInterval(()=>{fetchLog();fetchProd();},5*60*1000);
 </script>
 </body>
 </html>
